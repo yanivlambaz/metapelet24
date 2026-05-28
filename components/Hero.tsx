@@ -12,7 +12,6 @@ import { WhatsAppIcon } from "@/components/icons";
 
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&q=80";
-const IMAGE_ALT = "מטפלת פרטית מקצועית ומחייכת";
 
 function FloatingParticles() {
   const reducedMotion = useReducedMotion();
@@ -163,7 +162,7 @@ export default function Hero() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/20 shadow-xl sm:aspect-[5/6]">
               <Image
                 src={HERO_IMAGE}
-                alt={IMAGE_ALT}
+                alt="מטפלת פרטית מקצועית ומחייכת"
                 width={600}
                 height={750}
                 loading="lazy"
