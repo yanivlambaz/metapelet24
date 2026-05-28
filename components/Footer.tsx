@@ -20,7 +20,7 @@ export default function Footer() {
           {/* Column 1 — Logo + description */}
           <div>
             <div className="mb-4">
-              <Logo variant="white" className="h-[40px] w-auto" />
+              <Logo variant="white" className="shrink-0" />
             </div>
             <p className="text-sm leading-relaxed text-blue-100/90">
               פלטפורמה מובילה לאיתור מטפלים פרטיים ישראלים. שירות מקצועי, מהיר ואמין — 24 שעות ביממה.

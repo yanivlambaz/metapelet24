@@ -3,54 +3,27 @@ type LogoProps = {
   className?: string;
 };
 
-function HeartIcon({ crossFill }: { crossFill: string }) {
-  return (
-    <g transform="translate(10, 10)">
-      <path
-        d="M20 34.5 8.2 23.4C4.6 20.1 2.5 16.8 2.5 13.2 2.5 9.1 5.8 5.8 9.9 5.8c2.3 0 4.5 1.1 5.9 2.8 1.4-1.7 3.6-2.8 5.9-2.8 4.1 0 7.4 3.3 7.4 7.4 0 3.6-2.1 6.9-5.7 10.2L20 34.5Z"
-        fill="#FFFFFF"
-      />
-      <rect x="18.2" y="11.5" width="3.6" height="11.2" rx="1.2" fill={crossFill} />
-      <rect x="14.2" y="15.5" width="11.6" height="3.2" rx="1.2" fill={crossFill} />
-    </g>
-  );
-}
-
 export default function Logo({ variant = "default", className = "" }: LogoProps) {
   const isWhite = variant === "white";
 
+  const heartColor = isWhite ? "#93C5FD" : "#0EA5E9";
+  const titleColor = isWhite ? "#FFFFFF" : "#1B4F8A";
+  const numberColor = isWhite ? "#FFFFFF" : "#0EA5E9";
+  const taglineColor = isWhite ? "#FFFFFF" : "#64748B";
+
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 60"
-      role="img"
-      aria-label="מטפלת 24"
+    <div
       className={className}
+      style={{ textAlign: "right", lineHeight: 1.2 }}
+      role="img"
+      aria-label="מטפלת 24 — זמינות מיידית"
     >
-      {!isWhite && <rect width="200" height="60" rx="10" fill="#1B4F8A" />}
-      <HeartIcon crossFill={isWhite ? "#0F2D6B" : "#1B4F8A"} />
-      <text
-        x="58"
-        y="27"
-        fill="#FFFFFF"
-        fontFamily="var(--font-heebo), Arial, sans-serif"
-        fontSize="18"
-        fontWeight="700"
-        direction="rtl"
-      >
-        מטפלת<tspan fill={isWhite ? "#FFFFFF" : "#0EA5E9"}>24</tspan>
-      </text>
-      <text
-        x="58"
-        y="44"
-        fill={isWhite ? "#FFFFFF" : "#93C5FD"}
-        fontFamily="var(--font-heebo), Arial, sans-serif"
-        fontSize="10"
-        fontWeight="600"
-        direction="rtl"
-      >
-        זמינות מיידית
-      </text>
-    </svg>
+      <div>
+        <span style={{ color: heartColor, fontSize: "18px" }}>♥ </span>
+        <span style={{ color: titleColor, fontWeight: 700, fontSize: "22px" }}>מטפלת</span>
+        <span style={{ color: numberColor, fontWeight: 700, fontSize: "24px" }}>24</span>
+      </div>
+      <div style={{ color: taglineColor, fontSize: "11px" }}>זמינות מיידית 24/7</div>
+    </div>
   );
 }
