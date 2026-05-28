@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import MotionReveal from "@/components/MotionReveal";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
 const testimonials = [
   {
@@ -38,7 +39,9 @@ export default function SocialProof() {
             לקוחות מרוצים
           </span>
           <h2 className="text-2xl font-bold text-primary sm:text-3xl">מה הלקוחות שלנו אומרים</h2>
-          <p className="mt-3 text-muted">500+ משפחות כבר בחרו בנו</p>
+          <p className="mt-3 text-muted">
+            <AnimatedCounter end={500} suffix="+ משפחות כבר בחרו בנו" />
+          </p>
         </MotionReveal>
 
         <div className="grid gap-6 md:grid-cols-3">

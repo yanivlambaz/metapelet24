@@ -130,6 +130,36 @@ body {
   animation: pulse-soft 2s ease-in-out infinite;
 }
 
+@keyframes whatsapp-glow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow:
+      0 0 0 10px rgba(37, 211, 102, 0.12),
+      0 8px 32px rgba(37, 211, 102, 0.55);
+  }
+}
+
+.animate-whatsapp-pulse {
+  animation: whatsapp-glow 2s ease-in-out infinite;
+}
+
+@keyframes availability-badge {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(34, 197, 94, 0.45);
+  }
+}
+
+.animate-availability-badge {
+  animation: availability-badge 2s ease-in-out infinite;
+}
+
 .floating-bubble {
   @apply fixed z-40 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-xl transition-transform hover:scale-110;
 }
@@ -161,7 +191,9 @@ body {
   .hero-premium,
   .hero-animated,
   .marquee-track,
-  .animate-pulse-soft {
+  .animate-pulse-soft,
+  .animate-whatsapp-pulse,
+  .animate-availability-badge {
     animation: none !important;
   }
 

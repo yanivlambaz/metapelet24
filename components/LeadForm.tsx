@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF, WHATSAPP_HREF } from "@/lib/constants";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
+import LiveIndicator from "@/components/LiveIndicator";
 
 const careOptions = [
   { id: "hospital", emoji: "🏥", label: "מטפל לבית חולים" },
@@ -63,6 +64,9 @@ export default function LeadForm({
         <div className="mx-auto max-w-2xl">
           {!compact && (
             <div className="mb-8 text-center">
+              <div className="mb-4 flex justify-center">
+                <LiveIndicator />
+              </div>
               <span className="mb-3 inline-block rounded-full bg-accent/10 px-4 py-1 text-sm font-semibold text-accent">
                 בקשה מהירה — 3 שלבים
               </span>

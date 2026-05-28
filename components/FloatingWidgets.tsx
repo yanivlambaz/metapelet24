@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF, WHATSAPP_HREF } from "@/lib/constants";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
 
@@ -69,6 +70,7 @@ function ExitIntentForm({ onClose }: { onClose: () => void }) {
 export default function FloatingWidgets() {
   const [showExit, setShowExit] = useState(false);
   const [exitDismissed, setExitDismissed] = useState(false);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (exitDismissed) return;
@@ -88,14 +90,19 @@ export default function FloatingWidgets() {
         href={`${WHATSAPP_HREF}?text=${encodeURIComponent(DEFAULT_WHATSAPP_MESSAGE)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="floating-bubble floating-bubble-whatsapp animate-pulse-soft max-md:bottom-20"
+        className={`floating-bubble floating-bubble-whatsapp relative max-md:bottom-20 ${
+          reducedMotion ? "" : "animate-whatsapp-pulse"
+        }`}
         aria-label="WhatsApp"
       >
         <WhatsAppIcon className="h-7 w-7" />
+        <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white shadow-md ring-2 ring-white">
+          1
+        </span>
       </a>
       <a
         href={PHONE_HREF}
-        className="floating-bubble floating-bubble-phone animate-pulse-soft max-md:bottom-20"
+        className="floating-bubble floating-bubble-phone max-md:bottom-20"
         aria-label="התקשר"
       >
         <PhoneIcon className="h-6 w-6" />

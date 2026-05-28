@@ -9,6 +9,8 @@ import {
   PHONE_HREF,
 } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons";
+import LiveIndicator from "@/components/LiveIndicator";
+import PulsingDot from "@/components/PulsingDot";
 
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&q=80";
@@ -91,12 +93,11 @@ export default function Hero() {
               initial={reducedMotion ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-green-400/30 bg-green-500/15 px-4 py-2 text-sm font-semibold"
+              className={`mb-4 inline-flex items-center gap-2.5 rounded-full border border-green-400/40 bg-green-500/20 px-4 py-2 text-sm font-semibold shadow-[0_0_20px_rgba(34,197,94,0.25)] ${
+                reducedMotion ? "" : "animate-availability-badge"
+              }`}
             >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
-              </span>
+              <PulsingDot size="md" />
               3 מטפלים זמינים עכשיו באזורך
             </motion.div>
 
@@ -149,6 +150,15 @@ export default function Hero() {
               <a href={PHONE_HREF} className="btn-outline hidden sm:inline-flex">
                 התקשר עכשיו
               </a>
+            </motion.div>
+
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.32 }}
+              className="mt-5 flex justify-center lg:justify-start"
+            >
+              <LiveIndicator />
             </motion.div>
           </div>
 
