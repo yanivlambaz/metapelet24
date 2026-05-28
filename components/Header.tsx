@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
+import Logo from "@/components/Logo";
 import {
   buildWhatsAppUrl,
   DEFAULT_WHATSAPP_MESSAGE,
@@ -28,7 +28,7 @@ export default function Header({ homeHref = "/" }: HeaderProps) {
     <header className="sticky top-[36px] z-50 border-b border-slate-200/60 bg-white/95 backdrop-blur-md">
       <div className="container-main flex items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <a href={homeHref} className="group flex shrink-0 items-center">
-          <Image src="/logo.svg" alt="מטפלת 24" width={140} height={45} priority />
+          <Logo className="h-[45px] w-auto" />
         </a>
 
         <nav className="hidden items-center gap-6 lg:flex" aria-label="ניווט ראשי">

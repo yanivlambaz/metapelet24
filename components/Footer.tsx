@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Logo from "@/components/Logo";
 import {
   buildWhatsAppUrl,
   DEFAULT_WHATSAPP_MESSAGE,
@@ -20,7 +20,7 @@ export default function Footer() {
           {/* Column 1 — Logo + description */}
           <div>
             <div className="mb-4">
-              <Image src="/logo-white.svg" alt="מטפלת 24" width={120} height={40} />
+              <Logo variant="white" className="h-[40px] w-auto" />
             </div>
             <p className="text-sm leading-relaxed text-blue-100/90">
               פלטפורמה מובילה לאיתור מטפלים פרטיים ישראלים. שירות מקצועי, מהיר ואמין — 24 שעות ביממה.

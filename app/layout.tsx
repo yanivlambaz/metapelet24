@@ -19,9 +19,11 @@ export const metadata: Metadata = {
     template: "%s | מטפלת 24",
   },
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231B4F8A'/><path d='M16 8C16 5 13.5 3 11 5C8.5 3 6 5 6 8C6 11 9 14 11 17C9 14 13 18 16 22C19 18 23 14 21 11C21 8 18.5 3 16 8Z' fill='white'/></svg>",
+    shortcut:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231B4F8A'/><path d='M16 8C16 5 13.5 3 11 5C8.5 3 6 5 6 8C6 11 9 14 11 17C9 14 13 18 16 22C19 18 23 14 21 11C21 8 18.5 3 16 8Z' fill='white'/></svg>",
+    apple:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231B4F8A'/><path d='M16 8C16 5 13.5 3 11 5C8.5 3 6 5 6 8C6 11 9 14 11 17C9 14 13 18 16 22C19 18 23 14 21 11C21 8 18.5 3 16 8Z' fill='white'/></svg>",
   },
   description:
     "מצא מטפל/ת פרטי/ת ישראלי/ת בזמינות מיידית. התאמה תוך שעות לבית, בית חולים ומצבים דחופים. התקשר: 072-394-0350",
