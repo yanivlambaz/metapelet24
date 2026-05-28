@@ -1,186 +1,254 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import MotionReveal from "@/components/MotionReveal";
-import { buildWhatsAppUrl } from "@/lib/constants";
+import { FormEvent, useEffect, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF, WHATSAPP_HREF } from "@/lib/constants";
+import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
 
-const careTypes = [
-  "מטפל לבית חולים",
-  "מטפלת ללילה",
-  "מטפל אחרי ניתוח",
-  "טיפול בקשישים",
-  "השגחה פרטית",
-  "מטפל זמני",
-  "מטפלים 24/7",
-  "אחר",
+const careOptions = [
+  { id: "hospital", emoji: "🏥", label: "מטפל לבית חולים" },
+  { id: "night", emoji: "🌙", label: "מטפלת ללילה" },
+  { id: "home", emoji: "🏠", label: "מטפל לבית" },
+  { id: "surgery", emoji: "⚕️", label: "אחרי ניתוח" },
+  { id: "elderly", emoji: "👴", label: "טיפול בקשיש" },
+  { id: "urgent", emoji: "🚨", label: "דחוף עכשיו" },
 ];
 
-const urgencyOptions = [
-  "מיידי — היום",
-  "מחר",
-  "תוך שבוע",
-  "גמיש",
-];
+const timingOptions = ["היום", "מחר", "השבוע", "תאריך אחר"];
 
-type FormData = {
-  firstName: string;
-  phone: string;
-  city: string;
-  careType: string;
-  urgency: string;
+type LeadFormProps = {
+  defaultCity?: string;
+  defaultCareType?: string;
+  compact?: boolean;
 };
 
-const initialForm: FormData = {
-  firstName: "",
-  phone: "",
-  city: "",
-  careType: "",
-  urgency: "",
-};
+export default function LeadForm({
+  defaultCity = "",
+  defaultCareType = "",
+  compact = false,
+}: LeadFormProps) {
+  const [step, setStep] = useState(defaultCareType ? 2 : 1);
+  const [careType, setCareType] = useState(defaultCareType);
+  const [timing, setTiming] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [city, setCity] = useState(defaultCity);
+  const [submitted, setSubmitted] = useState(false);
+  const reducedMotion = useReducedMotion();
 
-export default function LeadForm() {
-  const [form, setForm] = useState<FormData>(initialForm);
+  function buildMessage() {
+    return [
+      "שלום, אני מעוניין/ת במטפל/ת פרטי/ת.",
+      careType ? `סוג טיפול: ${careType}` : "",
+      timing ? `מתי נדרש: ${timing}` : "",
+      firstName ? `שם: ${firstName}` : "",
+      phone ? `טלפון: ${phone}` : "",
+      city ? `עיר: ${city}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-
-    const message = [
-      "שלום, אני מעוניין/ת במטפל/ת פרטי/ת.",
-      "",
-      `שם: ${form.firstName}`,
-      `טלפון: ${form.phone}`,
-      `עיר: ${form.city}`,
-      `סוג טיפול: ${form.careType}`,
-      `מתי נדרש: ${form.urgency}`,
-    ].join("\n");
-
-    window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
+    setSubmitted(true);
+    window.open(buildWhatsAppUrl(buildMessage()), "_blank", "noopener,noreferrer");
   }
 
-  function updateField(field: keyof FormData, value: string) {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  }
+  const progress = (step / 3) * 100;
 
   return (
-    <section id="lead-form" className="section-padding bg-surface">
+    <section id="lead-form" className={compact ? "py-8" : "section-padding bg-surface"}>
       <div className="container-main">
-        <MotionReveal className="mx-auto max-w-2xl">
-          <div className="mb-8 text-center">
-            <span className="mb-3 inline-block rounded-full bg-accent/10 px-4 py-1 text-sm font-semibold text-accent">
-              בקשה מהירה
-            </span>
-            <h2 className="text-2xl font-bold text-primary sm:text-3xl">
-              מצאו מטפל/ת מתאים/ה תוך שעות
-            </h2>
-            <p className="mt-3 text-muted">
-              מלאו את הפרטים ונחזור אליכם מיד עם התאמה אישית
-            </p>
-          </div>
-
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-primary/5 sm:p-8"
-          >
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div className="sm:col-span-1">
-                <label htmlFor="firstName" className="mb-1.5 block text-sm font-medium text-slate-700">
-                  שם פרטי
-                </label>
-                <input
-                  id="firstName"
-                  type="text"
-                  required
-                  value={form.firstName}
-                  onChange={(e) => updateField("firstName", e.target.value)}
-                  placeholder="ישראל"
-                  className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
-                />
-              </div>
-
-              <div className="sm:col-span-1">
-                <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-slate-700">
-                  טלפון
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  required
-                  dir="ltr"
-                  value={form.phone}
-                  onChange={(e) => updateField("phone", e.target.value)}
-                  placeholder="050-000-0000"
-                  className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
-                />
-              </div>
-
-              <div className="sm:col-span-1">
-                <label htmlFor="city" className="mb-1.5 block text-sm font-medium text-slate-700">
-                  עיר
-                </label>
-                <input
-                  id="city"
-                  type="text"
-                  required
-                  value={form.city}
-                  onChange={(e) => updateField("city", e.target.value)}
-                  placeholder="תל אביב"
-                  className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
-                />
-              </div>
-
-              <div className="sm:col-span-1">
-                <label htmlFor="careType" className="mb-1.5 block text-sm font-medium text-slate-700">
-                  סוג טיפול
-                </label>
-                <select
-                  id="careType"
-                  required
-                  value={form.careType}
-                  onChange={(e) => updateField("careType", e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
-                >
-                  <option value="">בחרו סוג טיפול</option>
-                  {careTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label htmlFor="urgency" className="mb-1.5 block text-sm font-medium text-slate-700">
-                  מתי נדרש
-                </label>
-                <select
-                  id="urgency"
-                  required
-                  value={form.urgency}
-                  onChange={(e) => updateField("urgency", e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
-                >
-                  <option value="">בחרו מועד</option>
-                  {urgencyOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
+        <div className="mx-auto max-w-2xl">
+          {!compact && (
+            <div className="mb-8 text-center">
+              <span className="mb-3 inline-block rounded-full bg-accent/10 px-4 py-1 text-sm font-semibold text-accent">
+                בקשה מהירה — 3 שלבים
+              </span>
+              <h2 className="text-2xl font-bold text-primary sm:text-3xl">
+                מצאו מטפל/ת מתאים/ה תוך שעות
+              </h2>
             </div>
+          )}
 
-            <button type="submit" className="btn-primary mt-6 w-full">
-              שלח בקשה עכשיו
-              <svg className="h-5 w-5 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </button>
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-primary/5 sm:p-8">
+            {!submitted ? (
+              <>
+                <div className="mb-6">
+                  <div className="mb-2 flex justify-between text-xs font-medium text-muted">
+                    <span>שלב {step} מתוך 3</span>
+                    <span>{Math.round(progress)}%</span>
+                  </div>
+                  <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+                    <motion.div
+                      className="h-full rounded-full bg-accent"
+                      initial={false}
+                      animate={{ width: `${progress}%` }}
+                      transition={{ duration: reducedMotion ? 0 : 0.4 }}
+                    />
+                  </div>
+                </div>
 
-            <p className="mt-4 text-center text-xs text-muted">
-              בלחיצה על שליחה, הבקשה תישלח אלינו ב-WhatsApp לטיפול מיידי
-            </p>
-          </form>
-        </MotionReveal>
+                <AnimatePresence mode="wait">
+                  {step === 1 && (
+                    <motion.div
+                      key="step1"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: reducedMotion ? 0 : 0.3 }}
+                    >
+                      <h3 className="mb-4 text-lg font-bold text-primary">במה נוכל לעזור?</h3>
+                      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                        {careOptions.map((option) => (
+                          <button
+                            key={option.id}
+                            type="button"
+                            onClick={() => {
+                              setCareType(option.label);
+                              setStep(2);
+                            }}
+                            className={`rounded-xl border-2 p-4 text-center transition-all hover:border-accent hover:shadow-md ${
+                              careType === option.label
+                                ? "border-accent bg-accent/5"
+                                : "border-slate-200 bg-surface"
+                            }`}
+                          >
+                            <span className="text-2xl">{option.emoji}</span>
+                            <span className="mt-2 block text-xs font-semibold text-primary sm:text-sm">
+                              {option.label}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {step === 2 && (
+                    <motion.div
+                      key="step2"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: reducedMotion ? 0 : 0.3 }}
+                    >
+                      <h3 className="mb-4 text-lg font-bold text-primary">מתי תזדקק למטפל?</h3>
+                      <div className="grid grid-cols-2 gap-3">
+                        {timingOptions.map((option) => (
+                          <button
+                            key={option}
+                            type="button"
+                            onClick={() => {
+                              setTiming(option);
+                              setStep(3);
+                            }}
+                            className={`rounded-xl border-2 px-4 py-4 text-sm font-semibold transition-all hover:border-accent ${
+                              timing === option
+                                ? "border-accent bg-accent/5 text-primary"
+                                : "border-slate-200 bg-surface text-slate-700"
+                            }`}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
+                      {!defaultCareType && (
+                        <button
+                          type="button"
+                          onClick={() => setStep(1)}
+                          className="mt-4 text-sm text-muted hover:text-primary"
+                        >
+                          → חזרה
+                        </button>
+                      )}
+                    </motion.div>
+                  )}
+
+                  {step === 3 && (
+                    <motion.form
+                      key="step3"
+                      onSubmit={handleSubmit}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: reducedMotion ? 0 : 0.3 }}
+                    >
+                      <h3 className="mb-4 text-lg font-bold text-primary">פרטי יצירת קשר</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <label htmlFor="firstName" className="mb-1.5 block text-sm font-medium">
+                            שם פרטי
+                          </label>
+                          <input
+                            id="firstName"
+                            type="text"
+                            required
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="phone" className="mb-1.5 block text-sm font-medium">
+                            מספר טלפון *
+                          </label>
+                          <input
+                            id="phone"
+                            type="tel"
+                            required
+                            dir="ltr"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="050-000-0000"
+                            className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="city" className="mb-1.5 block text-sm font-medium">
+                            עיר
+                          </label>
+                          <input
+                            id="city"
+                            type="text"
+                            required
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20"
+                          />
+                        </div>
+                      </div>
+                      <div className="mt-6 flex gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setStep(2)}
+                          className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-muted"
+                        >
+                          חזרה
+                        </button>
+                        <button type="submit" className="btn-urgent flex-1">
+                          מצא לי מטפל עכשיו ←
+                        </button>
+                      </div>
+                    </motion.form>
+                  )}
+                </AnimatePresence>
+              </>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="py-8 text-center"
+              >
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl text-green-600">
+                  ✓
+                </div>
+                <h3 className="text-xl font-bold text-primary">קיבלנו! נחזור אליך תוך 30 דקות</h3>
+                <p className="mt-2 text-sm text-muted">נפתח גם WhatsApp לטיפול מיידי</p>
+              </motion.div>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );

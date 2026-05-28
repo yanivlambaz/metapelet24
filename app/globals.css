@@ -64,6 +64,10 @@ body {
   @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/10 px-6 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:border-white/50 hover:bg-white/20;
 }
 
+.btn-urgent {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-[#EA580C] px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-[#EA580C]/25 transition-all hover:-translate-y-0.5 hover:bg-[#C2410C] hover:shadow-xl active:translate-y-0;
+}
+
 .card-premium {
   @apply rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-accent/30 hover:shadow-lg hover:shadow-primary/5;
 }
@@ -72,6 +76,74 @@ body {
   background:
     radial-gradient(ellipse 80% 60% at 50% -10%, color-mix(in srgb, var(--accent) 18%, transparent), transparent),
     linear-gradient(160deg, #1b4f8a 0%, #123a66 45%, #0c2847 100%);
+}
+
+.hero-animated {
+  background: linear-gradient(135deg, #1b4f8a 0%, #123a66 40%, #0c2847 70%, #1b4f8a 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 12s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 25s linear infinite;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); }
+  50% { transform: scale(1.05); box-shadow: 0 6px 28px rgba(0, 0, 0, 0.22); }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.floating-bubble {
+  @apply fixed z-40 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-xl transition-transform hover:scale-110;
+}
+
+.floating-bubble-whatsapp {
+  @apply bottom-6 right-4 bg-[#25D366] md:bottom-8 md:right-8;
+}
+
+.floating-bubble-phone {
+  @apply bottom-6 left-4 bg-primary md:bottom-8 md:left-8;
+}
+
+@media (max-width: 768px) {
+  .hero-animated {
+    animation: none;
+    background: linear-gradient(160deg, #1b4f8a 0%, #123a66 45%, #0c2847 100%);
+  }
+
+  .marquee-track {
+    animation-duration: 18s;
+  }
+
+  .animate-pulse-soft {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-animated,
+  .marquee-track,
+  .animate-pulse-soft {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 .gradient-text {

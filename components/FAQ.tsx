@@ -3,51 +3,19 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MotionReveal from "@/components/MotionReveal";
+import { homepageFaqs, type FAQItem } from "@/lib/data/faq";
 
-const faqs = [
-  {
-    question: "מה זה מטפל/ת פרטי/ת ומתי צריך אחד/ת?",
-    answer:
-      "מטפל/ת פרטי/ת הוא/היא איש מקצוע שמספק/ת טיפול אישי וצמוד — בבית, בבית החולים או אחרי ניתוח. מומלץ כשיש צורך בהשגחה רציפה, עזרה בפעולות יומיומיות, ליווי רפואי או כשבני המשפחה אינם יכולים להיות נוכחים.",
-  },
-  {
-    question: "כמה מהר אפשר למצוא מטפל/ת?",
-    answer:
-      "במטפלת 24 אנחנו מתאימים מטפל/ת תוך שעות — ובמצבים דחופים גם באותו היום. לאחר מילוי בקשה קצרה, צוות ההתאמה שלנו יצור איתכם קשר מיד ויציע מטפל/ת מתאים/ה.",
-  },
-  {
-    question: "האם המטפלים הם ישראלים ודוברי עברית?",
-    answer:
-      "כן. כל המטפלים בפלטפורמה שלנו הם ישראלים, דוברי עברית, עם ניסיון מוכח בתחום. אנחנו מוודאים התאמה תרבותית ושפתית מלאה לנוחות המטופל/ת ולמשפחה.",
-  },
-  {
-    question: "מה ההבדל בין מטפל/ת לבית חולים לבין מטפל/ת בבית?",
-    answer:
-      "מטפל/ת לבית חולים מלווה/ה את המטופל/ת במהלך שהותו/ה בבית החולים — השגחה, עזרה בסיסית ותקשורת עם הצוות הרפואי. מטפל/ת בבית מספק/ת טיפול שוטף בבית המטופל/ת — ארוחות, היגיינה, תרופות, ליווי ועוד.",
-  },
-  {
-    question: "האם השירות זמין 24 שעות ביממה?",
-    answer:
-      "בהחלט. מטפלת 24 פועלת סביב השעון — 24/7, כולל לילות, סופי שבוע וחגים. ניתן לבקש מטפל/ת ללילה, לשבועות או לתקופה ארוכה יותר.",
-  },
-  {
-    question: "כמה עולה שירות מטפל/ת פרטי/ת?",
-    answer:
-      "המחיר משתנה לפי סוג הטיפול, משך השהות, מיקום ורמת הדחיפות. לאחר מילוי הבקשה, נספק הצעת מחיר שקופה ומותאמת — ללא התחייבות.",
-  },
-  {
-    question: "האם אפשר להחליף מטפל/ת אם אין התאמה?",
-    answer:
-      "כן, בהחלט. שביעות הרצון שלכם חשובה לנו. אם המטפל/ת אינו/ה מתאים/ה, נחליף/החליף במהירות ללא עלות נוספת.",
-  },
-  {
-    question: "באילו אזורים בארץ אתם פועלים?",
-    answer:
-      "אנחנו פועלים בכל רחבי ישראל — מתל אביב ומרכז, ירושלים, חיפה, באר שבע ועד יישובים קטנים. מלאו את העיר בטופס ונמצא מטפל/ת באזורכם.",
-  },
-];
+type FAQProps = {
+  items?: FAQItem[];
+  title?: string;
+  subtitle?: string;
+};
 
-export default function FAQ() {
+export default function FAQ({
+  items = homepageFaqs,
+  title = "כל מה שצריך לדעת על מטפלים פרטיים",
+  subtitle = "תשובות לשאלות הנפוצות ביותר על שירותי הטיפול שלנו",
+}: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -57,16 +25,12 @@ export default function FAQ() {
           <span className="mb-3 inline-block rounded-full bg-primary/10 px-4 py-1 text-sm font-semibold text-primary">
             שאלות נפוצות
           </span>
-          <h2 className="text-2xl font-bold text-primary sm:text-3xl">
-            כל מה שצריך לדעת על מטפלים פרטיים
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-muted">
-            תשובות לשאלות הנפוצות ביותר על שירותי הטיפול שלנו
-          </p>
+          <h2 className="text-2xl font-bold text-primary sm:text-3xl">{title}</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-muted">{subtitle}</p>
         </MotionReveal>
 
         <div className="mx-auto max-w-3xl space-y-3">
-          {faqs.map((faq, index) => {
+          {items.map((faq, index) => {
             const isOpen = openIndex === index;
 
             return (
