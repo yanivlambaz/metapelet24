@@ -1,6 +1,7 @@
 export const SITE_NAME = "מטפלת 24";
 export const SITE_TAGLINE =
-  "פלטפורמה לאיתור מטפלים פרטיים ישראלים בזמינות מיידית";
+  "פלטפורמה להתאמת מטפלים פרטיים ישראלים בזמינות מיידית";
+export const SITE_URL = "https://www.metapelet24.co.il";
 
 export const PHONE_DISPLAY = "072-394-0350";
 export const PHONE_HREF = "tel:0723940350";

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Heebo } from "next/font/google";
+import JsonLd from "@/components/JsonLd";
+import { PHONE_DISPLAY } from "@/lib/constants";
+import { layoutFaqs } from "@/lib/data/seo-faq";
+import { faqSchema, localBusinessSchema } from "@/lib/schema";
 import "./globals.css";
 
 const heebo = Heebo({
@@ -9,25 +13,21 @@ const heebo = Heebo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://metapelet24.co.il"),
+  metadataBase: new URL("https://www.metapelet24.co.il"),
   title: {
     default: "מטפלת פרטית בזמינות מיידית 24/7 | מטפלת 24",
     template: "%s | מטפלת 24",
   },
   description:
-    "מצא מטפל/ת פרטי/ת ישראלי/ת בזמינות מיידית. התאמה תוך שעות לבית, בית חולים ומצבים דחופים. התקשר עכשיו: 072-394-0350",
+    "מצא מטפל/ת פרטי/ת ישראלי/ת בזמינות מיידית. התאמה תוך שעות לבית, בית חולים ומצבים דחופים. התקשר: 072-394-0350",
   keywords: [
-    "מטפלים פרטיים",
-    "מטפלת לקשיש",
-    "מטפל לבית חולים",
-    "מטפלת לילה",
-    "מטפלים ישראלים",
-    "טיפול בקשישים",
-    "השגחה פרטית",
-    "מטפל אחרי ניתוח",
-    "מטפלים 24/7",
-    "מטפלת 24",
     "מטפלת פרטית",
+    "מטפל פרטי",
+    "מטפלת סיעודית",
+    "מטפל לבית חולים",
+    "מטפלת ללילה",
+    "מטפל ישראלי",
+    "סיעוד פרטי",
   ],
   authors: [{ name: "מטפלת 24" }],
   creator: "מטפלת 24",
@@ -36,19 +36,19 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "he_IL",
-    url: "https://metapelet24.co.il",
+    url: "https://www.metapelet24.co.il",
     siteName: "מטפלת 24",
     title: "מטפלת פרטית בזמינות מיידית 24/7 | מטפלת 24",
     description:
-      "מצא מטפל/ת פרטי/ת ישראלי/ת בזמינות מיידית. התאמה תוך שעות לבית, בית חולים ומצבים דחופים.",
+      "מצא מטפל/ת פרטי/ת ישראלי/ת בזמינות מיידית. התאמה תוך שעות לבית, בית חולים ומצבים דחופים. התקשר: 072-394-0350",
   },
   twitter: {
     card: "summary_large_image",
     title: "מטפלת פרטית בזמינות מיידית 24/7 | מטפלת 24",
-    description: "מטפלים פרטיים ישראלים — זמינות מיידית 24/7.",
+    description: `מטפלים פרטיים ישראלים — זמינות מיידית. התקשר: ${PHONE_DISPLAY}`,
   },
   alternates: {
-    canonical: "https://metapelet24.co.il",
+    canonical: "https://www.metapelet24.co.il",
   },
 };
 
@@ -59,6 +59,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="he" dir="rtl" className={`${heebo.variable} h-full scroll-smooth`}>
+      <head>
+        <JsonLd data={[localBusinessSchema(), faqSchema(layoutFaqs)]} />
+      </head>
       <body className="min-h-full bg-white font-sans text-foreground antialiased">
         {children}
       </body>

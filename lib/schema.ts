@@ -1,65 +1,48 @@
 import {
   PHONE_DISPLAY,
-  PHONE_HREF,
   SITE_NAME,
   SITE_TAGLINE,
-  WHATSAPP_HREF,
+  SITE_URL,
 } from "@/lib/constants";
 import type { FAQItem } from "@/lib/data/faq";
 
-const BASE_URL = "https://metapelet24.co.il";
+export function localBusinessSchema(options?: {
+  city?: string;
+  url?: string;
+}) {
+  const url = options?.url ?? SITE_URL;
 
-export function localBusinessSchema(city?: string) {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: SITE_NAME,
     description: SITE_TAGLINE,
-    url: city ? `${BASE_URL}/${city}` : BASE_URL,
+    url,
     telephone: PHONE_DISPLAY,
-    areaServed: city
-      ? {
-          "@type": "City",
-          name: city,
-        }
-      : {
-          "@type": "Country",
-          name: "Israel",
-        },
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: "00:00",
-      closes: "23:59",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "IL",
+      ...(options?.city ? { addressLocality: options.city } : {}),
     },
+    openingHours: "Mo-Su 00:00-23:59",
     priceRange: "$$",
-    sameAs: [WHATSAPP_HREF],
+    areaServed: options?.city ?? "Israel",
   };
 }
 
-export function medicalOrganizationSchema() {
+export function medicalOrganizationSchema(url = SITE_URL) {
   return {
     "@context": "https://schema.org",
     "@type": "MedicalOrganization",
     name: SITE_NAME,
     description: SITE_TAGLINE,
-    url: BASE_URL,
-    telephone: PHONE_HREF.replace("tel:", ""),
+    url,
+    telephone: PHONE_DISPLAY,
     medicalSpecialty: "HomeHealth",
-    availableService: [
-      "Private Caregiver",
-      "Hospital Caregiver",
-      "Night Caregiver",
-      "Elderly Care",
-    ],
+    areaServed: {
+      "@type": "Country",
+      name: "Israel",
+    },
   };
 }
 
@@ -85,7 +68,7 @@ export function serviceSchema(name: string, description: string, url: string) {
     name,
     description,
     provider: {
-      "@type": "LocalBusiness",
+      "@type": "MedicalOrganization",
       name: SITE_NAME,
       telephone: PHONE_DISPLAY,
     },

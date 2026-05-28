@@ -6,35 +6,28 @@ import LeadForm from "@/components/LeadForm";
 import Services from "@/components/Services";
 import HowItWorks from "@/components/HowItWorks";
 import FAQ from "@/components/FAQ";
-import JsonLd from "@/components/JsonLd";
-import { PHONE_DISPLAY } from "@/lib/constants";
-import { homepageFaqs } from "@/lib/data/faq";
-import { faqSchema, localBusinessSchema, medicalOrganizationSchema } from "@/lib/schema";
+import CityLinksGrid from "@/components/CityLinksGrid";
+import ServiceLinksGrid from "@/components/ServiceLinksGrid";
+import { PHONE_DISPLAY, SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "מטפלת פרטית בזמינות מיידית 24/7 | מטפלת 24",
-  description: `מצא מטפל/ת פרטי/ת ישראלי/ת בזמינות מיידית. התאמה תוך שעות לבית, בית חולים ומצבים דחופים. התקשר עכשיו: ${PHONE_DISPLAY}`,
+  description: `מצא מטפל/ת פרטי/ת ישראלי/ת בזמינות מיידית. התאמה תוך שעות לבית, בית חולים ומצבים דחופים. התקשר: ${PHONE_DISPLAY}`,
   alternates: {
-    canonical: "https://metapelet24.co.il",
+    canonical: SITE_URL,
   },
   openGraph: {
+    type: "website",
     title: "מטפלת פרטית בזמינות מיידית 24/7 | מטפלת 24",
     description: `מצא מטפל/ת פרטי/ת ישראלי/ת בזמינות מיידית. התקשר: ${PHONE_DISPLAY}`,
     locale: "he_IL",
-    url: "https://metapelet24.co.il",
+    url: SITE_URL,
   },
 };
 
 export default function Home() {
   return (
     <SiteShell>
-      <JsonLd
-        data={[
-          localBusinessSchema(),
-          medicalOrganizationSchema(),
-          faqSchema(homepageFaqs),
-        ]}
-      />
       <main>
         <Hero />
         <SocialProof />
@@ -42,6 +35,8 @@ export default function Home() {
         <Services />
         <HowItWorks />
         <FAQ />
+        <CityLinksGrid />
+        <ServiceLinksGrid />
       </main>
     </SiteShell>
   );
