@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import MotionReveal from "@/components/MotionReveal";
 
 const WHY_US_IMAGE =
-  "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=500&q=80";
+  "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=500&q=80";
 
 const benefits = [
   "מטפלים ישראלים דוברי עברית בלבד",
@@ -26,7 +26,7 @@ export default function WhyMetapelet24() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-xl">
               <Image
                 src={WHY_US_IMAGE}
-                alt="מטפלת פרטית מקצועית"
+                alt="מטפלת ישראלית מחייכת בבגדי עבודה"
                 width={500}
                 height={625}
                 loading="lazy"
