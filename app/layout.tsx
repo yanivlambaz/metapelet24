@@ -15,8 +15,13 @@ const heebo = Heebo({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.metapelet24.co.il"),
   title: {
-    default: "מטפלת פרטית בזמינות מיידית 24/7 | מטפלת 24",
+    default: "מטפלת 24 | מטפלת פרטית בזמינות מיידית 24/7",
     template: "%s | מטפלת 24",
+  },
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
   description:
     "מצא מטפל/ת פרטי/ת ישראלי/ת בזמינות מיידית. התאמה תוך שעות לבית, בית חולים ומצבים דחופים. התקשר: 072-394-0350",

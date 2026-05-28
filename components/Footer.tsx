@@ -1,11 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   buildWhatsAppUrl,
   DEFAULT_WHATSAPP_MESSAGE,
   PHONE_DISPLAY,
   PHONE_HREF,
   SITE_NAME,
-  SITE_TAGLINE,
 } from "@/lib/constants";
 import LicenseBanner from "@/components/LicenseBanner";
 import { WhatsAppIcon, PhoneIcon } from "@/components/icons";
@@ -19,14 +19,8 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Column 1 — Logo + description */}
           <div>
-            <div className="mb-4 flex items-center gap-2">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-lg font-bold">
-                24
-              </span>
-              <div>
-                <div className="text-lg font-bold">{SITE_NAME}</div>
-                <div className="text-xs text-blue-200">{SITE_TAGLINE}</div>
-              </div>
+            <div className="mb-4">
+              <Image src="/logo-white.svg" alt="מטפלת 24" width={120} height={40} />
             </div>
             <p className="text-sm leading-relaxed text-blue-100/90">
               פלטפורמה מובילה לאיתור מטפלים פרטיים ישראלים. שירות מקצועי, מהיר ואמין — 24 שעות ביממה.

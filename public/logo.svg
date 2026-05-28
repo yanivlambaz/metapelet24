@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" role="img" aria-label="оифмъ 24">
+  <rect width="200" height="60" rx="10" fill="#1B4F8A"/>
+  <g transform="translate(10, 10)">
+    <path
+      d="M20 34.5 8.2 23.4C4.6 20.1 2.5 16.8 2.5 13.2 2.5 9.1 5.8 5.8 9.9 5.8c2.3 0 4.5 1.1 5.9 2.8 1.4-1.7 3.6-2.8 5.9-2.8 4.1 0 7.4 3.3 7.4 7.4 0 3.6-2.1 6.9-5.7 10.2L20 34.5Z"
+      fill="#FFFFFF"
+    />
+    <rect x="18.2" y="11.5" width="3.6" height="11.2" rx="1.2" fill="#1B4F8A"/>
+    <rect x="14.2" y="15.5" width="11.6" height="3.2" rx="1.2" fill="#1B4F8A"/>
+  </g>
+  <text
+    x="58"
+    y="27"
+    fill="#FFFFFF"
+    font-family="Arial, Heebo, sans-serif"
+    font-size="18"
+    font-weight="700"
+    direction="rtl"
+  >
+    оифмъ<tspan fill="#0EA5E9">24</tspan>
+  </text>
+  <text
+    x="58"
+    y="44"
+    fill="#93C5FD"
+    font-family="Arial, Heebo, sans-serif"
+    font-size="10"
+    font-weight="600"
+    direction="rtl"
+  >
+    жойреъ оййгйъ 24/7
+  </text>
+</svg>

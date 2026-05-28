@@ -1,12 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import {
   buildWhatsAppUrl,
   DEFAULT_WHATSAPP_MESSAGE,
   PHONE_DISPLAY,
   PHONE_HREF,
-  SITE_NAME,
 } from "@/lib/constants";
 import { WhatsAppIcon, PhoneIcon } from "@/components/icons";
 
@@ -27,14 +27,8 @@ export default function Header({ homeHref = "/" }: HeaderProps) {
   return (
     <header className="sticky top-[36px] z-50 border-b border-slate-200/60 bg-white/95 backdrop-blur-md">
       <div className="container-main flex items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <a href={homeHref} className="group flex shrink-0 items-center gap-2">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-lg font-bold text-white shadow-md shadow-primary/25">
-            24
-          </span>
-          <div className="leading-tight">
-            <span className="block text-lg font-bold text-primary">{SITE_NAME}</span>
-            <span className="hidden text-xs font-semibold text-[#DC2626] sm:block">זמינות מיידית</span>
-          </div>
+        <a href={homeHref} className="group flex shrink-0 items-center">
+          <Image src="/logo.svg" alt="מטפלת 24" width={140} height={45} priority />
         </a>
 
         <nav className="hidden items-center gap-6 lg:flex" aria-label="ניווט ראשי">
