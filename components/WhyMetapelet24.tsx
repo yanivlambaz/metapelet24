@@ -5,9 +5,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import MotionReveal from "@/components/MotionReveal";
 
 const WHY_US_IMAGE =
-  "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&q=80";
-const WHY_US_IMAGE_ALT =
-  "מטפלת מקצועית מלווה ומסייעת לאדם מבוגר בטיפול יומיומי";
+  "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=500&q=80";
+const IMAGE_ALT = "מטפלת פרטית מקצועית ומחייכת";
 
 const benefits = [
   "מטפלים ישראלים דוברי עברית בלבד",
@@ -25,14 +24,14 @@ export default function WhyMetapelet24() {
       <div className="container-main">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <MotionReveal className="relative order-2 lg:order-1">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl shadow-primary/15">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-xl">
               <Image
                 src={WHY_US_IMAGE}
-                alt={WHY_US_IMAGE_ALT}
+                alt={IMAGE_ALT}
                 width={500}
                 height={625}
                 loading="lazy"
-                className="h-full w-full object-cover"
+                className="h-full w-full rounded-2xl object-cover"
                 sizes="(max-width: 1024px) 100vw, 500px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F2D6B]/40 to-transparent" />

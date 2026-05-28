@@ -11,9 +11,8 @@ import {
 import { WhatsAppIcon } from "@/components/icons";
 
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&q=80";
-const HERO_IMAGE_ALT =
-  "מטפלת ישראלית מסייעת לקשיש בבית — טיפול אישי וחם";
+  "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&q=80";
+const IMAGE_ALT = "מטפלת פרטית מקצועית ומחייכת";
 
 function FloatingParticles() {
   const reducedMotion = useReducedMotion();
@@ -161,14 +160,14 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative mx-auto w-full max-w-md lg:max-w-none"
           >
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/20 shadow-2xl shadow-black/30 sm:aspect-[5/6]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/20 shadow-xl sm:aspect-[5/6]">
               <Image
                 src={HERO_IMAGE}
-                alt={HERO_IMAGE_ALT}
+                alt={IMAGE_ALT}
                 width={600}
                 height={750}
                 loading="lazy"
-                className="h-full w-full object-cover"
+                className="h-full w-full rounded-2xl object-cover"
                 sizes="(max-width: 1024px) 90vw, 560px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F2D6B]/60 via-transparent to-transparent" />
