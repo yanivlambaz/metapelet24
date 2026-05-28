@@ -14,8 +14,8 @@ const badges = [
   {
     id: "response",
     emoji: "⚡",
-    animated: { end: 47, suffix: " דקות" },
-    subtitle: "זמן תגובה ממוצע",
+    animated: { end: 4, suffix: " שעות" },
+    subtitle: "ממוצע זמן שליחת מטפלת",
     description: "התאמה מהירה תוך שעות",
   },
   {

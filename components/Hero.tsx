@@ -53,21 +53,6 @@ function FloatingParticles() {
   );
 }
 
-function ResponseTimeCounter() {
-  const [minutes, setMinutes] = useState(47);
-  const reducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (reducedMotion) return;
-    const interval = setInterval(() => {
-      setMinutes((m) => Math.max(35, Math.min(55, m + (Math.random() > 0.5 ? 1 : -1))));
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [reducedMotion]);
-
-  return <span className="font-bold text-accent">{minutes} דקות</span>;
-}
-
 export default function Hero() {
   const reducedMotion = useReducedMotion();
 
@@ -107,7 +92,8 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.05 }}
               className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm backdrop-blur-sm"
             >
-              ממוצע זמן תגובה: <ResponseTimeCounter />
+              ממוצע זמן שליחת מטפלת:{" "}
+              <span className="font-bold text-accent">4 שעות</span>
             </motion.div>
 
             <motion.h1
