@@ -5,7 +5,7 @@ export default function LicenseBanner() {
   return (
     <div
       dir="rtl"
-      className="border-y border-amber-200 bg-amber-50 px-4 py-3 text-amber-900"
+      className="relative z-20 mt-4 border-y border-amber-200 bg-amber-50 px-4 py-3 text-amber-900"
       role="note"
       aria-label="הודעה על רישיון השמה"
     >

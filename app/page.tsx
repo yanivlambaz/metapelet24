@@ -33,12 +33,12 @@ export default function Home() {
     <SiteShell>
       <main>
         <Hero />
-        <LicenseBanner />
         <TrustBadges />
-        <SocialProof />
+        <LicenseBanner />
         <LeadForm />
         <Services />
         <HowItWorks />
+        <SocialProof />
         <WhyMetapelet24 />
         <FAQ />
         <CityLinksGrid />

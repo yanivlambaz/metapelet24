@@ -45,7 +45,7 @@ export default function TrustBadges() {
   const reducedMotion = useReducedMotion();
 
   return (
-    <section className="relative z-10 -mt-8 pb-4 sm:-mt-12">
+    <section className="relative z-10 -mt-8 mb-8 sm:-mt-12">
       <div className="container-main">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
           {badges.map((badge, index) => (
