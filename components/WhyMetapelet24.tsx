@@ -4,6 +4,11 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import MotionReveal from "@/components/MotionReveal";
 
+const WHY_US_IMAGE =
+  "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&q=80";
+const WHY_US_IMAGE_ALT =
+  "מטפלת מקצועית מלווה ומסייעת לאדם מבוגר בטיפול יומיומי";
+
 const benefits = [
   "מטפלים ישראלים דוברי עברית בלבד",
   "אימות מקצועי ובדיקת רקע לכל מטפל",
@@ -22,12 +27,13 @@ export default function WhyMetapelet24() {
           <MotionReveal className="relative order-2 lg:order-1">
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl shadow-primary/15">
               <Image
-                src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=500&q=80"
-                alt="מטפל/ת מקצועי/ת עם מטופל/ת"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 500px"
+                src={WHY_US_IMAGE}
+                alt={WHY_US_IMAGE_ALT}
+                width={500}
+                height={625}
                 loading="lazy"
+                className="h-full w-full object-cover"
+                sizes="(max-width: 1024px) 100vw, 500px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F2D6B]/40 to-transparent" />
             </div>
