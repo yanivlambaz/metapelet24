@@ -50,6 +50,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.metapelet24.co.il",
   },
+  verification: {
+    google: "HhAPIiPZ7qoXm5PLroB8_S6UbAB0rTiGxceax4L6GeM",
+  },
 };
 
 export default function RootLayout({
