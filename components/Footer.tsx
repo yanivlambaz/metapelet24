@@ -5,6 +5,7 @@ import {
   DEFAULT_WHATSAPP_MESSAGE,
   PHONE_DISPLAY,
   PHONE_HREF,
+  COMPANY_ADDRESS_DISPLAY,
   SITE_NAME,
 } from "@/lib/constants";
 import LicenseBanner from "@/components/LicenseBanner";
@@ -88,6 +89,12 @@ export default function Footer() {
                 <WhatsAppIcon className="h-5 w-5" />
                 שלח הודעה ב-WhatsApp
               </a>
+              <div className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold">
+                <span className="text-base" aria-hidden="true">
+                  📍
+                </span>
+                <span>{COMPANY_ADDRESS_DISPLAY}</span>
+              </div>
             </div>
           </div>
         </div>

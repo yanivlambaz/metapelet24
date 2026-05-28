@@ -1,10 +1,21 @@
 import {
+  COMPANY_CITY,
+  COMPANY_STREET_ADDRESS,
   PHONE_DISPLAY,
   SITE_NAME,
   SITE_TAGLINE,
   SITE_URL,
 } from "@/lib/constants";
 import type { FAQItem } from "@/lib/data/faq";
+
+export function postalAddressSchema() {
+  return {
+    "@type": "PostalAddress",
+    streetAddress: COMPANY_STREET_ADDRESS,
+    addressLocality: COMPANY_CITY,
+    addressCountry: "IL",
+  };
+}
 
 export function localBusinessSchema(options?: {
   city?: string;
@@ -19,11 +30,7 @@ export function localBusinessSchema(options?: {
     description: SITE_TAGLINE,
     url,
     telephone: PHONE_DISPLAY,
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "IL",
-      ...(options?.city ? { addressLocality: options.city } : {}),
-    },
+    address: postalAddressSchema(),
     openingHours: "Mo-Su 00:00-23:59",
     priceRange: "$$",
     areaServed: options?.city ?? "Israel",
@@ -38,6 +45,7 @@ export function medicalOrganizationSchema(url = SITE_URL) {
     description: SITE_TAGLINE,
     url,
     telephone: PHONE_DISPLAY,
+    address: postalAddressSchema(),
     medicalSpecialty: "HomeHealth",
     areaServed: {
       "@type": "Country",
@@ -71,6 +79,7 @@ export function serviceSchema(name: string, description: string, url: string) {
       "@type": "MedicalOrganization",
       name: SITE_NAME,
       telephone: PHONE_DISPLAY,
+      address: postalAddressSchema(),
     },
     url,
     areaServed: {
