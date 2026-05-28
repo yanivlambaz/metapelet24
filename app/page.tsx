@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SiteShell from "@/components/SiteShell";
 import Hero from "@/components/Hero";
+import LicenseBanner from "@/components/LicenseBanner";
 import TrustBadges from "@/components/TrustBadges";
 import SocialProof from "@/components/SocialProof";
 import LeadForm from "@/components/LeadForm";
@@ -32,6 +33,7 @@ export default function Home() {
     <SiteShell>
       <main>
         <Hero />
+        <LicenseBanner />
         <TrustBadges />
         <SocialProof />
         <LeadForm />

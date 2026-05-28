@@ -27,6 +27,12 @@ const badges = [
     subtitle: "מאומתים ומבוטחים",
     description: "בדיקת רקע מקצועית",
   },
+  {
+    emoji: "🏛️",
+    title: "רישיון ממשרד העבודה",
+    subtitle: "מס' 3203",
+    description: "לשכה פרטית מפוקחת",
+  },
 ];
 
 export default function TrustBadges() {
@@ -35,7 +41,7 @@ export default function TrustBadges() {
   return (
     <section className="relative z-10 -mt-8 pb-4 sm:-mt-12">
       <div className="container-main">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
           {badges.map((badge, index) => (
             <motion.div
               key={badge.subtitle}
