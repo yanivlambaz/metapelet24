@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import MotionReveal from "@/components/MotionReveal";
 
@@ -24,14 +23,14 @@ export default function WhyMetapelet24() {
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <MotionReveal className="relative order-2 lg:order-1">
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-xl">
-              <Image
+              <img
                 src={WHY_US_IMAGE}
                 alt="מטפלת ישראלית מחייכת בבגדי עבודה"
                 width={500}
                 height={625}
                 loading="lazy"
+                decoding="async"
                 className="h-full w-full rounded-2xl object-cover"
-                sizes="(max-width: 1024px) 100vw, 500px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F2D6B]/40 to-transparent" />
             </div>

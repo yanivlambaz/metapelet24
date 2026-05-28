@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   buildWhatsAppUrl,
@@ -156,14 +155,14 @@ export default function Hero() {
             className="relative mx-auto w-full max-w-md lg:max-w-none"
           >
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/20 shadow-xl sm:aspect-[5/6]">
-              <Image
+              <img
                 src={HERO_IMAGE}
                 alt="מטפלת פרטית מקצועית ומחייכת"
                 width={600}
                 height={750}
                 loading="lazy"
+                decoding="async"
                 className="h-full w-full rounded-2xl object-cover"
-                sizes="(max-width: 1024px) 90vw, 560px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F2D6B]/60 via-transparent to-transparent" />
             </div>

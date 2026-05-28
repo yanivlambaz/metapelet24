@@ -38,9 +38,7 @@ export default function Logo({ variant = "default", className = "" }: LogoProps)
         fontWeight="700"
         direction="rtl"
       >
-        מטפלת
-        {!isWhite && <tspan fill="#0EA5E9">24</tspan>}
-        {isWhite && <tspan>24</tspan>}
+        מטפלת<tspan fill={isWhite ? "#FFFFFF" : "#0EA5E9"}>24</tspan>
       </text>
       <text
         x="58"
