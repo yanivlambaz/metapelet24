@@ -4,6 +4,7 @@
   --background: #ffffff;
   --foreground: #0f172a;
   --primary: #1b4f8a;
+  --navy: #0f2d6b;
   --accent: #0ea5e9;
   --surface: #f8fafc;
   --muted: #64748b;
@@ -13,6 +14,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-navy: var(--navy);
   --color-accent: var(--accent);
   --color-surface: var(--surface);
   --color-muted: var(--muted);
@@ -69,7 +71,28 @@ body {
 }
 
 .card-premium {
-  @apply rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-accent/30 hover:shadow-lg hover:shadow-primary/5;
+  @apply rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-lg hover:shadow-primary/5;
+}
+
+.service-card {
+  @apply rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300;
+}
+
+.service-card:hover {
+  @apply -translate-y-2 border-accent/40 shadow-xl shadow-primary/10;
+}
+
+.icon-gradient {
+  background: linear-gradient(135deg, #1b4f8a 0%, #0ea5e9 100%);
+}
+
+.hero-premium {
+  background: linear-gradient(
+    135deg,
+    #0f2d6b 0%,
+    #1b4f8a 45%,
+    #0ea5e9 100%
+  );
 }
 
 .gradient-hero {
@@ -120,9 +143,9 @@ body {
 }
 
 @media (max-width: 768px) {
+  .hero-premium,
   .hero-animated {
     animation: none;
-    background: linear-gradient(160deg, #1b4f8a 0%, #123a66 45%, #0c2847 100%);
   }
 
   .marquee-track {
@@ -135,6 +158,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-premium,
   .hero-animated,
   .marquee-track,
   .animate-pulse-soft {

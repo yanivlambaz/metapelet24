@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import SiteShell from "@/components/SiteShell";
 import Hero from "@/components/Hero";
+import TrustBadges from "@/components/TrustBadges";
 import SocialProof from "@/components/SocialProof";
 import LeadForm from "@/components/LeadForm";
 import Services from "@/components/Services";
 import HowItWorks from "@/components/HowItWorks";
+import WhyMetapelet24 from "@/components/WhyMetapelet24";
 import FAQ from "@/components/FAQ";
 import CityLinksGrid from "@/components/CityLinksGrid";
 import ServiceLinksGrid from "@/components/ServiceLinksGrid";
@@ -30,10 +32,12 @@ export default function Home() {
     <SiteShell>
       <main>
         <Hero />
+        <TrustBadges />
         <SocialProof />
         <LeadForm />
         <Services />
         <HowItWorks />
+        <WhyMetapelet24 />
         <FAQ />
         <CityLinksGrid />
         <ServiceLinksGrid />
