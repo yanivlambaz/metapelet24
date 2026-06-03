@@ -3,8 +3,8 @@ export const SITE_TAGLINE =
   "פלטפורמה להתאמת מטפלים פרטיים ישראלים בזמינות מיידית";
 export const SITE_URL = "https://www.metapelet24.co.il";
 
-export const PHONE_DISPLAY = "072-394-0350";
-export const PHONE_HREF = "tel:0723940350";
+export const PHONE_DISPLAY = "072-393-9494";
+export const PHONE_HREF = "tel:0723939494";
 export const COMPANY_STREET_ADDRESS = "מצדה 9";
 export const COMPANY_CITY = "בני ברק";
 export const COMPANY_ADDRESS_DISPLAY = "מצדה 9, בני ברק";
