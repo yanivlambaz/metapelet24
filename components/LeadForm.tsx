@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { buildWhatsAppUrl } from "@/lib/constants";
+import { submitLead } from "@/lib/leads/submit-lead";
 import LiveIndicator from "@/components/LiveIndicator";
 
 const careOptions = [
@@ -35,6 +36,9 @@ export default function LeadForm({
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState(defaultCity);
   const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<{ state: "idle" | "loading" | "error"; message?: string }>({
+    state: "idle",
+  });
   const reducedMotion = useReducedMotion();
 
   function buildMessage() {
@@ -50,10 +54,44 @@ export default function LeadForm({
       .join("\n");
   }
 
-  function handleSubmit(e: FormEvent) {
+  function getFormType() {
+    if (defaultCareType) return "service";
+    if (defaultCity) return "city";
+    return "homepage";
+  }
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
-    window.open(buildWhatsAppUrl(buildMessage()), "_blank", "noopener,noreferrer");
+
+    if (status.state === "loading") return;
+
+    if (!firstName.trim() || !phone.trim() || !city.trim()) {
+      setStatus({ state: "error", message: "נא למלא שם, טלפון ועיר" });
+      return;
+    }
+
+    const message = buildMessage();
+    setStatus({ state: "loading" });
+
+    try {
+      await submitLead({
+        name: firstName,
+        phone,
+        city,
+        message,
+        formType: getFormType(),
+      });
+      setSubmitted(true);
+      window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
+    } catch (error) {
+      setStatus({
+        state: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "שליחת הפרטים נכשלה. נסו שוב בעוד רגע.",
+      });
+    }
   }
 
   const progress = (step / 3) * 100;
@@ -230,10 +268,19 @@ export default function LeadForm({
                         >
                           חזרה
                         </button>
-                        <button type="submit" className="btn-urgent flex-1">
-                          מצא לי מטפל עכשיו ←
+                        <button
+                          type="submit"
+                          disabled={status.state === "loading"}
+                          className="btn-urgent flex-1 disabled:cursor-not-allowed disabled:opacity-70"
+                        >
+                          {status.state === "loading" ? "שולח..." : "מצא לי מטפל עכשיו ←"}
                         </button>
                       </div>
+                      {status.state === "error" && (
+                        <p className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-center text-xs font-semibold text-red-700">
+                          {status.message}
+                        </p>
+                      )}
                       <p className="mt-3 text-center text-xs leading-relaxed text-muted">
                         שליחת הטופס מהווה אישור לכך שקראתי את{" "}
                         <Link

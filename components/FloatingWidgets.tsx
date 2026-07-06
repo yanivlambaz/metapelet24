@@ -4,24 +4,48 @@ import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useReducedMotion } from "framer-motion";
 import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF } from "@/lib/constants";
+import { submitLead } from "@/lib/leads/submit-lead";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
 
 function ExitIntentForm({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [done, setDone] = useState(false);
+  const [status, setStatus] = useState<{ state: "idle" | "loading" | "error"; message?: string }>({
+    state: "idle",
+  });
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    window.open(
-      buildWhatsAppUrl(
-        `שלום, התקבלה פנייה חדשה מאתר מטפלת 24.\nשם: ${name}\nטלפון: ${phone}`
-      ),
-      "_blank",
-      "noopener,noreferrer"
-    );
-    setDone(true);
-    setTimeout(onClose, 2000);
+    if (status.state === "loading") return;
+
+    if (!name.trim() || !phone.trim()) {
+      setStatus({ state: "error", message: "נא למלא שם וטלפון" });
+      return;
+    }
+
+    const message = `שלום, התקבלה פנייה חדשה מאתר מטפלת 24.\nשם: ${name}\nטלפון: ${phone}`;
+    setStatus({ state: "loading" });
+
+    try {
+      await submitLead({
+        name,
+        phone,
+        message,
+        formType: "popup",
+      });
+      window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
+      setDone(true);
+      setTimeout(onClose, 2000);
+    } catch (error) {
+      setStatus({
+        state: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "שליחת הפרטים נכשלה. נסו שוב בעוד רגע.",
+      });
+    }
   }
 
   return (
@@ -57,9 +81,18 @@ function ExitIntentForm({ onClose }: { onClose: () => void }) {
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-accent"
               />
-              <button type="submit" className="btn-urgent w-full">
-                שלח — נחזור אליך מהר
+              <button
+                type="submit"
+                disabled={status.state === "loading"}
+                className="btn-urgent w-full disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {status.state === "loading" ? "שולח..." : "שלח — נחזור אליך מהר"}
               </button>
+              {status.state === "error" && (
+                <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-center text-xs font-semibold text-red-700">
+                  {status.message}
+                </p>
+              )}
               <p className="text-center text-xs leading-relaxed text-muted">
                 שליחת הטופס מהווה אישור לכך שקראתי את{" "}
                 <Link
