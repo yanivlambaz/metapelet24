@@ -22,10 +22,23 @@ export async function submitLead(lead: LeadSubmission): Promise<SubmitLeadResult
       (typeof window !== "undefined" ? window.location.href : ""),
   };
 
+  console.info("[leads] API request started", {
+    formType: payload.formType,
+    hasCity: Boolean(payload.city),
+    hasEmail: Boolean(payload.email),
+    hasMessage: Boolean(payload.message),
+  });
+
   const response = await fetch("/api/leads", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
+  });
+
+  console.info("[leads] API response status", {
+    formType: payload.formType,
+    status: response.status,
+    ok: response.ok,
   });
 
   const data = (await response.json().catch(() => null)) as {

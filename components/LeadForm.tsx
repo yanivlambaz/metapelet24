@@ -62,6 +62,12 @@ export default function LeadForm({
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    const formType = getFormType();
+
+    console.info("[leads] form submission started", {
+      formType,
+      step,
+    });
 
     if (status.state === "loading") return;
 
@@ -79,7 +85,7 @@ export default function LeadForm({
         phone,
         city,
         message,
-        formType: getFormType(),
+        formType,
       });
       setSubmitted(true);
       window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");

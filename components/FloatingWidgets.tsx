@@ -17,6 +17,10 @@ function ExitIntentForm({ onClose }: { onClose: () => void }) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    console.info("[leads] form submission started", {
+      formType: "popup",
+    });
+
     if (status.state === "loading") return;
 
     if (!name.trim() || !phone.trim()) {

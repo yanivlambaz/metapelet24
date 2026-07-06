@@ -42,6 +42,13 @@ export async function POST(request: Request) {
   const formType = normalizeString(data.formType) || "unknown";
   const page = normalizeString(data.page) || request.headers.get("referer") || "";
 
+  console.info("[leads] /api/leads request received", {
+    formType,
+    hasCity: Boolean(city),
+    hasEmail: Boolean(email),
+    hasMessage: Boolean(message),
+  });
+
   if (name.length < 2) {
     return NextResponse.json(
       { ok: false, error: "נא להזין שם תקין" },
@@ -88,10 +95,23 @@ export async function POST(request: Request) {
   };
 
   try {
+    console.info("[leads] webhook request attempted", {
+      formType,
+      source: SOURCE,
+      sourceDisplayName: SOURCE_DISPLAY_NAME,
+      website: WEBSITE,
+    });
+
     const response = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(crmPayload),
+    });
+
+    console.info("[leads] webhook response status", {
+      formType,
+      status: response.status,
+      ok: response.ok,
     });
 
     if (!response.ok) {
