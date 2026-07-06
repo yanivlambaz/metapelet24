@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 const SOURCE = "metapelet24";
 const SOURCE_DISPLAY_NAME = "אתר מטפלת";
 const WEBSITE = "metapelet24";
+const WEBHOOK_CONFIG_ERROR_MESSAGE = "המערכת אינה זמינה כרגע. נסו שוב בעוד רגע.";
+const WEBHOOK_SUBMISSION_ERROR_MESSAGE = "שליחת הפרטים נכשלה. נסו שוב בעוד רגע.";
 
 function normalizeString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -70,12 +72,46 @@ export async function POST(request: Request) {
     );
   }
 
-  const webhookUrl = process.env.GHL_LEAD_WEBHOOK;
+  const webhookUrl = normalizeString(process.env.GHL_LEAD_WEBHOOK);
 
   if (!webhookUrl) {
-    console.error("[leads] Missing GHL_LEAD_WEBHOOK configuration");
+    console.error("[leads] GHL_LEAD_WEBHOOK missing");
     return NextResponse.json(
-      { ok: false, error: "המערכת אינה זמינה כרגע. נסו שוב בעוד רגע." },
+      {
+        ok: false,
+        error: WEBHOOK_CONFIG_ERROR_MESSAGE,
+        code: "WEBHOOK_CONFIG_MISSING",
+      },
+      { status: 500 }
+    );
+  }
+
+  console.info("[leads] GHL_LEAD_WEBHOOK present");
+
+  let webhookEndpoint: URL;
+
+  try {
+    webhookEndpoint = new URL(webhookUrl);
+  } catch {
+    console.error("[leads] GHL_LEAD_WEBHOOK invalid URL");
+    return NextResponse.json(
+      {
+        ok: false,
+        error: WEBHOOK_CONFIG_ERROR_MESSAGE,
+        code: "WEBHOOK_CONFIG_INVALID",
+      },
+      { status: 500 }
+    );
+  }
+
+  if (!["http:", "https:"].includes(webhookEndpoint.protocol)) {
+    console.error("[leads] GHL_LEAD_WEBHOOK invalid URL");
+    return NextResponse.json(
+      {
+        ok: false,
+        error: WEBHOOK_CONFIG_ERROR_MESSAGE,
+        code: "WEBHOOK_CONFIG_INVALID",
+      },
       { status: 500 }
     );
   }
@@ -102,7 +138,7 @@ export async function POST(request: Request) {
       website: WEBSITE,
     });
 
-    const response = await fetch(webhookUrl, {
+    const response = await fetch(webhookEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(crmPayload),
@@ -115,23 +151,31 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      console.error("[leads] CRM webhook failed", {
+      console.error("[leads] webhook upstream error", {
         status: response.status,
         statusText: response.statusText,
       });
       return NextResponse.json(
-        { ok: false, error: "שליחת הפרטים נכשלה. נסו שוב בעוד רגע." },
+        {
+          ok: false,
+          error: WEBHOOK_SUBMISSION_ERROR_MESSAGE,
+          code: "WEBHOOK_UPSTREAM_ERROR",
+        },
         { status: 502 }
       );
     }
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (error) {
-    console.error("[leads] CRM webhook request error", {
-      message: error instanceof Error ? error.message : "Unknown error",
+    console.error("[leads] webhook network exception", {
+      name: error instanceof Error ? error.name : "UnknownError",
     });
     return NextResponse.json(
-      { ok: false, error: "שליחת הפרטים נכשלה. נסו שוב בעוד רגע." },
+      {
+        ok: false,
+        error: WEBHOOK_SUBMISSION_ERROR_MESSAGE,
+        code: "WEBHOOK_NETWORK_ERROR",
+      },
       { status: 502 }
     );
   }
