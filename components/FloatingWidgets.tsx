@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import Link from "next/link";
 import { useReducedMotion } from "framer-motion";
 import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF } from "@/lib/constants";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
@@ -59,6 +60,16 @@ function ExitIntentForm({ onClose }: { onClose: () => void }) {
               <button type="submit" className="btn-urgent w-full">
                 שלח — נחזור אליך מהר
               </button>
+              <p className="text-center text-xs leading-relaxed text-muted">
+                שליחת הטופס מהווה אישור לכך שקראתי את{" "}
+                <Link
+                  href="/privacy-policy"
+                  className="font-semibold text-primary underline decoration-primary/40 underline-offset-2 hover:text-accent"
+                >
+                  מדיניות הפרטיות
+                </Link>{" "}
+                ואני מסכים/ה לשימוש במידע בהתאם לאמור בה.
+              </p>
             </form>
           </>
         ) : (

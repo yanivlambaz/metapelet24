@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Heebo } from "next/font/google";
 import JsonLd from "@/components/JsonLd";
+import CookieConsent from "@/components/CookieConsent";
 import { PHONE_DISPLAY } from "@/lib/constants";
 import { layoutFaqs } from "@/lib/data/seo-faq";
 import { faqSchema, localBusinessSchema } from "@/lib/schema";
@@ -76,11 +77,23 @@ export default function RootLayout({
           id="gtm-script"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            __html: `(function(w,d){
+w.dataLayer=w.dataLayer||[];
+function gtag(){w.dataLayer.push(arguments);}
+gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});
+try{
+  var c=JSON.parse(w.localStorage.getItem('metapelet24-cookie-consent'));
+  if(c&&c.version===1&&c.preferences){
+    var m=c.preferences.marketing?'granted':'denied';
+    gtag('consent','update',{analytics_storage:c.preferences.analytics?'granted':'denied',ad_storage:m,ad_user_data:m,ad_personalization:m});
+  }
+}catch(e){}
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KNNXBD26');`,
+})(w,d,'script','dataLayer','GTM-KNNXBD26');
+})(window,document);`,
           }}
         />
       </head>
@@ -94,6 +107,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

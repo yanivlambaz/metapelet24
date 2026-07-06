@@ -27,6 +27,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -35,6 +36,7 @@ body {
   font-family: var(--font-heebo), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -204,4 +206,25 @@ body {
 
 .gradient-text {
   @apply bg-gradient-to-l from-accent to-white bg-clip-text text-transparent;
+}
+
+/* Legal pages typography */
+.legal-content h2 {
+  @apply mt-10 text-xl font-bold text-primary sm:text-2xl;
+}
+
+.legal-content h3 {
+  @apply mt-6 text-base font-bold text-slate-800 sm:text-lg;
+}
+
+.legal-content p {
+  @apply mt-3 text-sm leading-relaxed text-slate-700 sm:text-base;
+}
+
+.legal-content ul {
+  @apply mt-3 list-disc space-y-1.5 pr-6 text-sm leading-relaxed text-slate-700 sm:text-base;
+}
+
+.legal-content a {
+  @apply font-semibold text-primary underline decoration-primary/40 underline-offset-2 transition-colors hover:text-accent;
 }

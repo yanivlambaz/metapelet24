@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { buildWhatsAppUrl } from "@/lib/constants";
 import LiveIndicator from "@/components/LiveIndicator";
@@ -233,6 +234,16 @@ export default function LeadForm({
                           מצא לי מטפל עכשיו ←
                         </button>
                       </div>
+                      <p className="mt-3 text-center text-xs leading-relaxed text-muted">
+                        שליחת הטופס מהווה אישור לכך שקראתי את{" "}
+                        <Link
+                          href="/privacy-policy"
+                          className="font-semibold text-primary underline decoration-primary/40 underline-offset-2 hover:text-accent"
+                        >
+                          מדיניות הפרטיות
+                        </Link>{" "}
+                        ואני מסכים/ה לשימוש במידע בהתאם לאמור בה.
+                      </p>
                     </motion.form>
                   )}
                 </AnimatePresence>

@@ -9,6 +9,7 @@ import {
   SITE_NAME,
 } from "@/lib/constants";
 import LicenseBanner from "@/components/LicenseBanner";
+import CookiePreferencesButton from "@/components/CookiePreferencesButton";
 import { WhatsAppIcon, PhoneIcon } from "@/components/icons";
 import { cities } from "@/lib/data/cities";
 import { services } from "@/lib/data/services";
@@ -101,7 +102,23 @@ export default function Footer() {
 
         <LicenseBanner />
 
-        <div id="accessibility" className="mt-6 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-blue-200 sm:flex-row">
+        <nav
+          aria-label="קישורים משפטיים"
+          className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-white/10 pt-6 text-xs text-blue-200"
+        >
+          <Link href="/privacy-policy" className="transition-colors hover:text-accent">
+            מדיניות פרטיות
+          </Link>
+          <Link href="/terms" className="transition-colors hover:text-accent">
+            תנאי שימוש
+          </Link>
+          <Link href="/accessibility" className="transition-colors hover:text-accent">
+            הצהרת נגישות
+          </Link>
+          <CookiePreferencesButton className="cursor-pointer transition-colors hover:text-accent" />
+        </nav>
+
+        <div id="accessibility" className="mt-4 flex flex-col items-center justify-between gap-3 text-xs text-blue-200 sm:flex-row">
           <p>© {new Date().getFullYear()} {SITE_NAME}. כל הזכויות שמורות.</p>
           <p>אתר זה מותאם לגלישה נגישה · RTL · עברית</p>
         </div>
