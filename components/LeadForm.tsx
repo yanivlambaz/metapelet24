@@ -1,9 +1,8 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF, WHATSAPP_HREF } from "@/lib/constants";
-import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
+import { buildWhatsAppUrl } from "@/lib/constants";
 import LiveIndicator from "@/components/LiveIndicator";
 
 const careOptions = [
@@ -39,11 +38,11 @@ export default function LeadForm({
 
   function buildMessage() {
     return [
-      "שלום, אני מעוניין/ת במטפל/ת פרטי/ת.",
-      careType ? `סוג טיפול: ${careType}` : "",
-      timing ? `מתי נדרש: ${timing}` : "",
+      "שלום, התקבלה פנייה חדשה מאתר מטפלת 24.",
       firstName ? `שם: ${firstName}` : "",
       phone ? `טלפון: ${phone}` : "",
+      careType ? `שירות מבוקש: ${careType}` : "",
+      timing ? `מתי נדרש: ${timing}` : "",
       city ? `עיר: ${city}` : "",
     ]
       .filter(Boolean)

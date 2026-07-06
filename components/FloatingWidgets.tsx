@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF, WHATSAPP_HREF } from "@/lib/constants";
+import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF } from "@/lib/constants";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
 
 function ExitIntentForm({ onClose }: { onClose: () => void }) {
@@ -13,7 +13,9 @@ function ExitIntentForm({ onClose }: { onClose: () => void }) {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     window.open(
-      buildWhatsAppUrl(`שלום, השארתי פרטים באתר.\nשם: ${name}\nטלפון: ${phone}`),
+      buildWhatsAppUrl(
+        `שלום, התקבלה פנייה חדשה מאתר מטפלת 24.\nשם: ${name}\nטלפון: ${phone}`
+      ),
       "_blank",
       "noopener,noreferrer"
     );
@@ -87,7 +89,7 @@ export default function FloatingWidgets() {
   return (
     <>
       <a
-        href={`${WHATSAPP_HREF}?text=${encodeURIComponent(DEFAULT_WHATSAPP_MESSAGE)}`}
+        href={buildWhatsAppUrl(DEFAULT_WHATSAPP_MESSAGE)}
         target="_blank"
         rel="noopener noreferrer"
         className={`floating-bubble floating-bubble-whatsapp relative max-md:bottom-20 ${
