@@ -3,8 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import MotionReveal from "@/components/MotionReveal";
 
-const WHY_US_IMAGE =
-  "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=500&q=80";
+const WHY_US_IMAGE = "/why-us-caregiver.png";
 
 const benefits = [
   "מטפלים ישראלים דוברי עברית בלבד",

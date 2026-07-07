@@ -12,7 +12,7 @@ import LiveIndicator from "@/components/LiveIndicator";
 import PulsingDot from "@/components/PulsingDot";
 
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&q=80";
+  "/hero-caregiver.png";
 
 function FloatingParticles() {
   const reducedMotion = useReducedMotion();
