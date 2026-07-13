@@ -1,5 +1,7 @@
-const LICENSE_URL =
+export const LICENSE_URL =
   "https://www.gov.il/he/Departments/DynamicCollectors/private-chambers?skip=0&companyname=%D7%A1%D7%A7%D7%90%D7%99%20%D7%A4%D7%99%D7%A4%D7%9C";
+
+export const LICENSE_NUMBER = "3203";
 
 export default function LicenseBanner() {
   return (

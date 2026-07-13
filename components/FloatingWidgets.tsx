@@ -7,7 +7,13 @@ import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF } from "@/lib/co
 import { submitLead } from "@/lib/leads/submit-lead";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
 
-function ExitIntentForm({ onClose }: { onClose: () => void }) {
+function ExitIntentForm({
+  onClose,
+  formType = "popup",
+}: {
+  onClose: () => void;
+  formType?: string;
+}) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [done, setDone] = useState(false);
@@ -18,7 +24,7 @@ function ExitIntentForm({ onClose }: { onClose: () => void }) {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     console.info("[leads] form submission started", {
-      formType: "popup",
+      formType,
     });
 
     if (status.state === "loading") return;
@@ -36,7 +42,7 @@ function ExitIntentForm({ onClose }: { onClose: () => void }) {
         name,
         phone,
         message,
-        formType: "popup",
+        formType,
       });
       window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
       setDone(true);
@@ -117,7 +123,11 @@ function ExitIntentForm({ onClose }: { onClose: () => void }) {
   );
 }
 
-export default function FloatingWidgets() {
+export default function FloatingWidgets({
+  popupFormType = "popup",
+}: {
+  popupFormType?: string;
+} = {}) {
   const [showExit, setShowExit] = useState(false);
   const [exitDismissed, setExitDismissed] = useState(false);
   const reducedMotion = useReducedMotion();
@@ -157,7 +167,9 @@ export default function FloatingWidgets() {
       >
         <PhoneIcon className="h-6 w-6" />
       </a>
-      {showExit && !exitDismissed && <ExitIntentForm onClose={closeExit} />}
+      {showExit && !exitDismissed && (
+        <ExitIntentForm onClose={closeExit} formType={popupFormType} />
+      )}
     </>
   );
 }
