@@ -113,7 +113,7 @@ export default function LandingPage() {
               מטפל/ת ישראלי/ת בביתכם — בתוך עד 5 שעות
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-base font-semibold leading-relaxed text-white sm:text-lg">
-              מענה אנושי מיידי — בלי מוקד אוטומטי, בלי המתנה.
+              מענה אנושי מיידי • מטפלים ומטפלות ישראלים • הגעה עד 5 שעות לבית החולים או לבית הלקוח
             </p>
             <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-blue-100 sm:text-base">
               חברה בעלת רישיון ומפוקחת על ידי משרד העבודה, בפריסה ארצית.

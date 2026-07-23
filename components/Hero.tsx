@@ -58,8 +58,8 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.12 }}
               className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-blue-100 sm:text-lg lg:mx-0"
             >
-              מטפלים ומטפלות ישראלים בפריסה ארצית. מענה אנושי מיידי — בלי מוקד
-              אוטומטי, בלי המתנה.
+              מענה אנושי מיידי • מטפלים ומטפלות ישראלים • הגעה עד 5 שעות לבית
+              החולים או לבית הלקוח
             </motion.p>
 
             {/* CTA — call first */}
@@ -125,18 +125,26 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative mx-auto mt-8 w-full max-w-xs lg:mt-0 lg:max-w-none"
           >
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/20 shadow-xl lg:aspect-[5/6]">
-              <img
-                src={HERO_IMAGE}
-                alt="מטפלת פרטית מקצועית ומחייכת"
-                width={600}
-                height={750}
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
-                className="h-full w-full rounded-2xl object-cover object-top lg:object-center"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0F2D6B]/60 via-transparent to-transparent" />
+            {/* Mobile: dedicated crop (faces + hands). Desktop: full portrait. */}
+            <div className="relative aspect-[8/7] overflow-hidden rounded-2xl border border-white/20 shadow-xl lg:aspect-[5/6]">
+              <picture>
+                <source
+                  media="(max-width: 1023px)"
+                  srcSet="/hero-caregiver-mobile.jpg"
+                  type="image/jpeg"
+                />
+                <img
+                  src={HERO_IMAGE}
+                  alt="מטפלת ישראלית מחזיקה ידיים של קשיש ומחייכת אליו"
+                  width={600}
+                  height={750}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="h-full w-full rounded-2xl object-cover object-center"
+                />
+              </picture>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0F2D6B]/25 via-transparent to-transparent lg:from-[#0F2D6B]/60" />
             </div>
             <div className="absolute -bottom-4 -right-4 hidden rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md lg:block">
               <p className="text-sm font-bold">✓ מטפלים מאומתים</p>
