@@ -115,8 +115,11 @@ export default function LeadForm({
                 בקשה מהירה — 3 שלבים
               </span>
               <h2 className="text-2xl font-bold text-primary sm:text-3xl">
-                מצאו מטפל/ת מתאים/ה תוך שעות
+                מעדיפים שנחזור אליכם? השאירו פרטים
               </h2>
+              <p className="mx-auto mt-2 max-w-md text-sm text-muted">
+                לשירות המהיר ביותר — התקשרו. בדחיפות מגיעים עד 5 שעות.
+              </p>
             </div>
           )}
 

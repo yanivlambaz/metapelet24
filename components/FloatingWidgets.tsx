@@ -71,9 +71,20 @@ function ExitIntentForm({
         </button>
         {!done ? (
           <>
-            <h3 className="text-xl font-bold text-primary">רגע לפני שאתה עוזב...</h3>
-            <p className="mt-2 text-sm text-muted">השאר פרטים ונחזור אליך תוך 30 דקות</p>
-            <form onSubmit={handleSubmit} className="mt-5 space-y-3">
+            <h3 className="text-xl font-bold text-primary">רוצים לדבר עכשיו?</h3>
+            <p className="mt-2 text-sm text-muted">
+              מענה אנושי מיידי — בלי מוקד אוטומטי. הדרך המהירה ביותר היא טלפון.
+            </p>
+            <a href={PHONE_HREF} className="btn-urgent mt-4 w-full">
+              <PhoneIcon className="h-5 w-5" />
+              התקשרו עכשיו
+            </a>
+            <div className="my-4 flex items-center gap-3 text-xs text-muted">
+              <span className="h-px flex-1 bg-slate-200" />
+              או השאירו פרטים ונחזור אליכם
+              <span className="h-px flex-1 bg-slate-200" />
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-3">
               <input
                 type="text"
                 required
@@ -146,11 +157,12 @@ export default function FloatingWidgets({
 
   return (
     <>
+      {/* Desktop-only floating bubbles. On mobile the sticky bar carries Call + WhatsApp. */}
       <a
         href={buildWhatsAppUrl(DEFAULT_WHATSAPP_MESSAGE)}
         target="_blank"
         rel="noopener noreferrer"
-        className={`floating-bubble floating-bubble-whatsapp relative max-md:bottom-20 ${
+        className={`floating-bubble floating-bubble-whatsapp relative hidden md:flex ${
           reducedMotion ? "" : "animate-whatsapp-pulse"
         }`}
         aria-label="WhatsApp"
@@ -162,7 +174,7 @@ export default function FloatingWidgets({
       </a>
       <a
         href={PHONE_HREF}
-        className="floating-bubble floating-bubble-phone max-md:bottom-20"
+        className="floating-bubble floating-bubble-phone hidden md:flex"
         aria-label="התקשר"
       >
         <PhoneIcon className="h-6 w-6" />

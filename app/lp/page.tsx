@@ -110,13 +110,13 @@ export default function LandingPage() {
         <section className="gradient-hero px-4 py-12 text-white sm:px-6 sm:py-16">
           <div className="container-main mx-auto max-w-2xl text-center">
             <h1 className="text-3xl font-extrabold leading-tight sm:text-4xl lg:text-[2.75rem]">
-              מטפל/ת סיעודי/ת כשצריך — גם בתוך 5 שעות
+              מטפל/ת ישראלי/ת בביתכם — בתוך עד 5 שעות
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-base font-semibold leading-relaxed text-white sm:text-lg">
-              שירות מהיר ואישי למציאת מטפל/ת מתאים/ה בכל רחבי הארץ
+              מענה אנושי מיידי — בלי מוקד אוטומטי, בלי המתנה.
             </p>
             <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-blue-100 sm:text-base">
-              במקרים דחופים ניתן לקבל מטפל/ת בבית בתוך עד 5 שעות
+              חברה בעלת רישיון ומפוקחת על ידי משרד העבודה, בפריסה ארצית.
             </p>
             <LpCtaButtons className="mt-7" />
             <div className="mt-6">

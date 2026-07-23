@@ -2,25 +2,27 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import MotionReveal from "@/components/MotionReveal";
+import { PHONE_HREF } from "@/lib/constants";
+import { PhoneIcon } from "@/components/icons";
 
 const steps = [
   {
     number: "1",
-    icon: "📝",
-    title: "ממלאים בקשה קצרה",
-    description: "משאירים פרטים בסיסיים — שם, טלפון, עיר וסוג הטיפול. לוקח פחות מדקה.",
+    icon: "📞",
+    title: "מתקשרים אלינו",
+    description: "עונה לכם רכז/ת אנושי/ת — בלי מוקד אוטומטי. מספרים בקצרה מה צריך.",
   },
   {
     number: "2",
     icon: "🔍",
-    title: "מתאימים מטפל במהירות",
+    title: "מתאימים מטפל/ת במהירות",
     description: "צוות ההתאמה בוחר מטפל/ת ישראלי/ת מתאים/ה לפי הצרכים והדחיפות.",
   },
   {
     number: "3",
     icon: "✅",
-    title: "מתחילים טיפול תוך שעות",
-    description: "המטפל/ת מגיע/ה אליכם — לבית, לבית החולים או לכל מקום. 24/7.",
+    title: "מטפל/ת מגיע/ה — עד 5 שעות",
+    description: "בדחיפות המטפל/ת מגיע/ה אליכם הביתה, לבית החולים או לכל מקום. 24/7.",
   },
 ];
 
@@ -57,14 +59,6 @@ export default function HowItWorks() {
                 transition={{ duration: 0.55, delay: index * 0.15 }}
                 className="relative flex flex-col items-center text-center"
               >
-                {/* Mobile vertical connector */}
-                {index < steps.length - 1 && (
-                  <div
-                    className="absolute top-20 h-[calc(100%+3rem)] w-0.5 bg-gradient-to-b from-primary/40 to-accent/40 md:hidden"
-                    aria-hidden="true"
-                  />
-                )}
-
                 <div className="relative z-10 mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-2xl font-extrabold text-white shadow-xl shadow-primary/30">
                   {step.number}
                 </div>
@@ -77,9 +71,13 @@ export default function HowItWorks() {
         </div>
 
         <MotionReveal delay={0.3}>
-          <div className="mt-14 text-center">
-            <a href="#lead-form" className="btn-primary">
-              התחילו עכשיו — זה חינם
+          <div className="mt-14 flex flex-col items-center gap-3">
+            <a href={PHONE_HREF} className="btn-urgent w-full max-w-xs">
+              <PhoneIcon className="h-5 w-5" />
+              התקשרו עכשיו
+            </a>
+            <a href="#lead-form" className="text-sm font-semibold text-primary underline underline-offset-4">
+              או השאירו פרטים ונחזור אליכם
             </a>
           </div>
         </MotionReveal>

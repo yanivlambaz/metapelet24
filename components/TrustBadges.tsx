@@ -14,9 +14,9 @@ const badges = [
   {
     id: "response",
     emoji: "⚡",
-    animated: { end: 4, suffix: " שעות" },
-    subtitle: "ממוצע זמן שליחת מטפלת",
-    description: "התאמה מהירה תוך שעות",
+    title: "עד 5 שעות",
+    subtitle: "מטפל/ת ישראלי/ת בבית",
+    description: "התאמה מהירה בדחיפות",
   },
   {
     id: "israeli",

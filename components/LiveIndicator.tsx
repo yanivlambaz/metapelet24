@@ -12,9 +12,9 @@ export default function LiveIndicator({ className = "" }: LiveIndicatorProps) {
     >
       <div className="text-right">
         <p className="text-sm font-bold text-green-900 sm:text-base">
-          🟢 מטפלת זמינה עכשיו — התאמה תוך שעות
+          🟢 זמינים עכשיו — מטפל/ת בבית תוך עד 5 שעות
         </p>
-        <p className="text-xs text-green-700 sm:text-sm">ממוצע זמן אספקת מטפלת: 3-5 שעות</p>
+        <p className="text-xs text-green-700 sm:text-sm">מענה אנושי מיידי, בלי מוקד אוטומטי</p>
       </div>
     </div>
   );

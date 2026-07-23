@@ -1,64 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   buildWhatsAppUrl,
   DEFAULT_WHATSAPP_MESSAGE,
+  PHONE_DISPLAY,
   PHONE_HREF,
 } from "@/lib/constants";
-import { WhatsAppIcon } from "@/components/icons";
+import { WhatsAppIcon, PhoneIcon } from "@/components/icons";
 import LiveIndicator from "@/components/LiveIndicator";
 import PulsingDot from "@/components/PulsingDot";
 
-const HERO_IMAGE =
-  "/hero-caregiver.png";
-
-function FloatingParticles() {
-  const reducedMotion = useReducedMotion();
-  const [particles, setParticles] = useState<{ id: number; x: number; y: number; size: number; delay: number }[]>([]);
-
-  useEffect(() => {
-    setParticles(
-      Array.from({ length: 18 }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 3 + 1.5,
-        delay: Math.random() * 4,
-      }))
-    );
-  }, []);
-
-  if (reducedMotion) return null;
-
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {particles.map((p) => (
-        <motion.span
-          key={p.id}
-          className="absolute rounded-full bg-white/30"
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
-          }}
-          animate={{ y: [0, -12, 0], opacity: [0.2, 0.55, 0.2] }}
-          transition={{ duration: 4 + p.delay, repeat: Infinity, delay: p.delay }}
-        />
-      ))}
-    </div>
-  );
-}
+const HERO_IMAGE = "/hero-caregiver.png";
 
 export default function Hero() {
   const reducedMotion = useReducedMotion();
 
   return (
     <section className="hero-premium relative overflow-hidden text-white">
-      <FloatingParticles />
-
       {/* Diagonal decorative shape */}
       <div
         className="pointer-events-none absolute -left-32 top-0 hidden h-full w-1/2 skew-x-[-12deg] bg-white/5 lg:block"
@@ -69,59 +28,50 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="container-main section-padding relative">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+      <div className="container-main relative px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-20">
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
           {/* LEFT — content */}
           <div className="text-center lg:text-right">
             <motion.div
               initial={reducedMotion ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className={`mb-4 inline-flex items-center gap-2.5 rounded-full border border-green-400/40 bg-green-500/20 px-4 py-2 text-sm font-semibold shadow-[0_0_20px_rgba(34,197,94,0.25)] ${
-                reducedMotion ? "" : "animate-availability-badge"
-              }`}
+              className="mb-4 inline-flex items-center gap-2.5 rounded-full border border-green-400/40 bg-green-500/20 px-4 py-2 text-sm font-semibold"
             >
               <PulsingDot size="md" />
-              3 מטפלים זמינים עכשיו באזורך
-            </motion.div>
-
-            <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.05 }}
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm backdrop-blur-sm"
-            >
-              ממוצע זמן שליחת מטפלת:{" "}
-              <span className="font-bold text-accent">4 שעות</span>
+              מטפל/ת ישראלי/ת בבית — עד 5 שעות בדחיפות
             </motion.div>
 
             <motion.h1
               initial={reducedMotion ? false : { opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.05 }}
               className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl"
             >
-              מטפלים פרטיים ישראלים{" "}
-              <span className="gradient-text">בזמינות מיידית 24/7</span>
+              צריכים מטפל/ת בדחיפות?{" "}
+              <span className="gradient-text">אנחנו כאן בשבילכם</span>
             </motion.h1>
 
             <motion.p
               initial={reducedMotion ? false : { opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.18 }}
-              className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-blue-100 sm:text-lg lg:mx-0"
+              transition={{ duration: 0.6, delay: 0.12 }}
+              className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-blue-100 sm:text-lg lg:mx-0"
             >
-              התאמה מהירה של מטפל מקצועי לבית, בית חולים ומצבים דחופים — שירות פרימיום, אמין ומיידי.
+              מטפלים ומטפלות ישראלים בפריסה ארצית. מענה אנושי מיידי — בלי מוקד
+              אוטומטי, בלי המתנה.
             </motion.p>
 
+            {/* CTA — call first */}
             <motion.div
               initial={reducedMotion ? false : { opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start"
             >
-              <a href="#lead-form" className="btn-urgent w-full sm:w-auto">
-                מצא מטפל עכשיו
+              <a href={PHONE_HREF} className="btn-urgent w-full text-base sm:w-auto">
+                <PhoneIcon className="h-5 w-5" />
+                התקשרו עכשיו — <span dir="ltr">{PHONE_DISPLAY}</span>
               </a>
               <a
                 href={buildWhatsAppUrl(DEFAULT_WHATSAPP_MESSAGE)}
@@ -130,18 +80,39 @@ export default function Hero() {
                 className="btn-whatsapp w-full sm:w-auto"
               >
                 <WhatsAppIcon className="h-5 w-5" />
-                שלח WhatsApp
+                שלחו WhatsApp
               </a>
-              <a href={PHONE_HREF} className="btn-outline hidden sm:inline-flex">
-                התקשר עכשיו
+            </motion.div>
+
+            <motion.p
+              initial={reducedMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.28 }}
+              className="mt-3 text-center text-sm text-blue-100 lg:text-right"
+            >
+              או{" "}
+              <a href="#lead-form" className="font-semibold text-white underline underline-offset-4">
+                השאירו פרטים ונחזור אליכם
               </a>
+            </motion.p>
+
+            {/* Trust row at the decision point */}
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.34 }}
+              className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-medium text-blue-100 lg:justify-start"
+            >
+              <span className="inline-flex items-center gap-1.5">🛡️ רישיון משרד העבודה 3203</span>
+              <span className="inline-flex items-center gap-1.5">🇮🇱 מטפלים ישראלים</span>
+              <span className="inline-flex items-center gap-1.5">👤 מענה אנושי אמיתי</span>
             </motion.div>
 
             <motion.div
               initial={reducedMotion ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.32 }}
-              className="mt-5 flex justify-center lg:justify-start"
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-6 flex justify-center lg:justify-start"
             >
               <LiveIndicator />
             </motion.div>
@@ -152,23 +123,24 @@ export default function Hero() {
             initial={reducedMotion ? false : { opacity: 0, scale: 0.95, x: -20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative mx-auto w-full max-w-md lg:max-w-none"
+            className="relative mx-auto mt-8 w-full max-w-xs lg:mt-0 lg:max-w-none"
           >
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/20 shadow-xl sm:aspect-[5/6]">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/20 shadow-xl lg:aspect-[5/6]">
               <img
                 src={HERO_IMAGE}
                 alt="מטפלת פרטית מקצועית ומחייכת"
                 width={600}
                 height={750}
-                loading="lazy"
+                loading="eager"
+                fetchPriority="high"
                 decoding="async"
-                className="h-full w-full rounded-2xl object-cover"
+                className="h-full w-full rounded-2xl object-cover object-top lg:object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F2D6B]/60 via-transparent to-transparent" />
             </div>
             <div className="absolute -bottom-4 -right-4 hidden rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md lg:block">
               <p className="text-sm font-bold">✓ מטפלים מאומתים</p>
-              <p className="text-xs text-blue-100">זמינות 24/7</p>
+              <p className="text-xs text-blue-100">מענה אנושי 24/7</p>
             </div>
           </motion.div>
         </div>

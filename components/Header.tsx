@@ -46,11 +46,12 @@ export default function Header({ homeHref = "/" }: HeaderProps) {
         <div className="flex items-center gap-2 sm:gap-3">
           <a
             href={PHONE_HREF}
-            className="flex items-center gap-1.5 rounded-lg border border-primary/20 px-2.5 py-2 text-sm font-bold text-primary transition-colors hover:bg-primary/5 md:px-3"
-            aria-label={`התקשר ${PHONE_DISPLAY}`}
+            className="btn-urgent !px-3 !py-2.5 !text-sm"
+            aria-label={`התקשרו ${PHONE_DISPLAY}`}
           >
             <PhoneIcon className="h-4 w-4 shrink-0" />
-            <span dir="ltr" className="hidden md:inline">{PHONE_DISPLAY}</span>
+            <span>התקשרו</span>
+            <span dir="ltr" className="hidden lg:inline">{PHONE_DISPLAY}</span>
           </a>
 
           <a
@@ -61,11 +62,7 @@ export default function Header({ homeHref = "/" }: HeaderProps) {
             aria-label="WhatsApp"
           >
             <WhatsAppIcon className="h-5 w-5" />
-            <span className="hidden sm:inline">שלח הודעה</span>
-          </a>
-
-          <a href="#lead-form" className="btn-urgent !px-3 !py-2.5 !text-sm max-sm:hidden sm:inline-flex">
-            מצא מטפל עכשיו
+            <span className="hidden sm:inline">WhatsApp</span>
           </a>
 
           <button

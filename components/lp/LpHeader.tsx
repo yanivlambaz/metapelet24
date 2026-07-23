@@ -17,11 +17,11 @@ export default function LpHeader() {
         <div className="flex items-center gap-2">
           <a
             href={PHONE_HREF}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 text-primary transition-colors hover:bg-primary/5 sm:h-auto sm:w-auto sm:gap-1.5 sm:px-3 sm:py-2"
-            aria-label="התקשר עכשיו"
+            className="btn-urgent !px-3 !py-2.5 !text-sm"
+            aria-label="התקשרו עכשיו"
           >
-            <PhoneIcon className="h-5 w-5 shrink-0" />
-            <span className="hidden text-sm font-bold sm:inline">התקשרו</span>
+            <PhoneIcon className="h-4 w-4 shrink-0" />
+            <span>התקשרו</span>
           </a>
           <a
             href={buildWhatsAppUrl(DEFAULT_WHATSAPP_MESSAGE)}
