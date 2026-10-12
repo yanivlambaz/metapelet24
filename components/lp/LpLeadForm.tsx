@@ -1,9 +1,7 @@
 "use client";
 
-import { FormEvent, useState } from "react";
 import Link from "next/link";
-import { buildWhatsAppUrl } from "@/lib/constants";
-import { submitLead } from "@/lib/leads/submit-lead";
+import { LEAD_MESSAGE_INTRO, useQuickLeadForm } from "@/lib/leads/use-lead-forms";
 
 type LpLeadFormProps = {
   formId?: string;
@@ -14,55 +12,10 @@ export default function LpLeadForm({
   formId = "lp-lead-form",
   compact = false,
 }: LpLeadFormProps) {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [status, setStatus] = useState<{
-    state: "idle" | "loading" | "error";
-    message?: string;
-  }>({ state: "idle" });
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-
-    console.info("[leads] form submission started", {
-      formType: "landing-page",
-    });
-
-    if (status.state === "loading") return;
-
-    if (!name.trim() || !phone.trim()) {
-      setStatus({ state: "error", message: "נא למלא שם וטלפון" });
-      return;
-    }
-
-    const message = [
-      "שלום, התקבלה פנייה חדשה מדף נחיתה — מטפלת 24.",
-      `שם: ${name}`,
-      `טלפון: ${phone}`,
-    ].join("\n");
-
-    setStatus({ state: "loading" });
-
-    try {
-      await submitLead({
-        name,
-        phone,
-        message,
-        formType: "landing-page",
-      });
-      setSubmitted(true);
-      window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
-    } catch (error) {
-      setStatus({
-        state: "error",
-        message:
-          error instanceof Error
-            ? error.message
-            : "שליחת הפרטים נכשלה. נסו שוב בעוד רגע.",
-      });
-    }
-  }
+  const { name, setName, phone, setPhone, submitted, status, handleSubmit } = useQuickLeadForm({
+    formType: "landing-page",
+    intro: LEAD_MESSAGE_INTRO.landingPage,
+  });
 
   if (submitted) {
     return (

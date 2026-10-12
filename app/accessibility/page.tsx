@@ -12,17 +12,17 @@ import {
 const LAST_UPDATED = "6 ביולי 2026";
 
 export const metadata: Metadata = {
-  title: "הצהרת נגישות | Metapelet24",
+  title: "הצהרת נגישות",
   description:
-    "הצהרת הנגישות של אתר Metapelet24 והמידע על הסדרי הנגישות ודרכי יצירת קשר בנושא נגישות.",
+    "הצהרת הנגישות של אתר המרכז הארצי לשירותי מטפלים והמידע על הסדרי הנגישות ודרכי יצירת קשר בנושא נגישות.",
   alternates: { canonical: `${SITE_URL}/accessibility` },
   openGraph: {
     type: "website",
     locale: "he_IL",
     url: `${SITE_URL}/accessibility`,
-    title: "הצהרת נגישות | Metapelet24",
+    title: "הצהרת נגישות",
     description:
-      "הצהרת הנגישות של אתר Metapelet24 והמידע על הסדרי הנגישות ודרכי יצירת קשר בנושא נגישות.",
+      "הצהרת הנגישות של אתר המרכז הארצי לשירותי מטפלים והמידע על הסדרי הנגישות ודרכי יצירת קשר בנושא נגישות.",
   },
 };
 

@@ -1,10 +1,9 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useReducedMotion } from "framer-motion";
 import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF } from "@/lib/constants";
-import { submitLead } from "@/lib/leads/submit-lead";
+import { LEAD_MESSAGE_INTRO, useQuickLeadForm, useTimedPopup } from "@/lib/leads/use-lead-forms";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
 
 function ExitIntentForm({
@@ -14,49 +13,19 @@ function ExitIntentForm({
   onClose: () => void;
   formType?: string;
 }) {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [done, setDone] = useState(false);
-  const [status, setStatus] = useState<{ state: "idle" | "loading" | "error"; message?: string }>({
-    state: "idle",
+  const {
+    name,
+    setName,
+    phone,
+    setPhone,
+    submitted: done,
+    status,
+    handleSubmit,
+  } = useQuickLeadForm({
+    formType,
+    intro: LEAD_MESSAGE_INTRO.site,
+    onSuccess: () => setTimeout(onClose, 2000),
   });
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    console.info("[leads] form submission started", {
-      formType,
-    });
-
-    if (status.state === "loading") return;
-
-    if (!name.trim() || !phone.trim()) {
-      setStatus({ state: "error", message: "נא למלא שם וטלפון" });
-      return;
-    }
-
-    const message = `שלום, התקבלה פנייה חדשה מאתר מטפלת 24.\nשם: ${name}\nטלפון: ${phone}`;
-    setStatus({ state: "loading" });
-
-    try {
-      await submitLead({
-        name,
-        phone,
-        message,
-        formType,
-      });
-      window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
-      setDone(true);
-      setTimeout(onClose, 2000);
-    } catch (error) {
-      setStatus({
-        state: "error",
-        message:
-          error instanceof Error
-            ? error.message
-            : "שליחת הפרטים נכשלה. נסו שוב בעוד רגע.",
-      });
-    }
-  }
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4">
@@ -139,21 +108,8 @@ export default function FloatingWidgets({
 }: {
   popupFormType?: string;
 } = {}) {
-  const [showExit, setShowExit] = useState(false);
-  const [exitDismissed, setExitDismissed] = useState(false);
+  const exitPopup = useTimedPopup();
   const reducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (exitDismissed) return;
-
-    const timer = setTimeout(() => setShowExit(true), 30000);
-    return () => clearTimeout(timer);
-  }, [exitDismissed]);
-
-  function closeExit() {
-    setShowExit(false);
-    setExitDismissed(true);
-  }
 
   return (
     <>
@@ -179,9 +135,7 @@ export default function FloatingWidgets({
       >
         <PhoneIcon className="h-6 w-6" />
       </a>
-      {showExit && !exitDismissed && (
-        <ExitIntentForm onClose={closeExit} formType={popupFormType} />
-      )}
+      {exitPopup.open && <ExitIntentForm onClose={exitPopup.close} formType={popupFormType} />}
     </>
   );
 }

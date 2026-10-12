@@ -1,14 +1,12 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import SiteShell from "@/components/SiteShell";
-import LeadForm from "@/components/LeadForm";
-import FAQ from "@/components/FAQ";
-import ServicePageContent from "@/components/ServicePageContent";
-import CTASection from "@/components/CTASection";
 import JsonLd from "@/components/JsonLd";
-import { serviceSlugs, getService } from "@/lib/data/services";
-import { serviceSchema, faqSchema, medicalOrganizationSchema } from "@/lib/schema";
-import { PHONE_DISPLAY, PHONE_HREF, SITE_URL, buildWhatsAppUrl } from "@/lib/constants";
+import { BrandFrame, LocalClose, LocalHero, LocalStory, RelatedLinks, RuledFacts } from "@/components/brand/BrandLocal";
+import { LICENSE, PROMISES } from "@/components/brand/content";
+import { cities } from "@/lib/data/cities";
+import { getService, serviceSlugs, services } from "@/lib/data/services";
+import { faqSchema, serviceSchema } from "@/lib/schema";
+import { PHONE_DISPLAY, SITE_NAME, SITE_URL } from "@/lib/constants";
 
 type PageProps = {
   params: Promise<{ service: string }>;
@@ -23,8 +21,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const service = getService(slug);
   if (!service) return {};
 
-  const title = `${service.h1} | מטפלת 24`;
-  const description = service.description;
+  const title = service.h1;
+  const description = `${service.description}. ${LICENSE.statement}. התקשר: ${PHONE_DISPLAY}`;
 
   return {
     title,
@@ -32,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: { canonical: `${SITE_URL}/services/${slug}` },
     openGraph: {
       type: "website",
-      title,
+      title: `${title} | ${SITE_NAME}`,
       description,
       locale: "he_IL",
       url: `${SITE_URL}/services/${slug}`,
@@ -43,56 +41,55 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ServicePage({ params }: PageProps) {
   const { service: slug } = await params;
   const service = getService(slug);
-
   if (!service) notFound();
 
   const pageUrl = `${SITE_URL}/services/${slug}`;
+  const others = Object.values(services)
+    .filter((item) => item.slug !== service.slug)
+    .map((item) => ({ href: `/services/${item.slug}`, label: item.name }));
 
   return (
-    <SiteShell homeHref="/">
+    <BrandFrame>
       <JsonLd
         data={[
-          medicalOrganizationSchema(pageUrl),
           serviceSchema(service.name, service.description, pageUrl),
           faqSchema(service.faqs),
         ]}
       />
       <main>
-        <section className="gradient-hero section-padding text-white">
-          <div className="container-main mx-auto max-w-4xl text-center">
-            <h1 className="text-3xl font-extrabold sm:text-4xl md:text-5xl">{service.h1}</h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-100">{service.description}</p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a href="#lead-form" className="btn-urgent w-full sm:w-auto">
-                מצא {service.name} עכשיו
-              </a>
-              <a href={PHONE_HREF} className="btn-outline w-full sm:w-auto">
-                <span dir="ltr">{PHONE_DISPLAY}</span>
-              </a>
-              <a
-                href={buildWhatsAppUrl(`שלום, אני מחפש/ת ${service.name}`)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-whatsapp w-full sm:w-auto"
-              >
-                WhatsApp
-              </a>
-            </div>
+        <LocalHero
+          kicker={PROMISES.coverage}
+          title={service.h1}
+          lede={`${service.description}. ${PROMISES.human}. ${PROMISES.urgent}, ${PROMISES.urgentQualifier}.`}
+          whatsappMessage={`שלום, אני מחפש/ת ${service.name}`}
+        />
+        <section className="bg-white">
+          <div className="mx-auto max-w-[820px] px-5 py-8 lg:max-w-[1100px] lg:px-8">
+            <RuledFacts items={service.benefits.map((benefit) => ({ title: benefit.title, line: benefit.description }))} />
           </div>
         </section>
-
-        <ServicePageContent service={service} />
-        <LeadForm defaultCareType={service.careType} />
-        <FAQ
-          items={service.faqs}
-          title={`שאלות נפוצות — ${service.name}`}
-          subtitle={`כל מה שצריך לדעת על ${service.name}`}
+        <LocalStory
+          heading="איך זה נראה בפועל"
+          body={service.content}
+          asideTitle="מה קורה אחרי שמתקשרים"
+          aside={[
+            { name: "מתקשרים", description: "עונה לכם אדם, לא מרכזייה." },
+            { name: "מספרים מה קרה", description: "רכז או רכזת שואלים מה המטופל צריך, ואיפה." },
+            { name: "מתאמים הגעה", description: `${PROMISES.urgent}, ${PROMISES.urgentQualifier}.` },
+          ]}
         />
-        <CTASection
-          title={`מחפשים ${service.name}?`}
-          subtitle="התקשרו עכשיו — נתאים מטפל מקצועי תוך שעות"
+        <RelatedLinks title="שירותים נוספים" links={others} />
+        <RelatedLinks
+          title="בפריסה ארצית"
+          links={Object.values(cities).map((city) => ({ href: `/${city.slug}`, label: `מטפלת פרטית ב${city.name}` }))}
+        />
+        <LocalClose
+          heading={`שאלות על ${service.name}`}
+          faqs={service.faqs.map((item) => ({ q: item.question, a: item.answer }))}
+          defaultCareType={service.careType}
+          whatsappMessage={`שלום, אני מחפש/ת ${service.name}`}
         />
       </main>
-    </SiteShell>
+    </BrandFrame>
   );
 }

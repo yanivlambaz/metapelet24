@@ -1,22 +1,23 @@
 "use client";
 
-import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { buildWhatsAppUrl } from "@/lib/constants";
-import { submitLead } from "@/lib/leads/submit-lead";
 import LiveIndicator from "@/components/LiveIndicator";
+import {
+  CARE_OPTIONS,
+  TIMING_OPTIONS,
+  useStepLeadForm,
+  type CareOptionId,
+} from "@/lib/leads/use-lead-forms";
 
-const careOptions = [
-  { id: "hospital", emoji: "🏥", label: "מטפל לבית חולים" },
-  { id: "night", emoji: "🌙", label: "מטפלת ללילה" },
-  { id: "home", emoji: "🏠", label: "מטפל לבית" },
-  { id: "surgery", emoji: "⚕️", label: "אחרי ניתוח" },
-  { id: "elderly", emoji: "👴", label: "טיפול בקשיש" },
-  { id: "urgent", emoji: "🚨", label: "דחוף עכשיו" },
-];
-
-const timingOptions = ["היום", "מחר", "השבוע", "תאריך אחר"];
+const careEmoji: Record<CareOptionId, string> = {
+  hospital: "🏥",
+  night: "🌙",
+  home: "🏠",
+  surgery: "⚕️",
+  elderly: "👴",
+  urgent: "🚨",
+};
 
 type LeadFormProps = {
   defaultCity?: string;
@@ -29,76 +30,24 @@ export default function LeadForm({
   defaultCareType = "",
   compact = false,
 }: LeadFormProps) {
-  const [step, setStep] = useState(defaultCareType ? 2 : 1);
-  const [careType, setCareType] = useState(defaultCareType);
-  const [timing, setTiming] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [city, setCity] = useState(defaultCity);
-  const [submitted, setSubmitted] = useState(false);
-  const [status, setStatus] = useState<{ state: "idle" | "loading" | "error"; message?: string }>({
-    state: "idle",
-  });
+  const {
+    step,
+    setStep,
+    careType,
+    timing,
+    firstName,
+    setFirstName,
+    phone,
+    setPhone,
+    city,
+    setCity,
+    submitted,
+    status,
+    chooseCareType,
+    chooseTiming,
+    handleSubmit,
+  } = useStepLeadForm({ defaultCity, defaultCareType });
   const reducedMotion = useReducedMotion();
-
-  function buildMessage() {
-    return [
-      "שלום, התקבלה פנייה חדשה מאתר מטפלת 24.",
-      firstName ? `שם: ${firstName}` : "",
-      phone ? `טלפון: ${phone}` : "",
-      careType ? `שירות מבוקש: ${careType}` : "",
-      timing ? `מתי נדרש: ${timing}` : "",
-      city ? `עיר: ${city}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-  }
-
-  function getFormType() {
-    if (defaultCareType) return "service";
-    if (defaultCity) return "city";
-    return "homepage";
-  }
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    const formType = getFormType();
-
-    console.info("[leads] form submission started", {
-      formType,
-      step,
-    });
-
-    if (status.state === "loading") return;
-
-    if (!firstName.trim() || !phone.trim() || !city.trim()) {
-      setStatus({ state: "error", message: "נא למלא שם, טלפון ועיר" });
-      return;
-    }
-
-    const message = buildMessage();
-    setStatus({ state: "loading" });
-
-    try {
-      await submitLead({
-        name: firstName,
-        phone,
-        city,
-        message,
-        formType,
-      });
-      setSubmitted(true);
-      window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
-    } catch (error) {
-      setStatus({
-        state: "error",
-        message:
-          error instanceof Error
-            ? error.message
-            : "שליחת הפרטים נכשלה. נסו שוב בעוד רגע.",
-      });
-    }
-  }
 
   const progress = (step / 3) * 100;
 
@@ -152,21 +101,18 @@ export default function LeadForm({
                     >
                       <h3 className="mb-4 text-lg font-bold text-primary">במה נוכל לעזור?</h3>
                       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                        {careOptions.map((option) => (
+                        {CARE_OPTIONS.map((option) => (
                           <button
                             key={option.id}
                             type="button"
-                            onClick={() => {
-                              setCareType(option.label);
-                              setStep(2);
-                            }}
+                            onClick={() => chooseCareType(option.label)}
                             className={`rounded-xl border-2 p-4 text-center transition-all hover:border-accent hover:shadow-md ${
                               careType === option.label
                                 ? "border-accent bg-accent/5"
                                 : "border-slate-200 bg-surface"
                             }`}
                           >
-                            <span className="text-2xl">{option.emoji}</span>
+                            <span className="text-2xl">{careEmoji[option.id]}</span>
                             <span className="mt-2 block text-xs font-semibold text-primary sm:text-sm">
                               {option.label}
                             </span>
@@ -186,14 +132,11 @@ export default function LeadForm({
                     >
                       <h3 className="mb-4 text-lg font-bold text-primary">מתי תזדקק למטפל?</h3>
                       <div className="grid grid-cols-2 gap-3">
-                        {timingOptions.map((option) => (
+                        {TIMING_OPTIONS.map((option) => (
                           <button
                             key={option}
                             type="button"
-                            onClick={() => {
-                              setTiming(option);
-                              setStep(3);
-                            }}
+                            onClick={() => chooseTiming(option)}
                             className={`rounded-xl border-2 px-4 py-4 text-sm font-semibold transition-all hover:border-accent ${
                               timing === option
                                 ? "border-accent bg-accent/5 text-primary"

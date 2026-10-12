@@ -76,7 +76,7 @@ export function serviceSchema(name: string, description: string, url: string) {
     name,
     description,
     provider: {
-      "@type": "MedicalOrganization",
+      "@type": "Organization",
       name: SITE_NAME,
       telephone: PHONE_DISPLAY,
       address: postalAddressSchema(),

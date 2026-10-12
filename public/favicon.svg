@@ -1,11 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="����� 24">
-  <circle cx="16" cy="16" r="16" fill="#1B4F8A"/>
-  <g transform="translate(6, 6)">
-    <path
-      d="M10 17.25 4.1 12.7C2.3 11.05 1.25 9.4 1.25 7.6 1.25 5.55 2.9 3.9 4.95 3.9c1.15 0 2.25.55 2.95 1.4.7-.85 1.8-1.4 2.95-1.4 2.05 0 3.7 1.65 3.7 3.7 0 1.8-1.05 3.45-2.85 5.1L10 17.25Z"
-      fill="#FFFFFF"
-    />
-    <rect x="9.1" y="5.75" width="1.8" height="5.6" rx="0.6" fill="#1B4F8A"/>
-    <rect x="7.1" y="7.75" width="5.8" height="1.6" rx="0.6" fill="#1B4F8A"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="המרכז הארצי"><image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAACXBIWXMAAAsTAAALEwEAmpwYAAADGElEQVR4nGP4+/df/4wlCsbeXHJWPPJW3BQjHnkrLjkrBWPv/hlL//79x9A7bTEDrxaHjAWPgjXlpnND7FCw5pCxYODVAhmuaOTNIWPOq2hDLdO5wYhX0YZDxlzRyJuBW86Sm3pu50ZGCtbccpYMVAwZbmxhxUA707nBaNQC7iEQRLyKNhDEo4CSPCCCVLCAUdSQQdSQUdQQ2XQ2KTMGEQNGMUMuOUsyLYCYomruv3DF5uXrtvdMW8SvZMMlZ8mnZMMgYhCUWLJ+2/5Zi9ZK6bpxyJjjyUz4fMCjYM0ubbZm857/YJBT3s4gqCes5sDAq1XXOf3///8fP39RMfNjlTIj0wJeRRsWCRNFI6/Hz17+////8bOXiqBC15KBX6emfdr////fffiobObHRrYF3PJWfEq2DEL6eVVdEE/MWrSWWdyYQVCvoWsmyAefKPMBKJQUrTlkzFmFDY6evPD///9fv397ReQwMMhUt075////h4+fVCjxATgOzCW0XKbNX/Xp85d/YE8cP31JTNNp6drt////f/7itYS2C0WRzCZltm7rvv///3/7/v3gsbPfvv/48+fvuw8f//0DWdc2YS6TuDH+3IAvmbJLm8kaeLx99+H///89UxcxcKit3rQbEhm37z2KSKtklzYD5QOkDEiaBaxSpipm/h8+fv7//39t+zQGNhV9+7DXb9//////6o27AvKWXERUtPgtMFMx8/v4+cv////rOqczCOoxihpWtkyCeGLizGUMQnp8SjaUWvDh4yeoD/i0+ZRs+RVtTp+/Co6VHzZeCQwiBvjtIBBEqub+nyA+6JjOwKstpObAIGLgHZkLieQTZy8LqtpzyVmSk4p45K04ZS1ENZxSC5uLanstPOJYJEx4Fa15FKw5ZS3CU8pzKzpzKzuVTHzYpclNptzyVlyyloyCegz8OmwSJnBTeBSsmYQNGAR0Gfh18GcCooprfiVbfiVbXlRT+BRtIOLkpyJqIQbat4vkCGRFbrKRghWoZadk7IO/OCTb7WxSZkrGPgydkxcwiBrSovHLIGrYOXkBAPiRVDxP3Q4uAAAAAElFTkSuQmCC" width="32" height="32"/></svg>

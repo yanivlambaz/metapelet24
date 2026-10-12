@@ -1,7 +1,7 @@
-export const SITE_NAME = "מטפלת 24";
+export const SITE_NAME = "המרכז הארצי לשירותי מטפלים";
 export const SITE_TAGLINE =
-  "פלטפורמה להתאמת מטפלים פרטיים ישראלים בזמינות מיידית";
-export const SITE_URL = "https://www.metapelet24.co.il";
+  "מטפלים ומטפלות ישראלים לבית ולבתי חולים, בפריסה ארצית";
+export const SITE_URL = "https://www.siudi.org.il";
 
 export const PHONE_DISPLAY = "072-393-9494";
 export const PHONE_HREF = "tel:0723939494";
