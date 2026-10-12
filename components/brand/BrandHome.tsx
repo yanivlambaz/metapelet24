@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { PHONE_HREF } from "@/lib/constants";
 import { cities } from "@/lib/data/cities";
 import BrandHeader from "./BrandHeader";
@@ -30,6 +31,7 @@ import {
   IconRefresh,
 } from "./icons";
 import { CallbackPopup, StepLeadForm } from "./lead-forms";
+import { SECOND_FAMILY_IMAGES } from "./second-family-copy";
 import {
   BrandFooter,
   BrandRoot,
@@ -278,26 +280,40 @@ export default function BrandHome() {
 
         <section id="second-family" className="scroll-mt-24 border-t border-(--nc-line) bg-white">
           <div className={`${SECTION} py-7 lg:py-10`}>
-            <div className="max-w-3xl border-r-[3px] border-(--nc-teal)/70 pr-4 lg:pr-5">
-              <p className="text-[12px] font-semibold leading-snug tracking-wide text-(--nc-muted) lg:text-[13px]">
-                שירות משלים מבית המרכז הארצי לשירותי מטפלים
-              </p>
-              <h2 className="mt-1.5 text-[20px] font-bold leading-snug text-(--nc-ink) lg:text-[24px]">
-                משפחה שנייה — דואגים להורים גם כשאתם לא יכולים להיות שם
-              </h2>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-(--nc-muted) lg:text-[16px]">
-                לא כל הורה זקוק למטפל במשמרת של 8 שעות. לפעמים כל מה שצריך הוא מישהו שיגיע בקביעות, ישב עם ההורה, יארח לו חברה וידאג לדברים הקטנים.
-              </p>
-              <p className="mt-2 text-[15px] leading-relaxed text-(--nc-muted) lg:text-[16px]">
-                משפחה שנייה הוא שירות נפרד במסגרת חבילה חודשית, הכוללת ביקורי בית פעם עד פעמיים בשבוע, קשר במהלך השבוע ועדכונים שוטפים למשפחה.
-              </p>
-              <Link
-                href="/mishpacha-shniya"
-                className="mt-3 inline-flex items-center gap-1.5 text-[15px] font-semibold text-(--nc-teal) underline decoration-(--nc-teal)/40 underline-offset-4 hover:text-(--nc-teal-dark) hover:decoration-(--nc-teal)"
-              >
-                הכירו את שירות משפחה שנייה
-                <IconChevron className="h-4 w-4" />
-              </Link>
+            <div className="flex flex-col lg:grid lg:grid-cols-[minmax(0,1.22fr)_minmax(0,1fr)] lg:items-center lg:gap-10">
+              <div className="contents lg:block">
+                <div className="order-1 border-r-[3px] border-(--nc-teal)/70 pr-4 lg:border-0 lg:pr-0">
+                  <div className="lg:border-r-[3px] lg:border-(--nc-teal)/70 lg:pr-5">
+                    <p className="text-[12px] font-semibold leading-snug tracking-wide text-(--nc-muted) lg:text-[13px]">
+                      שירות משלים מבית המרכז הארצי לשירותי מטפלים
+                    </p>
+                    <h2 className="mt-1.5 text-[20px] font-bold leading-snug text-(--nc-ink) lg:text-[24px]">
+                      משפחה שנייה — דואגים להורים גם כשאתם לא יכולים להיות שם
+                    </h2>
+                    <p className="mt-2.5 text-[15px] leading-relaxed text-(--nc-muted) lg:text-[16px]">
+                      לא כל הורה זקוק למטפל במשמרת של 8 שעות. לפעמים כל מה שצריך הוא מישהו שיגיע בקביעות, ישב עם ההורה, יארח לו חברה וידאג לדברים הקטנים.
+                    </p>
+                    <p className="mt-2 text-[15px] leading-relaxed text-(--nc-muted) lg:text-[16px]">
+                      משפחה שנייה הוא שירות נפרד במסגרת חבילה חודשית, הכוללת ביקורי בית פעם עד פעמיים בשבוע, קשר במהלך השבוע ועדכונים שוטפים למשפחה.
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  href="/mishpacha-shniya"
+                  className="order-3 mt-4 inline-flex items-center gap-1.5 pr-4 text-[15px] font-semibold text-(--nc-teal) underline decoration-(--nc-teal)/40 underline-offset-4 hover:text-(--nc-teal-dark) hover:decoration-(--nc-teal) lg:mt-3 lg:pr-5"
+                >
+                  הכירו את שירות משפחה שנייה
+                  <IconChevron className="h-4 w-4" />
+                </Link>
+              </div>
+              <Image
+                src={SECOND_FAMILY_IMAGES.desktop.src}
+                alt={SECOND_FAMILY_IMAGES.alt}
+                width={SECOND_FAMILY_IMAGES.desktop.width}
+                height={SECOND_FAMILY_IMAGES.desktop.height}
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="order-2 mt-4 h-auto w-full rounded-[4px] lg:mt-0"
+              />
             </div>
           </div>
         </section>

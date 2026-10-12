@@ -16,7 +16,15 @@ const HOME_NAV = [
   { href: "#faq", label: "שאלות נפוצות" },
 ];
 
-export default function BrandHeader({ variant = "home" }: { variant?: "home" | "landing" }) {
+export default function BrandHeader({
+  variant = "home",
+  phoneHref = PHONE_HREF,
+  phoneDisplay = CONTACT.phone,
+}: {
+  variant?: "home" | "landing";
+  phoneHref?: string;
+  phoneDisplay?: string;
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const isHome = variant === "home";
 
@@ -46,13 +54,13 @@ export default function BrandHeader({ variant = "home" }: { variant?: "home" | "
         <div className="hidden items-center gap-5 lg:flex">
           <div className="text-left leading-tight">
             <p className="text-[12px] font-medium text-(--nc-muted)">{PROMISES.human}</p>
-            <a href={PHONE_HREF} dir="ltr" className="text-[22px] font-bold tabular-nums text-(--nc-ink)">
-              {CONTACT.phone}
+            <a href={phoneHref} dir="ltr" className="text-[22px] font-bold tabular-nums text-(--nc-ink)">
+              {phoneDisplay}
             </a>
           </div>
           <a
-            href={PHONE_HREF}
-            aria-label={`התקשרו: ${CONTACT.phone}`}
+            href={phoneHref}
+            aria-label={`התקשרו: ${phoneDisplay}`}
             className="flex h-12 items-center gap-2 rounded-[4px] bg-(--nc-teal) px-5 text-[15px] font-semibold text-white hover:bg-(--nc-teal-dark)"
           >
             <IconPhone className="h-[18px] w-[18px]" stroke={1.8} />

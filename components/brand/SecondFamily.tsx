@@ -11,6 +11,8 @@ import {
   SECOND_FAMILY_FAQ,
   SECOND_FAMILY_IMAGES,
   SECOND_FAMILY_PACKAGES,
+  SECOND_FAMILY_PHONE_DISPLAY,
+  SECOND_FAMILY_PHONE_HREF,
   SECOND_FAMILY_STEPS,
   SECOND_FAMILY_WHATSAPP,
 } from "./second-family-copy";
@@ -20,6 +22,11 @@ import BrandHeader from "./BrandHeader";
 const SECTION = "mx-auto max-w-[1240px] px-5 lg:px-8";
 const H2 = "mt-2 text-[25px] font-bold leading-tight lg:text-[38px]";
 const AREA_ICONS = [IconPerson, IconHome, IconHands, IconDocument, IconPhone, IconRefresh] as const;
+
+const familyPhone = {
+  phoneHref: SECOND_FAMILY_PHONE_HREF,
+  phoneDisplay: SECOND_FAMILY_PHONE_DISPLAY,
+};
 
 const warm = {
   "--sf-ivory": "#F7F1E8",
@@ -38,7 +45,7 @@ export default function SecondFamily() {
             </a>
           </p>
         </div>
-        <BrandHeader variant="landing" />
+        <BrandHeader variant="landing" {...familyPhone} />
 
         <main>
           <section className="bg-(--sf-ivory)">
@@ -59,7 +66,7 @@ export default function SecondFamily() {
                     </li>
                   ))}
                 </ul>
-                <CallButton id="hero-call" label="דברו איתנו על ההורים שלכם" size="lg" className="mt-5 !h-auto min-h-14 py-3 lg:max-w-[30rem]" />
+                <CallButton {...familyPhone} id="hero-call" label="דברו איתנו על ההורים שלכם" size="lg" className="mt-5 !h-auto min-h-14 py-3 lg:max-w-[30rem]" />
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-3 lg:max-w-[30rem]">
                   <a href="#packages" className="text-[15px] font-semibold text-(--nc-navy) underline decoration-(--nc-line) underline-offset-4 hover:decoration-(--nc-navy)">
                     קבלו פרטים על המסלולים
@@ -130,7 +137,7 @@ export default function SecondFamily() {
                   </li>
                 ))}
               </ul>
-              <CallButton label="בואו נדבר על מה שההורים שלכם צריכים" size="lg" className="mt-7 !h-auto min-h-14 py-3 lg:max-w-[34rem]" />
+              <CallButton {...familyPhone} label="בואו נדבר על מה שההורים שלכם צריכים" size="lg" className="mt-7 !h-auto min-h-14 py-3 lg:max-w-[34rem]" />
             </div>
           </section>
 
@@ -156,7 +163,7 @@ export default function SecondFamily() {
                   </article>
                 ))}
               </div>
-              <CallButton label="בואו נתאים להורים שלכם את המסלול הנכון" size="lg" className="mt-6 !h-auto min-h-14 py-3 lg:max-w-[36rem]" />
+              <CallButton {...familyPhone} label="בואו נתאים להורים שלכם את המסלול הנכון" size="lg" className="mt-6 !h-auto min-h-14 py-3 lg:max-w-[36rem]" />
             </div>
           </section>
 
@@ -205,7 +212,7 @@ export default function SecondFamily() {
               <div className="lg:col-span-6">
                 <h2 className="text-[27px] font-bold leading-tight lg:text-[40px]">רוצים לדעת שיש מי שדואג להורים שלכם?</h2>
                 <p className="mt-3 text-[16px] leading-relaxed text-white/80 lg:text-[18px]">השאירו פרטים ונחזור אליכם כדי להתאים למשפחה את הליווי הנכון.</p>
-                <CallButton label="דברו איתנו על ההורים שלכם" size="lg" className="mt-6 !h-auto min-h-14 py-3 lg:max-w-[30rem]" />
+                <CallButton {...familyPhone} label="דברו איתנו על ההורים שלכם" size="lg" className="mt-6 !h-auto min-h-14 py-3 lg:max-w-[30rem]" />
                 <WhatsAppLink message={SECOND_FAMILY_WHATSAPP} tone="light" className="mt-4" />
                 <p className="mt-6 text-[13px] text-white/60">
                   {BRAND.name}. {LICENSE.privateNote}
@@ -222,8 +229,8 @@ export default function SecondFamily() {
           </section>
         </main>
 
-        <BrandFooter variant="full" whatsappHref={buildWhatsAppUrl(SECOND_FAMILY_WHATSAPP)} />
-        <MobileCallBar whatsappMessage={SECOND_FAMILY_WHATSAPP} />
+        <BrandFooter variant="full" whatsappHref={buildWhatsAppUrl(SECOND_FAMILY_WHATSAPP)} {...familyPhone} />
+        <MobileCallBar whatsappMessage={SECOND_FAMILY_WHATSAPP} {...familyPhone} />
       </div>
     </BrandRoot>
   );

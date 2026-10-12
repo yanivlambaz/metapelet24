@@ -69,7 +69,7 @@ export function faqSchema(faqs: FAQItem[]) {
   };
 }
 
-export function serviceSchema(name: string, description: string, url: string) {
+export function serviceSchema(name: string, description: string, url: string, telephone = PHONE_DISPLAY) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -78,7 +78,7 @@ export function serviceSchema(name: string, description: string, url: string) {
     provider: {
       "@type": "Organization",
       name: SITE_NAME,
-      telephone: PHONE_DISPLAY,
+      telephone,
       address: postalAddressSchema(),
     },
     url,

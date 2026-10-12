@@ -9,18 +9,22 @@ export function CallButton({
   label = "התקשרו עכשיו",
   size = "md",
   className = "",
+  phoneHref = PHONE_HREF,
+  phoneDisplay = CONTACT.phone,
 }: {
   id?: string;
   label?: string;
   size?: "md" | "lg";
   className?: string;
+  phoneHref?: string;
+  phoneDisplay?: string;
 }) {
   const h = size === "lg" ? "h-14 px-5 text-[17px] lg:h-16 lg:px-7 lg:text-[19px]" : "h-14 px-5 text-[17px]";
   return (
     <a
       id={id}
-      href={PHONE_HREF}
-      aria-label={`${label}: ${CONTACT.phone}`}
+      href={phoneHref}
+      aria-label={`${label}: ${phoneDisplay}`}
       className={`flex w-full items-center justify-between gap-4 rounded-[4px] bg-(--nc-teal) ${h} font-semibold text-white transition-colors hover:bg-(--nc-teal-dark) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--nc-teal) ${className}`}
     >
       <span className="flex min-w-0 items-center gap-2.5">
@@ -28,7 +32,7 @@ export function CallButton({
         <span>{label}</span>
       </span>
       <span dir="ltr" className="shrink-0 font-bold tabular-nums tracking-[0.01em]">
-        {CONTACT.phone}
+        {phoneDisplay}
       </span>
     </a>
   );
@@ -61,7 +65,15 @@ export function WhatsAppLink({
 }
 
 /** The only floating element on brand pages: one call bar, mobile only. */
-export function MobileCallBar({ whatsappMessage }: { whatsappMessage?: string } = {}) {
+export function MobileCallBar({
+  whatsappMessage,
+  phoneHref = PHONE_HREF,
+  phoneDisplay = CONTACT.phone,
+}: {
+  whatsappMessage?: string;
+  phoneHref?: string;
+  phoneDisplay?: string;
+} = {}) {
   const whatsappHref = whatsappMessage ? buildWhatsAppUrl(whatsappMessage) : WHATSAPP_HREF;
   return (
     <div
@@ -70,14 +82,14 @@ export function MobileCallBar({ whatsappMessage }: { whatsappMessage?: string } 
     >
       <div className="flex gap-2">
         <a
-          href={PHONE_HREF}
-          aria-label={`התקשרו עכשיו: ${CONTACT.phone}`}
+          href={phoneHref}
+          aria-label={`התקשרו עכשיו: ${phoneDisplay}`}
           className="flex h-14 flex-1 items-center justify-center gap-2.5 rounded-[4px] bg-(--nc-teal) text-[16px] font-semibold text-white"
         >
           <IconPhone className="h-5 w-5" stroke={1.8} />
           התקשרו
           <span dir="ltr" className="font-bold tabular-nums">
-            {CONTACT.phone}
+            {phoneDisplay}
           </span>
         </a>
         <a

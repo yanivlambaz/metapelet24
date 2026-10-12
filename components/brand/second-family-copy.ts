@@ -113,6 +113,9 @@ export const SECOND_FAMILY_FAQ: FaqItem[] = [
   },
 ];
 
+export const SECOND_FAMILY_PHONE_DISPLAY = "073-757-9024";
+export const SECOND_FAMILY_PHONE_HREF = "tel:0737579024";
+
 export const SECOND_FAMILY_IMAGES = {
   alt: "תמונה להמחשה: אדם מבוגר ומלווה יושבים יחד ליד שולחן בבית",
   mobile: { src: "/second-family-mobile.jpg", width: 1152, height: 864, crop: { x: 0, y: 0, w: 1152, h: 864 } },

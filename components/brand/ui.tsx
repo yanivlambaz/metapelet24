@@ -250,9 +250,13 @@ const LEGAL_LINKS = [
 export function BrandFooter({
   variant = "full",
   whatsappHref = WHATSAPP_HREF,
+  phoneHref = PHONE_HREF,
+  phoneDisplay = CONTACT.phone,
 }: {
   variant?: "full" | "minimal";
   whatsappHref?: string;
+  phoneHref?: string;
+  phoneDisplay?: string;
 }) {
   return (
     <footer className="bg-(--nc-footer) pb-28 text-white lg:pb-0">
@@ -311,8 +315,8 @@ export function BrandFooter({
 
           <div className={variant === "full" ? "lg:col-span-3" : "lg:col-span-4 lg:col-start-9"}>
             <p className="text-[13px] font-semibold text-white/55">יצירת קשר</p>
-            <a href={PHONE_HREF} dir="ltr" className="mt-2 block text-right text-[22px] font-bold tabular-nums text-white">
-              {CONTACT.phone}
+            <a href={phoneHref} dir="ltr" className="mt-2 block text-right text-[22px] font-bold tabular-nums text-white">
+              {phoneDisplay}
             </a>
             <a
               href={whatsappHref}
