@@ -4,6 +4,7 @@ import { BRAND, LICENSE } from "./content";
 import { CallButton, MobileCallBar, WhatsAppLink } from "./actions";
 import { IconCheck, IconDocument, IconHands, IconHome, IconPerson, IconPhone, IconRefresh } from "./icons";
 import SecondFamilyForm from "./SecondFamilyForm";
+import SecondFamilyVideo from "./SecondFamilyVideo";
 import {
   SECOND_FAMILY,
   SECOND_FAMILY_AREAS,
@@ -190,18 +191,7 @@ export default function SecondFamily() {
                   לא תמיד אפשר להגיע להורים, אבל תמיד רוצים לדעת שהם בסדר. עם משפחה שנייה יש מי שמבקר, מתעניין, דואג לדברים הקטנים ומעדכן את המשפחה.
                 </p>
               </div>
-              <video
-                className="mx-auto aspect-[9/16] w-full max-w-[300px] rounded-[4px] bg-(--nc-stone) sm:max-w-[320px]"
-                controls
-                playsInline
-                preload="metadata"
-                poster="/second-family-video-poster.jpg"
-                width={720}
-                height={1280}
-                aria-label="סרטון: גם כשאתם לא שם, תמיד יש מי שידאג"
-              >
-                <source src="/second-family-video.mp4" type="video/mp4" />
-              </video>
+              <SecondFamilyVideo />
             </div>
           </section>
 
