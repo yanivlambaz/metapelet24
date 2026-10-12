@@ -23,11 +23,11 @@ export function CallButton({
       aria-label={`${label}: ${CONTACT.phone}`}
       className={`flex w-full items-center justify-between gap-4 rounded-[4px] bg-(--nc-teal) ${h} font-semibold text-white transition-colors hover:bg-(--nc-teal-dark) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--nc-teal) ${className}`}
     >
-      <span className="flex items-center gap-2.5">
-        <IconPhone className="h-5 w-5" stroke={1.8} />
-        {label}
+      <span className="flex min-w-0 items-center gap-2.5">
+        <IconPhone className="h-5 w-5 shrink-0" stroke={1.8} />
+        <span>{label}</span>
       </span>
-      <span dir="ltr" className="font-bold tabular-nums tracking-[0.01em]">
+      <span dir="ltr" className="shrink-0 font-bold tabular-nums tracking-[0.01em]">
         {CONTACT.phone}
       </span>
     </a>
@@ -61,7 +61,8 @@ export function WhatsAppLink({
 }
 
 /** The only floating element on brand pages: one call bar, mobile only. */
-export function MobileCallBar() {
+export function MobileCallBar({ whatsappMessage }: { whatsappMessage?: string } = {}) {
+  const whatsappHref = whatsappMessage ? buildWhatsAppUrl(whatsappMessage) : WHATSAPP_HREF;
   return (
     <div
       className="fixed inset-x-0 bottom-0 z-50 border-t border-(--nc-line) bg-white px-3 pt-2.5 lg:hidden"
@@ -80,7 +81,7 @@ export function MobileCallBar() {
           </span>
         </a>
         <a
-          href={WHATSAPP_HREF}
+          href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"

@@ -6,7 +6,7 @@ import { PHONE_HREF } from "@/lib/constants";
 import { cities } from "@/lib/data/cities";
 import { services } from "@/lib/data/services";
 import { brandFont } from "./fonts";
-import { BRAND, CONTACT, IMAGE_DISCLOSURE, LICENSE, PROCESS, type FaqItem } from "./content";
+import { BRAND, CONTACT, LICENSE, PROCESS, type FaqItem } from "./content";
 import { WHATSAPP_HREF } from "./actions";
 import { IconDocument, IconExternal, IconWhatsApp } from "./icons";
 
@@ -203,8 +203,6 @@ export function CroppedImage({
   desktop = mobile,
   sizes,
   eager = false,
-  disclosureSide = "right",
-  captionAt = "bottom",
   className = "",
 }: {
   alt: string;
@@ -212,8 +210,6 @@ export function CroppedImage({
   desktop?: ImageSource;
   sizes: string;
   eager?: boolean;
-  disclosureSide?: "left" | "right";
-  captionAt?: "top" | "bottom";
   className?: string;
 }) {
   const common = eager
@@ -239,11 +235,6 @@ export function CroppedImage({
           className="absolute h-auto max-w-none w-(--iw-m) left-(--il-m) top-(--it-m) lg:w-(--iw-d) lg:left-(--il-d) lg:top-(--it-d)"
         />
       </picture>
-      <figcaption
-        className={`absolute ${captionAt === "top" ? "top-2" : "bottom-2"} ${disclosureSide === "right" ? "right-2" : "left-2"} rounded-[3px] bg-(--nc-ink)/75 px-2 py-1 text-[11px] font-medium leading-none text-white`}
-      >
-        {IMAGE_DISCLOSURE}
-      </figcaption>
     </figure>
   );
 }
@@ -256,7 +247,13 @@ const LEGAL_LINKS = [
   { href: "/accessibility", label: "הצהרת נגישות" },
 ];
 
-export function BrandFooter({ variant = "full" }: { variant?: "full" | "minimal" }) {
+export function BrandFooter({
+  variant = "full",
+  whatsappHref = WHATSAPP_HREF,
+}: {
+  variant?: "full" | "minimal";
+  whatsappHref?: string;
+}) {
   return (
     <footer className="bg-(--nc-footer) pb-28 text-white lg:pb-0">
       <div className="mx-auto max-w-[1240px] px-5 py-10 lg:px-8 lg:py-14">
@@ -290,6 +287,11 @@ export function BrandFooter({ variant = "full" }: { variant?: "full" | "minimal"
                       </Link>
                     </li>
                   ))}
+                  <li>
+                    <Link href="/mishpacha-shniya" className="text-white/85 hover:text-white">
+                      משפחה שנייה
+                    </Link>
+                  </li>
                 </ul>
               </nav>
               <nav aria-label="ערים" className="lg:col-span-2">
@@ -313,7 +315,7 @@ export function BrandFooter({ variant = "full" }: { variant?: "full" | "minimal"
               {CONTACT.phone}
             </a>
             <a
-              href={WHATSAPP_HREF}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-1 inline-flex items-center gap-1.5 text-[14px] text-white/85 underline decoration-white/30 underline-offset-4 hover:text-white"

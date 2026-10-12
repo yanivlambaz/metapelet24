@@ -36,6 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...cityPages,
     ...servicePages,
+    {
+      url: `${SITE_URL}/mishpacha-shniya`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
     ...legalPages,
   ];
 }

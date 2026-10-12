@@ -9,6 +9,7 @@ import { Wordmark } from "./ui";
 
 const HOME_NAV = [
   { href: "#services", label: "שירותים" },
+  { href: "/mishpacha-shniya", label: "משפחה שנייה" },
   { href: "#how-it-works", label: "איך זה עובד" },
   { href: "#license", label: "רישיון ופיקוח" },
   { href: "#coverage", label: "אזורי שירות" },
@@ -28,11 +29,17 @@ export default function BrandHeader({ variant = "home" }: { variant?: "home" | "
 
         {isHome && (
           <nav className="hidden items-center gap-7 text-[15px] font-medium xl:gap-8 lg:flex" aria-label="ניווט ראשי">
-            {HOME_NAV.map((item) => (
-              <a key={item.href} href={item.href} className="text-(--nc-ink) hover:text-(--nc-teal)">
-                {item.label}
-              </a>
-            ))}
+            {HOME_NAV.map((item) =>
+              item.href.startsWith("/") ? (
+                <Link key={item.href} href={item.href} className="text-(--nc-ink) hover:text-(--nc-teal)">
+                  {item.label}
+                </Link>
+              ) : (
+                <a key={item.href} href={item.href} className="text-(--nc-ink) hover:text-(--nc-teal)">
+                  {item.label}
+                </a>
+              ),
+            )}
           </nav>
         )}
 
@@ -73,16 +80,27 @@ export default function BrandHeader({ variant = "home" }: { variant?: "home" | "
           className="absolute inset-x-0 top-full border-b border-(--nc-line) bg-white px-4 pb-5 shadow-[0_12px_24px_-12px_rgba(11,31,58,0.25)] lg:hidden"
         >
           <nav className="divide-y divide-(--nc-line)" aria-label="ניווט ראשי">
-            {[...HOME_NAV, { href: "#lead-form", label: "השארת פרטים לחזרה" }].map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setMenuOpen(false)}
-                className="block py-3.5 text-[17px] font-medium"
-              >
-                {item.label}
-              </a>
-            ))}
+            {[...HOME_NAV, { href: "#lead-form", label: "השארת פרטים לחזרה" }].map((item) =>
+              item.href.startsWith("/") ? (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block py-3.5 text-[17px] font-medium"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block py-3.5 text-[17px] font-medium"
+                >
+                  {item.label}
+                </a>
+              ),
+            )}
           </nav>
         </div>
       )}

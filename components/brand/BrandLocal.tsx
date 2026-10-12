@@ -76,7 +76,6 @@ export function LocalHero({
             desktop={IMAGES.heroDesktop}
             sizes="(min-width: 1024px) 420px, 100vw"
             eager
-            captionAt="top"
           />
         </div>
       </div>

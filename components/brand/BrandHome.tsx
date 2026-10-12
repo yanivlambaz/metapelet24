@@ -99,8 +99,6 @@ export default function BrandHome() {
                 desktop={IMAGES.heroDesktop}
                 sizes="(min-width: 1024px) 580px, 100vw"
                 eager
-                disclosureSide="right"
-                captionAt="top"
               />
               <div className="mt-6 hidden lg:block">
                 <PromiseLedger />
@@ -175,6 +173,26 @@ export default function BrandHome() {
           </div>
         </section>
 
+        <section id="second-family" className="scroll-mt-24 border-b border-(--nc-line) bg-white">
+          <div className={`${SECTION} py-9 lg:flex lg:items-end lg:justify-between lg:gap-16 lg:py-16`}>
+            <div className="max-w-2xl">
+              <p className="text-[13px] font-semibold tracking-wide text-(--nc-teal)">משפחה שנייה</p>
+              <h2 className="mt-2 text-[24px] font-bold leading-snug lg:text-[34px]">
+                גם כשאתם לא יכולים להיות ליד ההורים — יש מי שידאג להם.
+              </h2>
+              <p className="mt-3 text-[15.5px] leading-relaxed text-(--nc-muted) lg:text-[17px]">
+                ביקורים קבועים, חברה, סיוע יומיומי, קשר במהלך השבוע ועדכונים למשפחה.
+              </p>
+            </div>
+            <Link
+              href="/mishpacha-shniya"
+              className="mt-5 inline-flex h-12 items-center justify-center rounded-[4px] bg-(--nc-ink) px-5 text-[16px] font-semibold text-white hover:bg-(--nc-navy) lg:mt-0 lg:shrink-0"
+            >
+              הכירו את משפחה שנייה
+            </Link>
+          </div>
+        </section>
+
         {/* PROCESS */}
         <section id="how-it-works" className="scroll-mt-24 bg-(--nc-stone) lg:bg-white">
           <div className={`${SECTION} py-10 lg:py-24`}>
@@ -207,8 +225,6 @@ export default function BrandHome() {
                 alt={IMAGES.humanAlt}
                 mobile={IMAGES.human}
                 sizes="(min-width: 1024px) 720px, 100vw"
-                disclosureSide="left"
-                captionAt="top"
               />
             </div>
             <div className="px-5 py-9 lg:col-span-5 lg:px-14 lg:py-12">

@@ -61,7 +61,6 @@ export default function BrandLanding() {
                   mobile={IMAGES.heroMobile}
                   desktop={IMAGES.heroDesktop}
                   sizes="(min-width: 1024px) 480px, 100vw"
-                  captionAt="top"
                 />
                 <div className="bg-(--nc-stone) px-5 py-6 lg:bg-white lg:px-7 lg:py-7">
                   <p className="text-[18px] font-bold lg:text-[19px]">מעדיפים שנחזור אליכם?</p>
@@ -108,7 +107,7 @@ export default function BrandLanding() {
           <div className={`${SECTION} py-10 lg:grid lg:grid-cols-12 lg:items-center lg:gap-14 lg:py-20`}>
             <div className="lg:col-span-7">
               <div className="-mx-5 lg:mx-0">
-                <CroppedImage alt={IMAGES.humanAlt} mobile={IMAGES.human} sizes="(min-width: 1024px) 680px, 100vw" disclosureSide="left" captionAt="top" />
+                <CroppedImage alt={IMAGES.humanAlt} mobile={IMAGES.human} sizes="(min-width: 1024px) 680px, 100vw" />
               </div>
               <h2 className="mt-7 text-[23px] font-bold leading-tight lg:text-[32px]">לא מוקד. אנשים שמבינים מה המשפחה צריכה.</h2>
               <p className="mt-3 text-[15.5px] leading-relaxed text-(--nc-muted) lg:mt-4 lg:max-w-[38rem] lg:text-[17px]">

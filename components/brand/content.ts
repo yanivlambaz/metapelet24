@@ -121,8 +121,6 @@ export const HOME_FAQ: FaqItem[] = [FAQ_URGENT, FAQ_GOVERNMENT, FAQ_PLACES, FAQ_
 
 export const LANDING_FAQ: FaqItem[] = [FAQ_URGENT, FAQ_GOVERNMENT, FAQ_PRICE, FAQ_TALK_FIRST];
 
-export const IMAGE_DISCLOSURE = "תמונה להמחשה · נוצרה בבינה מלאכותית";
-
 /**
  * Illustrative photographs composed so the full head, face and hands stay inside
  * the frame. The crop is the whole file: the container uses that aspect ratio.
