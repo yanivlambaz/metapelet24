@@ -182,6 +182,29 @@ export default function SecondFamily() {
             </div>
           </section>
 
+          <section aria-labelledby="sf-video-title" className="border-t border-(--nc-line) bg-white">
+            <div className={`${SECTION} grid items-center gap-6 py-10 lg:grid-cols-[minmax(0,1.15fr)_auto] lg:gap-14 lg:py-16`}>
+              <div>
+                <h2 id="sf-video-title" className={H2}>גם כשאתם לא שם, תמיד יש מי שידאג.</h2>
+                <p className="mt-3 max-w-[38rem] text-[15.5px] leading-relaxed text-(--nc-muted) lg:text-[17px]">
+                  לא תמיד אפשר להגיע להורים, אבל תמיד רוצים לדעת שהם בסדר. עם משפחה שנייה יש מי שמבקר, מתעניין, דואג לדברים הקטנים ומעדכן את המשפחה.
+                </p>
+              </div>
+              <video
+                className="mx-auto aspect-[9/16] w-full max-w-[300px] rounded-[4px] bg-(--nc-stone) sm:max-w-[320px]"
+                controls
+                playsInline
+                preload="metadata"
+                poster="/second-family-video-poster.jpg"
+                width={720}
+                height={1280}
+                aria-label="סרטון: גם כשאתם לא שם, תמיד יש מי שידאג"
+              >
+                <source src="/second-family-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </section>
+
           <section className="bg-(--sf-ivory)">
             <div className="mx-auto grid max-w-[1240px] lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-7">
