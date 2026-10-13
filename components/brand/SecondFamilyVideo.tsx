@@ -24,7 +24,7 @@ export default function SecondFamilyVideo() {
         controls={started}
         playsInline
         preload="metadata"
-        poster="/second-family-video-poster.jpg"
+        poster="/second-family-video-v4-poster.jpg"
         width={720}
         height={1280}
         aria-label="סרטון: גם כשאתם לא שם, תמיד יש מי שידאג"
@@ -43,7 +43,7 @@ export default function SecondFamilyVideo() {
           setPlaying(videoRef.current ? !videoRef.current.paused : false);
         }}
       >
-        <source src="/second-family-video.mp4" type="video/mp4" />
+        <source src="/second-family-video-v4.mp4" type="video/mp4" />
       </video>
       {playing ? null : (
         <>
