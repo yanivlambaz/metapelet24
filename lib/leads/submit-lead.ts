@@ -1,5 +1,7 @@
 "use client";
 
+import { captureLeadAttribution, readStoredConsent } from "@/lib/consent";
+
 export type LeadSubmission = {
   name: string;
   phone: string;
@@ -15,8 +17,10 @@ export type SubmitLeadResult = {
 };
 
 export async function submitLead(lead: LeadSubmission): Promise<SubmitLeadResult> {
-  const payload: LeadSubmission = {
+  const touches = captureLeadAttribution(readStoredConsent()?.preferences.marketing === true);
+  const payload = {
     ...lead,
+    ...(touches ? { attribution: touches } : {}),
     page:
       lead.page ||
       (typeof window !== "undefined" ? window.location.href : ""),
