@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sanitizeLeadAttribution } from "@/lib/consent";
 
 const SOURCE = "metapelet24";
 const SOURCE_DISPLAY_NAME = "אתר מטפלת";
@@ -116,7 +117,16 @@ export async function POST(request: Request) {
     );
   }
 
+  const touches = data.attribution && typeof data.attribution === "object"
+    ? data.attribution as Record<string, unknown>
+    : {};
+  const first = sanitizeLeadAttribution(touches.first);
+  const last = sanitizeLeadAttribution(touches.last);
   const crmPayload = {
+    ...last,
+    attribution_website: "siudi.org.il",
+    ...(Object.keys(first).length ? { attribution_first_touch_text: "Google Ads | " + JSON.stringify(first) } : {}),
+    ...(Object.keys(last).length ? { attribution_last_touch_text: "Google Ads | " + JSON.stringify(last) } : {}),
     name,
     phone,
     city,

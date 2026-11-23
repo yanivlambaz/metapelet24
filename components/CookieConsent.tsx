@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   applyConsent,
+  captureLeadAttribution,
   ConsentPreferences,
   OPEN_COOKIE_SETTINGS_EVENT,
   readStoredConsent,
@@ -185,6 +187,11 @@ function SettingsDialog({
 }
 
 export default function CookieConsent() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    captureLeadAttribution(readStoredConsent()?.preferences.marketing === true);
+  }, [pathname]);
   const [bannerVisible, setBannerVisible] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [current, setCurrent] = useState<ConsentPreferences>({
