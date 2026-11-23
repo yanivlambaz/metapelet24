@@ -63,6 +63,7 @@ export function saveConsent(preferences: ConsentPreferences): void {
  * gated on consent react immediately without a page reload.
  */
 export function applyConsent(preferences: ConsentPreferences): void {
+  captureLeadAttribution(preferences.marketing);
   window.dataLayer = window.dataLayer || [];
 
   // Consent Mode requires an `arguments` object, matching gtag() semantics.
@@ -88,4 +89,67 @@ export function applyConsent(preferences: ConsentPreferences): void {
 
 export function openCookieSettings(): void {
   window.dispatchEvent(new CustomEvent(OPEN_COOKIE_SETTINGS_EVENT));
+}
+
+const LEAD_ATTRIBUTION_KEY = "metapelet24:lead-attribution";
+const LEAD_ATTRIBUTION_PARAMS = [
+  "utm_source",
+  "utm_medium",
+  "campaign_id",
+  "adgroup_id",
+  "ad_id",
+  "keyword",
+  "match_type",
+  "target_id",
+  "network",
+  "device",
+  "gclid",
+  "utm_id",
+  "utm_campaign",
+  "utm_term",
+  "utm_content",
+  "gbraid",
+  "wbraid",
+] as const;
+
+type LeadAttribution = Partial<Record<(typeof LEAD_ATTRIBUTION_PARAMS)[number], string>>;
+type LeadTouches = { first: LeadAttribution; last: LeadAttribution };
+
+export function sanitizeLeadAttribution(input: unknown): LeadAttribution {
+  const fields: LeadAttribution = {};
+  if (!input || typeof input !== "object") return fields;
+  for (const key of LEAD_ATTRIBUTION_PARAMS) {
+    const raw = (input as Record<string, unknown>)[key];
+    if (typeof raw !== "string") continue;
+    const value = raw.trim();
+    if (value && !/^\{[^}]+\}$/.test(value)) fields[key] = value.slice(0, 500);
+  }
+  return fields;
+}
+
+export function captureLeadAttribution(marketingAllowed: boolean): LeadTouches | undefined {
+  if (typeof window === "undefined") return undefined;
+  try {
+    if (!marketingAllowed) {
+      window.sessionStorage.removeItem(LEAD_ATTRIBUTION_KEY);
+      return undefined;
+    }
+
+    const raw = window.sessionStorage.getItem(LEAD_ATTRIBUTION_KEY);
+    const saved = raw ? JSON.parse(raw) : undefined;
+    const first = sanitizeLeadAttribution(saved?.first);
+    const last = sanitizeLeadAttribution(saved?.last);
+    const incoming = sanitizeLeadAttribution(
+      Object.fromEntries(new URLSearchParams(window.location.search)),
+    );
+    if (!Object.keys(incoming).length) {
+      return Object.keys(last).length ? { first, last } : undefined;
+    }
+
+    const touches = { first: Object.keys(first).length ? first : incoming, last: incoming };
+    window.sessionStorage.setItem(LEAD_ATTRIBUTION_KEY, JSON.stringify(touches));
+    return touches;
+  } catch {
+    return undefined;
+  }
 }
