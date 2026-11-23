@@ -125,8 +125,8 @@ export async function POST(request: Request) {
   const crmPayload = {
     ...last,
     attribution_website: "siudi.org.il",
-    ...(Object.keys(first).length ? { attribution_first_touch: JSON.stringify(first) } : {}),
-    ...(Object.keys(last).length ? { attribution_last_touch: JSON.stringify(last) } : {}),
+    ...(Object.keys(first).length ? { attribution_first_touch_text: "Google Ads | " + JSON.stringify(first) } : {}),
+    ...(Object.keys(last).length ? { attribution_last_touch_text: "Google Ads | " + JSON.stringify(last) } : {}),
     name,
     phone,
     city,
