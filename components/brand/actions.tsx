@@ -126,7 +126,7 @@ export function MobileCallBar({
           className="fixed inset-x-0 bottom-0 z-50 border-t border-(--nc-line) bg-white px-2.5 pt-2 lg:hidden"
           style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
         >
-          <div className="mx-auto flex max-w-lg items-stretch gap-1.5">
+          <div className="mx-auto flex max-w-lg items-center gap-2">
             <button
               type="button"
               onClick={() =>
@@ -140,7 +140,7 @@ export function MobileCallBar({
                   intro,
                 })
               }
-              className="flex min-h-12 basis-1/2 flex-[2] items-center justify-center rounded-[4px] bg-(--nc-ink) px-2 text-[14px] font-semibold text-white min-[360px]:min-h-14 min-[360px]:text-[15px]"
+              className="flex h-12 min-w-0 flex-1 items-center justify-center rounded-[4px] bg-(--nc-ink) px-3 text-[14px] font-semibold leading-none text-white"
             >
               השאירו פרטים
             </button>
@@ -148,10 +148,9 @@ export function MobileCallBar({
               href={phoneHref}
               aria-label={`התקשרו עכשיו: ${phoneDisplay}`}
               onClick={() => trackLeadEvent("phone_click", { source: "mobile-sticky" })}
-              className="flex min-h-12 min-w-[44px] flex-1 items-center justify-center gap-1 rounded-[4px] bg-(--nc-teal) px-1.5 text-[13px] font-semibold text-white min-[360px]:min-h-14 min-[360px]:gap-1.5 min-[360px]:text-[14px]"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[4px] bg-(--nc-teal) text-white"
             >
-              <IconPhone className="h-4 w-4 shrink-0" stroke={1.8} />
-              <span>התקשרו</span>
+              <IconPhone className="h-5 w-5" stroke={1.9} />
             </a>
             <a
               href={whatsappHref}
@@ -159,9 +158,9 @@ export function MobileCallBar({
               rel="noopener noreferrer"
               aria-label="פתיחת שיחת WhatsApp"
               onClick={() => trackLeadEvent("whatsapp_click", { source: "mobile-sticky" })}
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[4px] border border-(--nc-line) text-[#1DA851] min-[360px]:h-14 min-[360px]:w-14"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[4px] border border-(--nc-line) text-[#1DA851]"
             >
-              <IconWhatsApp className="h-6 w-6 min-[360px]:h-7 min-[360px]:w-7" />
+              <IconWhatsApp className="h-6 w-6" />
             </a>
           </div>
         </div>
