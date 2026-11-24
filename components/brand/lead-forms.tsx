@@ -2,6 +2,7 @@
 
 import { useEffect, useId } from "react";
 import Link from "next/link";
+import { buildWhatsAppUrl } from "@/lib/constants";
 import {
   CARE_OPTIONS,
   LEAD_MESSAGE_INTRO,
@@ -12,7 +13,7 @@ import {
   type CareOptionId,
   type LeadStatus,
 } from "@/lib/leads/use-lead-forms";
-import { CallButton } from "./actions";
+import { CallButton, WhatsAppLink } from "./actions";
 import { PROMISES } from "./content";
 import { IconBed, IconCheck, IconClock, IconClose, IconHands, IconHome, IconMoon, IconPerson } from "./icons";
 
@@ -56,14 +57,36 @@ function ErrorNote({ status }: { status: LeadStatus }) {
   );
 }
 
-function SuccessNote({ id, tone, title }: { id?: string; tone: Tone; title: string }) {
+function SuccessNote({
+  id,
+  tone,
+  title,
+  whatsappMessage,
+}: {
+  id?: string;
+  tone: Tone;
+  title: string;
+  whatsappMessage?: string;
+}) {
   return (
     <div id={id} role="status" className={`border-r-[3px] border-(--nc-teal) px-4 py-3.5 ${tone === "light" ? "bg-(--nc-teal-tint)" : "bg-white/10"}`}>
       <p className="flex items-center gap-2 text-[16px] font-bold">
         <IconCheck className="h-5 w-5 text-[#3FB7A6]" stroke={2.2} />
         {title}
       </p>
-      <p className={`mt-1 text-[14px] ${MUTED[tone]}`}>נפתחה גם שיחת WhatsApp, אם תרצו להוסיף פרטים.</p>
+      <p className={`mt-1 text-[14px] ${MUTED[tone]}`}>
+        רכז שירות יחזור אליכם לבירור הצרכים. משאירים שם וטלפון — בלי התחייבות.
+      </p>
+      {whatsappMessage ? (
+        <a
+          href={buildWhatsAppUrl(whatsappMessage)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`mt-3 inline-flex text-[14px] font-semibold underline underline-offset-4 ${tone === "light" ? "text-(--nc-ink)" : "text-white"}`}
+        >
+          אפשר גם להוסיף פרטים ב־WhatsApp
+        </a>
+      ) : null}
     </div>
   );
 }
@@ -74,7 +97,10 @@ export function QuickLeadForm({
   formType,
   intro = LEAD_MESSAGE_INTRO.landingPage,
   tone = "light",
-  buttonLabel = "חזרו אליי",
+  buttonLabel = "חזרו אליי עם פרטים על מטפל/ת",
+  city,
+  careType,
+  openWhatsApp = false,
   onSuccess,
 }: {
   formId: string;
@@ -82,26 +108,41 @@ export function QuickLeadForm({
   intro?: string;
   tone?: Tone;
   buttonLabel?: string;
+  city?: string;
+  careType?: string;
+  openWhatsApp?: boolean;
   onSuccess?: () => void;
 }) {
-  const { name, setName, phone, setPhone, submitted, status, handleSubmit } = useQuickLeadForm({
+  const { name, setName, phone, setPhone, submitted, status, handleSubmit, whatsappMessage } = useQuickLeadForm({
     formType,
     intro,
+    formId,
+    city,
+    careType,
+    openWhatsApp,
     onSuccess,
   });
 
   if (submitted) {
-    return <SuccessNote id={formId} tone={tone} title="קיבלנו את הפרטים. נחזור אליכם בהקדם." />;
+    return (
+      <SuccessNote
+        id={formId}
+        tone={tone}
+        title="קיבלנו את הפרטים. נחזור אליכם בהקדם."
+        whatsappMessage={whatsappMessage || undefined}
+      />
+    );
   }
 
   return (
-    <form id={formId} onSubmit={handleSubmit} dir="rtl">
+    <form id={formId} onSubmit={handleSubmit} dir="rtl" noValidate>
       <div className="grid gap-2">
         <label htmlFor={`${formId}-name`} className="sr-only">
           שם מלא
         </label>
         <input
           id={`${formId}-name`}
+          name="name"
           type="text"
           required
           autoComplete="name"
@@ -111,15 +152,16 @@ export function QuickLeadForm({
           className={INPUT[tone]}
         />
         <label htmlFor={`${formId}-phone`} className="sr-only">
-          טלפון
+          מספר טלפון
         </label>
         <input
           id={`${formId}-phone`}
+          name="phone"
           type="tel"
           inputMode="tel"
           required
           autoComplete="tel"
-          placeholder="טלפון לחזרה"
+          placeholder="מספר טלפון"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           className={`${INPUT[tone]} text-right`}
@@ -131,6 +173,56 @@ export function QuickLeadForm({
       <ErrorNote status={status} />
       <PrivacyNote tone={tone} />
     </form>
+  );
+}
+
+/** Compact hero / mid-page lead card with heading and reassurance. */
+export function LeadCaptureCard({
+  formId,
+  formType,
+  title = "צריכים מטפל או מטפלת? אנחנו כאן לעזור",
+  description = "השאירו שם ומספר טלפון, ורכז שירות אנושי יחזור אליכם לבירור הצרכים והתאמת מטפל.",
+  buttonLabel = "חזרו אליי עם פרטים על מטפל/ת",
+  reassurance = "שיחה ראשונית ללא התחייבות",
+  intro = LEAD_MESSAGE_INTRO.site,
+  tone = "light",
+  city,
+  careType,
+  className = "",
+}: {
+  formId: string;
+  formType: string;
+  title?: string;
+  description?: string;
+  buttonLabel?: string;
+  reassurance?: string;
+  intro?: string;
+  tone?: Tone;
+  city?: string;
+  careType?: string;
+  className?: string;
+}) {
+  return (
+    <div className={`${tone === "light" ? "border border-(--nc-line) bg-white" : "bg-white/5"} p-5 lg:p-6 ${className}`}>
+      <p className="text-[18px] font-bold leading-snug lg:text-[20px]">{title}</p>
+      <p className={`mt-1.5 text-[14px] leading-relaxed ${MUTED[tone]}`}>{description}</p>
+      <p className={`mt-2 text-[13px] font-semibold ${tone === "light" ? "text-(--nc-teal)" : "text-[#7FC8BC]"}`}>{reassurance}</p>
+      <div className="mt-4">
+        <QuickLeadForm
+          formId={formId}
+          formType={formType}
+          intro={intro}
+          tone={tone}
+          buttonLabel={buttonLabel}
+          city={city}
+          careType={careType}
+          openWhatsApp={false}
+        />
+      </div>
+      <p className={`mt-3 text-[12.5px] leading-relaxed ${MUTED[tone]}`}>
+        משאירים שם וטלפון, רכז שירות חוזר אליכם, מבין את הצרכים ובודק אפשרויות מתאימות.
+      </p>
+    </div>
   );
 }
 
@@ -146,7 +238,7 @@ const CARE_ICONS: Record<CareOptionId, typeof IconBed> = {
 const OPTION =
   "flex items-center gap-3 rounded-[4px] border bg-white px-3.5 py-3.5 text-right text-[15px] font-semibold transition-colors hover:border-(--nc-teal)";
 
-/** Three-step homepage form. Lead logic lives in `useStepLeadForm`. */
+/** Three-step homepage form. Prefer LeadCaptureCard / QuickLeadForm for conversion. */
 export function StepLeadForm({
   defaultCity = "",
   defaultCareType = "",
@@ -286,7 +378,7 @@ export function StepLeadForm({
   );
 }
 
-/** Timed callback popup; same 30s timer and dismiss behaviour as the previous site popup. */
+/** Optional timed popup — prefer user-initiated CallbackProvider modal. */
 export function CallbackPopup({ formType }: { formType: string }) {
   const popup = useTimedPopup();
   const titleId = useId();
@@ -315,22 +407,28 @@ export function CallbackPopup({ formType }: { formType: string }) {
           <IconClose className="h-5 w-5" />
         </button>
         <h2 id={titleId} className="pl-10 text-[21px] font-bold leading-tight">
-          רוצים לדבר עם מישהו עכשיו?
+          רוצים שנחזור אליכם?
         </h2>
-        <p className="mt-1.5 text-[15px] text-(--nc-muted)">{PROMISES.human}. הדרך המהירה ביותר היא שיחת טלפון.</p>
-        <CallButton className="mt-4" />
+        <p className="mt-1.5 text-[15px] text-(--nc-muted)">{PROMISES.human}. השאירו שם וטלפון — שיחה ראשונית ללא התחייבות.</p>
+        <div className="mt-4">
+          <QuickLeadForm
+            formId="popup-lead-form"
+            formType={formType}
+            intro={LEAD_MESSAGE_INTRO.site}
+            buttonLabel="חזרו אליי עם פרטים על מטפל/ת"
+            openWhatsApp={false}
+            onSuccess={() => setTimeout(close, 2000)}
+          />
+        </div>
         <div className="my-4 flex items-center gap-3 text-[13px] text-(--nc-muted)">
           <span className="h-px flex-1 bg-(--nc-line)" />
-          או השאירו פרטים ונחזור אליכם
+          או התקשרו עכשיו
           <span className="h-px flex-1 bg-(--nc-line)" />
         </div>
-        <QuickLeadForm
-          formId="popup-lead-form"
-          formType={formType}
-          intro={LEAD_MESSAGE_INTRO.site}
-          buttonLabel="שליחה"
-          onSuccess={() => setTimeout(close, 2000)}
-        />
+        <CallButton />
+        <div className="mt-3">
+          <WhatsAppLink />
+        </div>
       </div>
     </div>
   );

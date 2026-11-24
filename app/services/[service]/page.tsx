@@ -48,6 +48,15 @@ export default async function ServicePage({ params }: PageProps) {
     .filter((item) => item.slug !== service.slug)
     .map((item) => ({ href: `/services/${item.slug}`, label: item.name }));
 
+  const formTitles: Record<string, string> = {
+    "hospital-caregiver": "צריכים מישהו שישגיח על בן משפחה בבית החולים?",
+    "night-caregiver": "מחפשים מטפלת להשגחת לילה?",
+    "post-surgery": "זקוקים לעזרה בבית לאחר ניתוח או אשפוז?",
+    dementia: "מחפשים ליווי מתאים לבן משפחה עם דמנציה?",
+    elderly: "מחפשים מטפל או מטפלת לקשיש בבית?",
+  };
+  const formTitle = formTitles[service.slug] || `צריכים ${service.name}? אנחנו כאן לעזור`;
+
   return (
     <BrandFrame>
       <JsonLd
@@ -62,6 +71,9 @@ export default async function ServicePage({ params }: PageProps) {
           title={service.h1}
           lede={`${service.description}. ${PROMISES.human}. ${PROMISES.urgent}, ${PROMISES.urgentQualifier}.`}
           whatsappMessage={`שלום, אני מחפש/ת ${service.name}`}
+          formType={`service-${service.slug}`}
+          careType={service.careType}
+          formTitle={formTitle}
         />
         <section className="bg-white">
           <div className="mx-auto max-w-[820px] px-5 py-8 lg:max-w-[1100px] lg:px-8">
@@ -71,12 +83,17 @@ export default async function ServicePage({ params }: PageProps) {
         <LocalStory
           heading="איך זה נראה בפועל"
           body={service.content}
-          asideTitle="מה קורה אחרי שמתקשרים"
+          asideTitle="מה קורה אחרי שמשאירים פרטים"
           aside={[
-            { name: "מתקשרים", description: "עונה לכם אדם, לא מרכזייה." },
+            { name: "משאירים שם וטלפון", description: "רכז שירות חוזר אליכם — אדם, לא מרכזייה." },
             { name: "מספרים מה קרה", description: "רכז או רכזת שואלים מה המטופל צריך, ואיפה." },
             { name: "מתאמים הגעה", description: `${PROMISES.urgent}, ${PROMISES.urgentQualifier}.` },
           ]}
+          formType={`service-${service.slug}-story`}
+          careType={service.careType}
+          callbackHeading={formTitle}
+          callbackCopy="ספרו לנו בקצרה מה אתם צריכים, ונחזור אליכם עם האפשרויות המתאימות."
+          callbackCta="השאירו פרטים לשיחה חוזרת"
         />
         <RelatedLinks title="שירותים נוספים" links={others} />
         <RelatedLinks
@@ -87,6 +104,8 @@ export default async function ServicePage({ params }: PageProps) {
           heading={`שאלות על ${service.name}`}
           faqs={service.faqs.map((item) => ({ q: item.question, a: item.answer }))}
           defaultCareType={service.careType}
+          formType={`service-${service.slug}-final`}
+          formTitle={formTitle}
           whatsappMessage={`שלום, אני מחפש/ת ${service.name}`}
         />
       </main>

@@ -2,15 +2,16 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import BrandHeader from "./BrandHeader";
 import { CallButton, MobileCallBar, WhatsAppLink } from "./actions";
+import { ContextualCallback } from "./ContextualCallback";
 import { IMAGES, LICENSE, PROMISES } from "./content";
 import { IconChevron } from "./icons";
-import { CallbackPopup, StepLeadForm } from "./lead-forms";
+import { LeadCaptureCard } from "./lead-forms";
 import { BrandFooter, BrandRoot, CroppedImage, FaqList, LicensePanel } from "./ui";
 import type { FaqItem } from "./content";
 
 const SECTION = "mx-auto max-w-[820px] px-5 lg:max-w-[1100px] lg:px-8";
 
-export function BrandFrame({ children, popupFormType = "popup" }: { children: ReactNode; popupFormType?: string }) {
+export function BrandFrame({ children }: { children: ReactNode; popupFormType?: string }) {
   return (
     <BrandRoot>
       <div className="bg-(--nc-ink) text-white">
@@ -25,7 +26,6 @@ export function BrandFrame({ children, popupFormType = "popup" }: { children: Re
       {children}
       <BrandFooter variant="full" />
       <MobileCallBar />
-      <CallbackPopup formType={popupFormType} />
     </BrandRoot>
   );
 }
@@ -48,35 +48,77 @@ export function LocalHero({
   title,
   lede,
   whatsappMessage,
+  formType = "local-hero",
+  city,
+  careType,
+  formTitle = "מחפשים מטפל או מטפלת באזור שלכם?",
+  formDescription = "השאירו שם ומספר טלפון, ורכז שירות יחזור אליכם לבירור הצרכים והתאמת מטפל.",
 }: {
   kicker: string;
   title: string;
   lede: string;
   whatsappMessage?: string;
+  formType?: string;
+  city?: string;
+  careType?: string;
+  formTitle?: string;
+  formDescription?: string;
 }) {
   return (
     <section className="border-b border-(--nc-line)">
-      <div className={`${SECTION} grid gap-8 py-6 lg:grid-cols-12 lg:items-center lg:py-14`}>
-        <div className="lg:col-span-7">
+      <div className={`${SECTION} grid gap-6 py-6 lg:grid-cols-12 lg:items-start lg:gap-10 lg:py-14`}>
+        <div className="lg:col-span-6">
           <p className="text-[13px] font-semibold text-(--nc-teal)">{kicker}</p>
-          <h1 className="mt-2 text-[30px] font-bold leading-[1.15] tracking-[-0.015em] text-balance lg:text-[46px] lg:leading-[1.08]">
+          <h1 className="mt-2 text-[28px] font-bold leading-[1.15] tracking-[-0.015em] text-balance lg:text-[42px] lg:leading-[1.08]">
             {title}
           </h1>
-          <p className="mt-3 max-w-[38rem] text-[16.5px] leading-relaxed text-(--nc-muted) lg:text-[18px]">{lede}</p>
-          <CallButton id="hero-call" size="lg" className="mt-5 lg:max-w-[30rem]" />
-          <div className="mt-2.5 flex items-center justify-between gap-3 text-[13px] text-(--nc-muted) lg:max-w-[30rem]">
+          <p className="mt-3 max-w-[38rem] text-[16px] leading-relaxed text-(--nc-muted) lg:text-[17.5px]">{lede}</p>
+
+          <div className="mt-4 lg:hidden">
+            <LeadCaptureCard
+              formId="local-hero-mobile"
+              formType={formType}
+              title={formTitle}
+              description={formDescription}
+              city={city}
+              careType={careType}
+            />
+          </div>
+
+          <div className="mt-5 hidden lg:block lg:max-w-[30rem]">
+            <CallButton id="hero-call" size="lg" label="צריכים מטפלת? דברו איתנו" />
+            <div className="mt-2.5 flex items-center justify-between gap-3 text-[13px] text-(--nc-muted)">
+              <span>{PROMISES.human}</span>
+              <WhatsAppLink message={whatsappMessage} />
+            </div>
+          </div>
+
+          <div className="mt-3 flex items-center justify-between gap-3 text-[13px] text-(--nc-muted) lg:hidden">
             <span>{PROMISES.human}</span>
             <WhatsAppLink message={whatsappMessage} />
           </div>
         </div>
-        <div className="lg:col-span-5">
-          <CroppedImage
-            alt={IMAGES.heroAlt}
-            mobile={IMAGES.heroMobile}
-            desktop={IMAGES.heroDesktop}
-            sizes="(min-width: 1024px) 420px, 100vw"
-            eager
-          />
+
+        <div className="lg:col-span-6">
+          <div className="hidden lg:block">
+            <LeadCaptureCard
+              formId="local-hero-desktop"
+              formType={formType}
+              title={formTitle}
+              description={formDescription}
+              city={city}
+              careType={careType}
+            />
+          </div>
+          <div className="-mx-5 mt-5 lg:mx-0 lg:mt-5">
+            <CroppedImage
+              alt={IMAGES.heroAlt}
+              mobile={IMAGES.heroMobile}
+              desktop={IMAGES.heroDesktop}
+              sizes="(min-width: 1024px) 480px, 100vw"
+              eager
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -101,11 +143,23 @@ export function LocalStory({
   body,
   asideTitle,
   aside,
+  callbackHeading,
+  callbackCopy,
+  callbackCta,
+  formType = "local-story",
+  city,
+  careType,
 }: {
   heading: string;
   body: string;
   asideTitle: string;
   aside: { name: string; description: string }[];
+  callbackHeading?: string;
+  callbackCopy?: string;
+  callbackCta?: string;
+  formType?: string;
+  city?: string;
+  careType?: string;
 }) {
   return (
     <section className="bg-white">
@@ -115,6 +169,18 @@ export function LocalStory({
           <div className="mt-5">
             <Prose>{body}</Prose>
           </div>
+          {callbackHeading ? (
+            <div className="mt-8">
+              <ContextualCallback
+                formType={formType}
+                heading={callbackHeading}
+                copy={callbackCopy || "השאירו פרטים, ורכז שירות יחזור אליכם."}
+                cta={callbackCta || "בקשו שיחה חוזרת"}
+                city={city}
+                careType={careType}
+              />
+            </div>
+          ) : null}
         </div>
         <div className="mt-8 lg:col-span-5 lg:mt-0">
           <h2 className="text-[15px] font-semibold text-(--nc-teal)">{asideTitle}</h2>
@@ -176,12 +242,16 @@ export function LocalClose({
   defaultCity,
   defaultCareType,
   whatsappMessage,
+  formType = "local-final",
+  formTitle = "השאירו פרטים ונחזור אליכם",
 }: {
   heading: string;
   faqs: FaqItem[];
   defaultCity?: string;
   defaultCareType?: string;
   whatsappMessage?: string;
+  formType?: string;
+  formTitle?: string;
 }) {
   return (
     <>
@@ -198,15 +268,23 @@ export function LocalClose({
           <div className="lg:col-span-5">
             <h2 className="text-[28px] font-bold leading-tight lg:text-[36px]">רוצים שנחזור אליכם?</h2>
             <p className="mt-3 text-[16px] leading-relaxed text-white/75">
-              {PROMISES.urgent}, {PROMISES.urgentQualifier}.
+              שם ומספר טלפון מספיקים. רכז שירות יבין את הצורך ויבדוק אפשרויות — ללא התחייבות.
             </p>
             <CallButton className="mt-6" />
             <div className="mt-4">
               <WhatsAppLink tone="light" message={whatsappMessage} />
             </div>
           </div>
-          <div className="mt-8 bg-white p-5 text-(--nc-ink) lg:col-span-7 lg:mt-0 lg:p-7">
-            <StepLeadForm defaultCity={defaultCity} defaultCareType={defaultCareType} />
+          <div className="mt-8 lg:col-span-7 lg:mt-0">
+            <LeadCaptureCard
+              formId="local-final"
+              formType={formType}
+              title={formTitle}
+              description="השאירו שם ומספר טלפון בלבד. בלי בחירת שירות ובלי טפסים ארוכים."
+              city={defaultCity}
+              careType={defaultCareType}
+              className="border-0"
+            />
           </div>
         </div>
       </section>

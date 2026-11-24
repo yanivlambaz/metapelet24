@@ -72,7 +72,7 @@ export const SITUATIONS = [
 export type SituationId = (typeof SITUATIONS)[number]["id"];
 
 export const PROCESS = [
-  { title: "מתקשרים", line: "עונה לכם אדם, לא מרכזייה." },
+  { title: "משאירים שם וטלפון — או מתקשרים", line: "רכז שירות אנושי חוזר אליכם. עונה אדם, לא מרכזייה." },
   { title: "מדברים עם רכז או רכזת", line: "מספרים מה קרה ומה המטופל צריך." },
   { title: "בודקים ומתאימים מטפל", line: "לפי המצב, השעות והמקום." },
   { title: "מתאמים הגעה", line: "לבית או לבית החולים." },

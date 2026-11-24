@@ -57,6 +57,10 @@ export default async function CityPage({ params }: PageProps) {
           kicker={`${LICENSE.statement} · רישיון ${LICENSE.number}`}
           title={`מטפלת פרטית ב${city.name}`}
           lede={`${PROMISES.human}. ${PROMISES.urgent}, ${PROMISES.urgentQualifier}.`}
+          formType={`city-${city.slug}`}
+          city={city.name}
+          formTitle={`מחפשים מטפל או מטפלת ב${city.name}?`}
+          formDescription="השאירו שם ומספר טלפון, ורכז שירות יחזור אליכם לבדיקת זמינות באזור."
         />
         <section className="bg-white">
           <div className="mx-auto max-w-[820px] px-5 py-8 lg:max-w-[1100px] lg:px-8">
@@ -75,6 +79,11 @@ export default async function CityPage({ params }: PageProps) {
           body={city.intro}
           asideTitle={`בתי חולים ב${city.name}`}
           aside={city.hospitals}
+          formType={`city-${city.slug}-story`}
+          city={city.name}
+          callbackHeading={`רוצים לבדוק זמינות ב${city.name}?`}
+          callbackCopy="רכז שירות יבדוק איתכם מי זמין באזור — שיחה אנושית, לא בדיקה אוטומטית."
+          callbackCta="בדקו זמינות עם רכז שירות"
         />
         <PlaceList
           title={`שכונות ואזורים ב${city.name}`}
@@ -87,6 +96,8 @@ export default async function CityPage({ params }: PageProps) {
           heading={`שאלות על טיפול ב${city.name}`}
           faqs={city.faqs.map((item) => ({ q: item.question, a: item.answer }))}
           defaultCity={city.name}
+          formType={`city-${city.slug}-final`}
+          formTitle={`מחפשים מטפל או מטפלת ב${city.name}?`}
         />
       </main>
     </BrandFrame>

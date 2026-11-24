@@ -1,8 +1,9 @@
 import BrandHeader from "./BrandHeader";
 import { CallButton, MobileCallBar, WhatsAppLink } from "./actions";
+import { ContextualCallback } from "./ContextualCallback";
 import { COVERAGE_HEADLINE, IMAGES, LANDING_FAQ, PROMISES, PROMISE_LEDGER, type PromiseId } from "./content";
 import { IconClock, IconDocument, IconMap, IconPerson } from "./icons";
-import { CallbackPopup, QuickLeadForm } from "./lead-forms";
+import { LeadCaptureCard, QuickLeadForm } from "./lead-forms";
 import { BrandFooter, BrandRoot, CroppedImage, FaqList, LicensePanel, LicenseStrip, ProcessList } from "./ui";
 
 const PROMISE_ICONS: Record<PromiseId, typeof IconClock> = {
@@ -21,24 +22,36 @@ export default function BrandLanding() {
       <BrandHeader variant="landing" />
 
       <main>
-        {/* HERO */}
+        {/* HERO — form first */}
         <section>
-          <div className={`${SECTION} pt-5 lg:grid lg:grid-cols-12 lg:gap-14 lg:py-16`}>
-            <div className="lg:col-span-7 lg:pt-4">
-              <h1 className="text-[28px] font-bold leading-[1.15] tracking-[-0.015em] text-balance min-[390px]:text-[30px] lg:text-[54px] lg:leading-[1.07]">
+          <div className={`${SECTION} pt-5 lg:grid lg:grid-cols-12 lg:gap-10 lg:py-14`}>
+            <div className="lg:col-span-6 lg:pt-2">
+              <h1 className="text-[28px] font-bold leading-[1.15] tracking-[-0.015em] text-balance min-[390px]:text-[30px] lg:text-[48px] lg:leading-[1.07]">
                 צריכים מטפל בדחיפות? עונים לכם עכשיו.
               </h1>
-              <p className="mt-3 text-[16px] leading-normal text-(--nc-muted) lg:mt-5 lg:max-w-[36rem] lg:text-[20px]">
+              <p className="mt-3 text-[16px] leading-normal text-(--nc-muted) lg:mt-5 lg:max-w-[36rem] lg:text-[19px]">
                 <span className="font-semibold text-(--nc-ink)">{PROMISES.urgent}</span>, בהתאם לזמינות באזור.{" "}
                 {COVERAGE_HEADLINE}.
               </p>
-              <CallButton id="hero-call" size="lg" className="mt-5 lg:mt-9 lg:max-w-[30rem]" />
-              <div className="mt-2.5 flex items-center justify-between gap-3 text-[13px] text-(--nc-muted) lg:mt-4 lg:max-w-[30rem] lg:text-[14px]">
-                <span>{PROMISES.human} · ללא התחייבות</span>
-                <WhatsAppLink className="!text-[13px] lg:!text-[14px]" />
+
+              <div className="mt-4 lg:hidden">
+                <LeadCaptureCard formId="lp-hero-mobile" formType="landing-page" />
               </div>
 
-              <ol className="mt-12 hidden border-t border-(--nc-line) lg:grid lg:grid-cols-2">
+              <div className="mt-5 hidden lg:block lg:max-w-[30rem]">
+                <CallButton id="hero-call" size="lg" label="צריכים מטפלת? דברו איתנו" />
+                <div className="mt-2.5 flex items-center justify-between gap-3 text-[13px] text-(--nc-muted) lg:text-[14px]">
+                  <span>{PROMISES.human} · ללא התחייבות</span>
+                  <WhatsAppLink className="!text-[13px] lg:!text-[14px]" />
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center justify-between gap-3 text-[13px] text-(--nc-muted) lg:hidden">
+                <span>{PROMISES.human} · ללא התחייבות</span>
+                <WhatsAppLink className="!text-[13px]" />
+              </div>
+
+              <ol className="mt-10 hidden border-t border-(--nc-line) lg:grid lg:grid-cols-2">
                 {PROMISE_LEDGER.map((item) => {
                   const Icon = PROMISE_ICONS[item.id];
                   return (
@@ -54,21 +67,18 @@ export default function BrandLanding() {
               </ol>
             </div>
 
-            <div className="-mx-5 mt-7 lg:col-span-5 lg:mx-0 lg:mt-0">
-              <div className="lg:border lg:border-(--nc-line)">
+            <div className="mt-6 lg:col-span-6 lg:mt-0">
+              <div className="hidden lg:block">
+                <LeadCaptureCard formId="lp-lead-form-hero" formType="landing-page" />
+              </div>
+              <div className="-mx-5 mt-5 lg:mx-0 lg:mt-5">
                 <CroppedImage
                   alt={IMAGES.heroAlt}
                   mobile={IMAGES.heroMobile}
                   desktop={IMAGES.heroDesktop}
                   sizes="(min-width: 1024px) 480px, 100vw"
+                  eager
                 />
-                <div className="bg-(--nc-stone) px-5 py-6 lg:bg-white lg:px-7 lg:py-7">
-                  <p className="text-[18px] font-bold lg:text-[19px]">מעדיפים שנחזור אליכם?</p>
-                  <p className="mt-1 text-[14px] text-(--nc-muted)">השאירו שם ומספר, ורכז שירות יחזור אליכם בהקדם.</p>
-                  <div className="mt-4">
-                    <QuickLeadForm formId="lp-lead-form-hero" formType="landing-page" />
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -95,9 +105,18 @@ export default function BrandLanding() {
         {/* PROCESS */}
         <section className="bg-(--nc-stone)">
           <div className={`${SECTION} py-10 lg:py-16`}>
-            <h2 className="text-[23px] font-bold leading-tight lg:text-[32px]">מה קורה כשמתקשרים</h2>
+            <h2 className="text-[23px] font-bold leading-tight lg:text-[32px]">מה קורה אחרי שמשאירים פרטים</h2>
             <div className="mt-6 lg:mt-10">
               <ProcessList />
+            </div>
+            <div className="mt-8">
+              <ContextualCallback
+                formType="landing-process"
+                heading="אפשר להתחיל בשיחה קצרה"
+                copy="אין צורך לדעת מראש איזה שירות מתאים. נשמח להבין את הצורך ולסייע."
+                cta="בקשו שיחזרו אליכם"
+                className="bg-white"
+              />
             </div>
           </div>
         </section>
@@ -109,13 +128,21 @@ export default function BrandLanding() {
               <div className="-mx-5 lg:mx-0">
                 <CroppedImage alt={IMAGES.humanAlt} mobile={IMAGES.human} sizes="(min-width: 1024px) 680px, 100vw" />
               </div>
-              <h2 className="mt-7 text-[23px] font-bold leading-tight lg:text-[32px]">לא מוקד. אנשים שמבינים מה המשפחה צריכה.</h2>
+              <h2 className="mt-7 text-[23px] font-bold leading-tight lg:text-[32px]">מאחורי כל פנייה עומד אדם שמקשיב</h2>
               <p className="mt-3 text-[15.5px] leading-relaxed text-(--nc-muted) lg:mt-4 lg:max-w-[38rem] lg:text-[17px]">
-                הרכז שעונה לכם שואל מה קרה, מה המטופל צריך ואיפה הוא נמצא, ומתאים מטפל לפי זה. אתם יודעים בכל שלב מה קורה.
+                כשאתם פונים אלינו, אתם מדברים עם רכז או רכזת שירות שמבינים את הצורך, בודקים את האפשרויות ומסייעים למצוא פתרון מתאים.
               </p>
             </div>
             <div className="mt-8 lg:col-span-5 lg:mt-0">
               <LicensePanel />
+              <div className="mt-6">
+                <ContextualCallback
+                  formType="landing-availability"
+                  heading="רוצים לבדוק זמינות באזור שלכם?"
+                  copy="רכז שירות יבדוק איתכם מי זמין — שיחה אנושית, לא בדיקה אוטומטית."
+                  cta="בדקו זמינות עם רכז שירות"
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -131,19 +158,19 @@ export default function BrandLanding() {
         </section>
 
         {/* FINAL */}
-        <section className="bg-(--nc-ink) text-white">
+        <section id="lead-form" className="scroll-mt-24 bg-(--nc-ink) text-white">
           <div className={`${SECTION} py-11 lg:grid lg:grid-cols-12 lg:gap-14 lg:py-16`}>
-            <div className="lg:col-span-7">
-              <h2 className="text-[26px] font-bold leading-tight lg:text-[40px]">אפשר להתחיל בשיחה אחת</h2>
+            <div className="lg:col-span-6">
+              <h2 className="text-[26px] font-bold leading-tight lg:text-[40px]">השאירו מספר טלפון — ונחזור אליכם</h2>
               <p className="mt-2.5 text-[16px] text-white/75 lg:text-[18px]">
-                {PROMISES.urgent}, {PROMISES.urgentQualifier}.
+                {PROMISES.urgent}, {PROMISES.urgentQualifier}. שיחה ראשונית ללא התחייבות.
               </p>
               <CallButton size="lg" className="mt-6 lg:max-w-[30rem]" />
               <WhatsAppLink tone="light" className="mt-4" />
             </div>
-            <div className="mt-9 border-t border-white/15 pt-7 lg:col-span-5 lg:mt-0 lg:border-t-0 lg:pt-0">
+            <div className="mt-9 border-t border-white/15 pt-7 lg:col-span-6 lg:mt-0 lg:border-t-0 lg:pt-0">
               <p className="text-[17px] font-bold">מעדיפים שנחזור אליכם?</p>
-              <p className="mt-1 text-[14px] text-white/65">השאירו שם ומספר, ונחזור אליכם בהקדם.</p>
+              <p className="mt-1 text-[14px] text-white/65">השאירו שם ומספר בלבד.</p>
               <div className="mt-4">
                 <QuickLeadForm formId="lp-lead-form-final" formType="landing-page" tone="dark" />
               </div>
@@ -154,7 +181,6 @@ export default function BrandLanding() {
 
       <BrandFooter variant="minimal" />
       <MobileCallBar />
-      <CallbackPopup formType="landing-page-popup" />
     </BrandRoot>
   );
 }

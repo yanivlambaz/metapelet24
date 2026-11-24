@@ -4,6 +4,7 @@ import { PHONE_HREF } from "@/lib/constants";
 import { cities } from "@/lib/data/cities";
 import BrandHeader from "./BrandHeader";
 import { CallButton, MobileCallBar, WhatsAppLink } from "./actions";
+import { ContextualCallback } from "./ContextualCallback";
 import {
   COVERAGE_HEADLINE,
   HOME_FAQ,
@@ -30,7 +31,7 @@ import {
   IconPerson,
   IconRefresh,
 } from "./icons";
-import { CallbackPopup, StepLeadForm } from "./lead-forms";
+import { LeadCaptureCard } from "./lead-forms";
 import { SECOND_FAMILY_IMAGES } from "./second-family-copy";
 import {
   BrandFooter,
@@ -91,41 +92,72 @@ export default function BrandHome() {
       <BrandHeader variant="home" />
 
       <main>
-        {/* HERO */}
+        {/* HERO — form above the fold */}
         <section>
-          <div className={`${SECTION} lg:grid lg:grid-cols-12 lg:items-center lg:gap-14 lg:py-16`}>
-            <div className="-mx-5 lg:order-2 lg:col-span-6 lg:mx-0">
-              <CroppedImage
-                alt={IMAGES.heroAlt}
-                mobile={IMAGES.heroMobile}
-                desktop={IMAGES.heroDesktop}
-                sizes="(min-width: 1024px) 580px, 100vw"
-                eager
-              />
-              <div className="mt-6 hidden lg:block">
-                <PromiseLedger />
-              </div>
-            </div>
-
-            <div className="pt-4 lg:order-1 lg:col-span-6 lg:pt-0">
+          <div className={`${SECTION} lg:grid lg:grid-cols-12 lg:items-start lg:gap-10 lg:py-14`}>
+            {/* RIGHT (RTL first): copy */}
+            <div className="pt-4 lg:col-span-6 lg:pt-2">
               <p className="hidden items-center gap-2.5 text-[14px] font-semibold text-(--nc-teal) lg:flex">
                 <span className="h-px w-6 bg-(--nc-teal)" />
                 {LICENSE.statement}
               </p>
-              <h1 className="text-[26px] font-bold leading-[1.18] tracking-[-0.015em] text-balance min-[390px]:text-[28px] lg:mt-5 lg:text-[48px] lg:leading-[1.1]">
+              <h1 className="text-[26px] font-bold leading-[1.18] tracking-[-0.015em] text-balance min-[390px]:text-[28px] lg:mt-5 lg:text-[44px] lg:leading-[1.1]">
                 {COVERAGE_HEADLINE}
               </h1>
-              <p className="mt-2 text-[16px] leading-normal text-(--nc-muted) lg:mt-6 lg:text-[20px]">
+              <p className="mt-2 text-[16px] leading-normal text-(--nc-muted) lg:mt-5 lg:text-[19px]">
                 <span className="font-semibold text-(--nc-ink)">{PROMISES.human}.</span>{" "}
                 <span className="font-semibold text-(--nc-ink)">{PROMISES.urgent}</span>, בהתאם לזמינות באזור.
               </p>
-              <p className="mt-3 hidden text-[17px] leading-relaxed text-(--nc-muted) lg:block">
-                כשמישהו יקר צריך השגחה, לא צריך לחכות. רכזי השירות שלנו מבינים מה קרה ומתאמים מטפל לבית או לבית החולים.
+              <p className="mt-3 hidden text-[16.5px] leading-relaxed text-(--nc-muted) lg:block">
+                כשמישהו יקר צריך השגחה — רכז שירות אנושי מקשיב, מבין מה קרה ומתאים מטפל לבית או לבית החולים. בלי התחייבות מראש.
               </p>
-              <CallButton id="hero-call" size="lg" className="mt-4 lg:mt-9 lg:max-w-[30rem]" />
-              <div className="mt-2.5 flex items-center justify-between gap-3 text-[13px] text-(--nc-muted) lg:mt-4 lg:max-w-[30rem] lg:text-[14px]">
-                <span>עונה לכם אדם, לא מרכזייה</span>
-                <WhatsAppLink className="!text-[13px] lg:!text-[14px]" />
+
+              {/* Mobile: form immediately after headline — before imagery */}
+              <div className="mt-3 lg:hidden">
+                <LeadCaptureCard
+                  formId="home-hero-mobile"
+                  formType="home-hero"
+                  className="!p-4 shadow-sm"
+                  description="השאירו שם ומספר — רכז שירות אנושי יחזור אליכם."
+                />
+              </div>
+
+              <div className="mt-4 hidden lg:block lg:max-w-[30rem]">
+                <CallButton id="hero-call" size="lg" label="צריכים מטפלת? דברו איתנו" />
+                <div className="mt-3 flex items-center justify-between gap-3 text-[14px] text-(--nc-muted)">
+                  <span>עונה לכם אדם, לא מרכזייה</span>
+                  <WhatsAppLink className="!text-[14px]" />
+                </div>
+              </div>
+
+              <div className="mt-5 flex items-center justify-between gap-3 text-[13px] text-(--nc-muted) lg:hidden">
+                <a
+                  href={PHONE_HREF}
+                  className="font-semibold text-(--nc-teal) underline decoration-(--nc-teal)/40 underline-offset-4"
+                >
+                  או התקשרו עכשיו
+                </a>
+                <WhatsAppLink className="!text-[13px]" />
+              </div>
+
+              <div className="mt-8 hidden lg:block">
+                <PromiseLedger />
+              </div>
+            </div>
+
+            {/* LEFT: desktop form + imagery */}
+            <div className="mt-6 lg:col-span-6 lg:mt-0">
+              <div className="hidden lg:block">
+                <LeadCaptureCard formId="home-hero-desktop" formType="home-hero" />
+              </div>
+              <div className="-mx-5 mt-5 lg:mx-0 lg:mt-6">
+                <CroppedImage
+                  alt={IMAGES.heroAlt}
+                  mobile={IMAGES.heroMobile}
+                  desktop={IMAGES.heroDesktop}
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  eager
+                />
               </div>
             </div>
           </div>
@@ -173,6 +205,14 @@ export default function BrandHome() {
               })}
             </ul>
           </div>
+          <div className={`${SECTION} pb-10 lg:pb-16`}>
+            <ContextualCallback
+              formType="home-services"
+              heading="מתלבטים איזה מטפל מתאים?"
+              copy="ספרו לנו בקצרה מה אתם צריכים, ונחזור אליכם עם האפשרויות המתאימות."
+              cta="השאירו פרטים לשיחה חוזרת"
+            />
+          </div>
         </section>
 
         {/* PROCESS */}
@@ -181,10 +221,10 @@ export default function BrandHome() {
             <div className="lg:flex lg:items-end lg:justify-between">
               <div>
                 <SectionLabel index="02">איך זה עובד</SectionLabel>
-                <h2 className={H2}>מה קורה אחרי שמתקשרים</h2>
+                <h2 className={H2}>מה קורה אחרי שמשאירים פרטים</h2>
               </div>
               <p className="mt-2 text-[15px] text-(--nc-muted) lg:mt-0 lg:max-w-sm lg:text-[16px]">
-                ארבעה שלבים, בלי טפסים מסובכים ובלי המתנה למענה ממוחשב.
+                משאירים שם וטלפון — רכז שירות חוזר אליכם, מבין את הצורך ובודק אפשרויות מתאימות.
               </p>
             </div>
             <div className="mt-7 lg:mt-12">
@@ -195,6 +235,15 @@ export default function BrandHome() {
               <p className="text-[14.5px] leading-relaxed lg:text-[16px]">
                 <span className="font-semibold">{PROMISES.urgent}</span>, לבית המטופל או לבית החולים, {PROMISES.urgentQualifier}.
               </p>
+            </div>
+            <div className="mt-8 lg:mt-12">
+              <ContextualCallback
+                formType="home-process"
+                heading="אפשר להתחיל בשיחה קצרה"
+                copy="אין צורך לדעת מראש איזה שירות מתאים. נשמח להבין את הצורך ולסייע."
+                cta="בקשו שיחזרו אליכם"
+                className="bg-white lg:bg-(--nc-teal-tint)"
+              />
             </div>
           </div>
         </section>
@@ -214,10 +263,13 @@ export default function BrandHome() {
                 אנשים, לא מוקד
               </SectionLabel>
               <h2 className="mt-3 text-[24px] font-bold leading-snug lg:text-[32px]">
-                המטרה שלנו פשוטה: שתסיימו את השיחה רגועים יותר ממה שהתחלתם.
+                מאחורי כל פנייה עומד אדם שמקשיב
               </h2>
               <p className="mt-3 text-[15.5px] leading-relaxed text-(--nc-muted) lg:mt-5 lg:text-[17px] lg:text-white/75">
-                רכזי השירות שלנו מקשיבים, שואלים את השאלות הנכונות, מסבירים מה האפשרויות ומלווים אתכם עד שהמטפל מגיע.
+                כשאתם פונים אלינו, אתם מדברים עם רכז או רכזת שירות שמבינים את הצורך, בודקים את האפשרויות ומסייעים לכם למצוא פתרון מתאים.
+              </p>
+              <p className="mt-3 text-[14.5px] leading-relaxed text-(--nc-muted) lg:text-[15.5px] lg:text-white/65">
+                אחרי שליחת הפרטים: רכז חוזר אליכם, שואל מה קרה ואיפה המטופל, ומציע אפשרויות לפי הזמינות באזור — בלי התחייבות בשיחה הראשונה.
               </p>
             </div>
           </div>
@@ -244,6 +296,14 @@ export default function BrandHome() {
             <div className="mt-8 lg:col-span-5 lg:mt-0">
               <LicensePanel />
             </div>
+          </div>
+          <div className={`${SECTION} pb-10 lg:pb-16`}>
+            <ContextualCallback
+              formType="home-availability"
+              heading="רוצים לבדוק זמינות באזור שלכם?"
+              copy="רכז שירות יבדוק איתכם מי זמין באזור — זו שיחה אנושית, לא בדיקה אוטומטית."
+              cta="בדקו זמינות עם רכז שירות"
+            />
           </div>
         </section>
 
@@ -334,12 +394,12 @@ export default function BrandHome() {
         {/* FINAL + CALLBACK */}
         <section id="lead-form" className="scroll-mt-24 bg-(--nc-ink) text-white">
           <div className={`${SECTION} py-11 lg:grid lg:grid-cols-12 lg:gap-14 lg:py-20`}>
-            <div className="lg:col-span-6">
-              <h2 className="text-[27px] font-bold leading-tight lg:text-[44px]">רוצים לדבר עם מישהו עכשיו?</h2>
-              <p className="mt-2.5 text-[16px] text-white/75 lg:mt-4 lg:text-[19px]">
-                לא צריך להכין כלום. ספרו מה קרה, ונמשיך משם יחד.
+            <div className="lg:col-span-5">
+              <h2 className="text-[27px] font-bold leading-tight lg:text-[40px]">השאירו מספר טלפון — ונחזור אליכם</h2>
+              <p className="mt-2.5 text-[16px] text-white/75 lg:mt-4 lg:text-[18px]">
+                שם ומספר מספיקים. רכז שירות יבין את הצורך ויבדוק אפשרויות מתאימות. שיחה ראשונית ללא התחייבות.
               </p>
-              <CallButton size="lg" className="mt-6 lg:mt-9 lg:max-w-[30rem]" />
+              <CallButton size="lg" className="mt-6 lg:mt-9 lg:max-w-[30rem]" label="התקשרו עכשיו" />
               <WhatsAppLink tone="light" className="mt-4" />
               <a
                 href={LICENSE.url}
@@ -352,12 +412,15 @@ export default function BrandHome() {
                 <IconExternal className="h-3.5 w-3.5" />
               </a>
             </div>
-            <div className="mt-9 bg-white p-5 text-(--nc-ink) lg:col-span-6 lg:mt-0 lg:p-8">
-              <p className="text-[18px] font-bold">מעדיפים שנחזור אליכם?</p>
-              <p className="mt-1 text-[14.5px] text-(--nc-muted)">שלוש שאלות קצרות, ורכז שירות יחזור אליכם.</p>
-              <div className="mt-5">
-                <StepLeadForm />
-              </div>
+            <div className="mt-9 lg:col-span-7 lg:mt-0">
+              <LeadCaptureCard
+                formId="home-final"
+                formType="home-final"
+                title="מעדיפים שנחזור אליכם?"
+                description="השאירו שם ומספר טלפון בלבד. בלי בחירת שירות ובלי טפסים ארוכים."
+                tone="light"
+                className="border-0"
+              />
             </div>
           </div>
         </section>
@@ -365,7 +428,6 @@ export default function BrandHome() {
 
       <BrandFooter variant="full" />
       <MobileCallBar />
-      <CallbackPopup formType="popup" />
     </BrandRoot>
   );
 }

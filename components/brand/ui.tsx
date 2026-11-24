@@ -2,13 +2,15 @@ import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { getImageProps } from "next/image";
 import CookiePreferencesButton from "@/components/CookiePreferencesButton";
-import { PHONE_HREF } from "@/lib/constants";
+import { buildWhatsAppUrl, DEFAULT_WHATSAPP_MESSAGE, PHONE_HREF } from "@/lib/constants";
 import { cities } from "@/lib/data/cities";
 import { services } from "@/lib/data/services";
+import { CallbackProvider } from "./CallbackProvider";
 import { brandFont } from "./fonts";
 import { BRAND, CONTACT, LICENSE, PROCESS, type FaqItem } from "./content";
-import { WHATSAPP_HREF } from "./actions";
 import { IconDocument, IconExternal, IconWhatsApp } from "./icons";
+
+const WHATSAPP_HREF = buildWhatsAppUrl(DEFAULT_WHATSAPP_MESSAGE);
 
 const theme = {
   "--nc-ink": "#0B1F3A",
@@ -30,7 +32,7 @@ export function BrandRoot({ children }: { children: ReactNode }) {
       style={theme}
       className={`${brandFont.variable} min-h-screen overflow-x-clip bg-white text-(--nc-ink) text-pretty antialiased [&_h2]:text-balance`}
     >
-      {children}
+      <CallbackProvider>{children}</CallbackProvider>
     </div>
   );
 }

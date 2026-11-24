@@ -15,6 +15,7 @@ import {
   SECOND_FAMILY_PHONE_DISPLAY,
   SECOND_FAMILY_PHONE_HREF,
   SECOND_FAMILY_STEPS,
+  SECOND_FAMILY_CRM_INTRO,
   SECOND_FAMILY_WHATSAPP,
 } from "./second-family-copy";
 import { BrandFooter, BrandRoot, CroppedImage, FaqList } from "./ui";
@@ -50,16 +51,16 @@ export default function SecondFamily() {
 
         <main>
           <section className="bg-(--sf-ivory)">
-            <div className={`${SECTION} pt-5 lg:grid lg:grid-cols-12 lg:items-center lg:gap-14 lg:py-16`}>
+            <div className={`${SECTION} pt-5 lg:grid lg:grid-cols-12 lg:items-start lg:gap-10 lg:py-14`}>
               <div className="lg:col-span-6">
                 <p className="text-[13px] font-semibold text-(--nc-teal)">{SECOND_FAMILY.parent}</p>
                 <p className="mt-2 text-[22px] font-bold leading-none text-(--nc-navy) lg:text-[28px]">{SECOND_FAMILY.name}</p>
                 <p className="mt-3 max-w-[36rem] text-[16px] font-medium leading-snug text-(--nc-ink) lg:text-[18px]">{SECOND_FAMILY.slogan}</p>
-                <h1 className="mt-5 text-[28px] font-bold leading-[1.18] tracking-[-0.015em] min-[390px]:text-[30px] lg:text-[46px] lg:leading-[1.12]">
+                <h1 className="mt-5 text-[28px] font-bold leading-[1.18] tracking-[-0.015em] min-[390px]:text-[30px] lg:text-[42px] lg:leading-[1.12]">
                   {SECOND_FAMILY.h1}
                 </h1>
-                <p className="mt-3 max-w-[38rem] text-[16px] leading-relaxed text-(--nc-muted) lg:text-[18px]">{SECOND_FAMILY.sub}</p>
-                <ul className="mt-4 grid gap-1.5 text-[15px] font-semibold lg:text-[16px]">
+                <p className="mt-3 max-w-[38rem] text-[16px] leading-relaxed text-(--nc-muted) lg:text-[17.5px]">{SECOND_FAMILY.sub}</p>
+                <ul className="mt-4 hidden gap-1.5 text-[15px] font-semibold lg:grid lg:text-[16px]">
                   {SECOND_FAMILY_BENEFITS.map((item) => (
                     <li key={item} className="flex items-center gap-2">
                       <IconCheck className="h-4 w-4 shrink-0 text-(--nc-teal)" stroke={2.2} />
@@ -67,22 +68,50 @@ export default function SecondFamily() {
                     </li>
                   ))}
                 </ul>
-                <CallButton {...familyPhone} id="hero-call" label="דברו איתנו על ההורים שלכם" size="lg" className="mt-5 !h-auto min-h-14 py-3 lg:max-w-[30rem]" />
-                <div className="mt-3 flex flex-wrap items-center justify-between gap-3 lg:max-w-[30rem]">
-                  <a href="#packages" className="text-[15px] font-semibold text-(--nc-navy) underline decoration-(--nc-line) underline-offset-4 hover:decoration-(--nc-navy)">
-                    קבלו פרטים על המסלולים
+
+                <div className="mt-5 rounded-[4px] border border-(--nc-line) bg-white p-5 lg:hidden">
+                  <p className="text-[18px] font-bold">רוצים שנדאג גם להורים שלכם?</p>
+                  <p className="mt-1 text-[14px] text-(--nc-muted)">השאירו שם ומספר — נחזור אליכם על משפחה שנייה.</p>
+                  <div className="mt-4">
+                    <SecondFamilyForm formId="sf-hero-mobile" />
+                  </div>
+                </div>
+
+                <div className="mt-5 hidden lg:block lg:max-w-[30rem]">
+                  <CallButton {...familyPhone} id="hero-call" label="דברו איתנו על ההורים שלכם" size="lg" className="!h-auto min-h-14 py-3" />
+                  <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+                    <a href="#packages" className="text-[15px] font-semibold text-(--nc-navy) underline decoration-(--nc-line) underline-offset-4 hover:decoration-(--nc-navy)">
+                      קבלו פרטים על המסלולים
+                    </a>
+                    <WhatsAppLink message={SECOND_FAMILY_WHATSAPP} />
+                  </div>
+                </div>
+
+                <div className="mt-3 flex items-center justify-between gap-3 text-[13px] text-(--nc-muted) lg:hidden">
+                  <a href={SECOND_FAMILY_PHONE_HREF} className="font-semibold text-(--nc-teal) underline underline-offset-4">
+                    או התקשרו: {SECOND_FAMILY_PHONE_DISPLAY}
                   </a>
-                  <WhatsAppLink message={SECOND_FAMILY_WHATSAPP} />
+                  <WhatsAppLink message={SECOND_FAMILY_WHATSAPP} className="!text-[13px]" />
                 </div>
               </div>
-              <div className="-mx-5 mt-6 lg:col-span-6 lg:mx-0 lg:mt-0">
-                <CroppedImage
-                  alt={SECOND_FAMILY_IMAGES.alt}
-                  mobile={SECOND_FAMILY_IMAGES.mobile}
-                  desktop={SECOND_FAMILY_IMAGES.desktop}
-                  sizes="(min-width: 1024px) 580px, 100vw"
-                  eager
-                />
+              <div className="mt-6 lg:col-span-6 lg:mt-0">
+                <div className="hidden rounded-[4px] border border-(--nc-line) bg-white p-5 lg:block lg:p-6">
+                  <p className="text-[18px] font-bold lg:text-[20px]">רוצים שנדאג גם להורים שלכם?</p>
+                  <p className="mt-1.5 text-[14px] text-(--nc-muted)">השאירו שם ומספר טלפון. נחזור אליכם על חבילות הביקורים החודשיות.</p>
+                  <p className="mt-2 text-[13px] font-semibold text-(--nc-teal)">שיחה ראשונית ללא התחייבות</p>
+                  <div className="mt-4">
+                    <SecondFamilyForm formId="sf-hero-desktop" />
+                  </div>
+                </div>
+                <div className="-mx-5 mt-5 lg:mx-0 lg:mt-5">
+                  <CroppedImage
+                    alt={SECOND_FAMILY_IMAGES.alt}
+                    mobile={SECOND_FAMILY_IMAGES.mobile}
+                    desktop={SECOND_FAMILY_IMAGES.desktop}
+                    sizes="(min-width: 1024px) 560px, 100vw"
+                    eager
+                  />
+                </div>
               </div>
             </div>
           </section>
@@ -232,10 +261,10 @@ export default function SecondFamily() {
                 </p>
               </div>
               <div className="mt-8 bg-(--sf-ivory) p-5 text-(--nc-ink) lg:col-span-6 lg:mt-0 lg:p-8">
-                <p className="text-[18px] font-bold">השאירו פרטים על משפחה שנייה</p>
+                <p className="text-[18px] font-bold">רוצים שנדאג גם להורים שלכם?</p>
                 <p className="mt-1 text-[14.5px] text-(--nc-muted)">שם וטלפון מספיקים. אין צורך בפרטים רפואיים.</p>
                 <div className="mt-5">
-                  <SecondFamilyForm />
+                  <SecondFamilyForm formId="sf-lead-form-final" />
                 </div>
               </div>
             </div>
@@ -243,7 +272,15 @@ export default function SecondFamily() {
         </main>
 
         <BrandFooter variant="full" whatsappHref={buildWhatsAppUrl(SECOND_FAMILY_WHATSAPP)} {...familyPhone} />
-        <MobileCallBar whatsappMessage={SECOND_FAMILY_WHATSAPP} {...familyPhone} />
+        <MobileCallBar
+          whatsappMessage={SECOND_FAMILY_WHATSAPP}
+          {...familyPhone}
+          formType="second-family-mobile"
+          callbackHeading="רוצים שנדאג גם להורים שלכם?"
+          callbackDescription="השאירו שם ומספר — נחזור אליכם על משפחה שנייה."
+          callbackButtonLabel="חזרו אליי"
+          intro={SECOND_FAMILY_CRM_INTRO}
+        />
       </div>
     </BrandRoot>
   );

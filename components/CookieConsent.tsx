@@ -233,7 +233,8 @@ export default function CookieConsent() {
           dir="rtl"
           role="region"
           aria-label="הודעת עוגיות"
-          className="fixed inset-x-3 bottom-[148px] z-[80] mx-auto max-w-[640px] rounded-xl border border-slate-200 bg-white/95 p-2.5 shadow-xl shadow-slate-900/10 backdrop-blur-sm sm:p-3 md:bottom-[104px] lg:bottom-5"
+          data-cookie-banner="true"
+          className="fixed inset-x-3 z-[80] mx-auto max-w-[640px] rounded-xl border border-slate-200 bg-white/95 p-2.5 shadow-xl shadow-slate-900/10 backdrop-blur-sm sm:p-3 top-[max(0.75rem,env(safe-area-inset-top))] lg:top-auto lg:bottom-5"
         >
           <div className="flex items-start gap-2.5">
             <ShieldIcon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
