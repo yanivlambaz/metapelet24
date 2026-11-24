@@ -129,7 +129,9 @@ Widths: 320, 360, 375, 390, 412, 430, 768.
 
 ## 13–14. Git / push
 
-Filled after commit + push in the final message.
+- **Commit:** `0857270f8669fa027fd31a39549c6bdcd45ab671`
+- **Branch pushed:** `feature/cro-lead-optimization` → `origin`
+- Not merged to `main`; not deployed to production.
 
 ---
 
